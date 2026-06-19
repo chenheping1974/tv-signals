@@ -305,16 +305,16 @@ def generate_rss_items(articles, analysis_results):
         if ai.get("impact", 0) < min_impact:
             continue  # 商品>=2★，A股>=1★
 
-    # 打印分析结果分布
     impacts = [r.get("impact", 0) for r in analysis_results]
-    print(f"   AI评分分布: 0★={impacts.count(0)}, 1★={impacts.count(1)}, 2★={impacts.count(2)}, 3★={impacts.count(3)}, 4★={impacts.count(4)}, 5★={impacts.count(5)}")
-    a_stock_passed = sum(1 for i, art in enumerate(articles)
-                         if art["cat"] in ("both", "a-stocks")
-                         and analysis_map.get(i, {}).get("impact", 0) >= 1)
+    print(f"   AI评分: 0★={impacts.count(0)} 1★={impacts.count(1)} 2★={impacts.count(2)} 3★={impacts.count(3)} 4★={impacts.count(4)} 5★={impacts.count(5)}")
+    ai_idxs = sorted([r.get("idx", -1) for r in analysis_results])
+    a_idxs = [i for i, art in enumerate(articles) if art["cat"] in ("both", "a-stocks")]
+    print(f"   idx范围: {ai_idxs[:3]}...{ai_idxs[-3:]}, A股idx: {a_idxs[:5]}")
+    a_stock_passed = sum(1 for i in a_idxs if analysis_map.get(i, {}).get("impact", 0) >= 1)
     commodity_passed = sum(1 for i, art in enumerate(articles)
                            if art["cat"] == "commodities"
                            and analysis_map.get(i, {}).get("impact", 0) >= 2)
-    print(f"   >=1★(A股): {a_stock_passed}篇, >=2★(商品): {commodity_passed}篇")
+    print(f"   通过: A股>={a_stock_passed} 商品>={commodity_passed}")
 
     for i, art in enumerate(articles):
         ai = analysis_map.get(i, {})
