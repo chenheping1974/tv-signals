@@ -17,11 +17,20 @@ DATA_DIR.mkdir(exist_ok=True)
 PROCESSED_FILE = DATA_DIR / "processed_urls.json"
 SIGNAL_LOG = DATA_DIR / "signal_log.json"
 
-# RSS源配置
-RSS_SOURCES = [
-    {"url": "https://rsshub.app/jin10",              "name": "金十数据",     "cat": "commodities"},
-    {"url": "https://rsshub.app/wallstreetcn/news",  "name": "华尔街见闻",   "cat": "both"},
-    {"url": "https://rsshub.app/cls/depth",          "name": "财联社深度",   "cat": "a-stocks"},
+# 信源配置 — 直接API，不经过RSSHub
+SOURCES = [
+    {
+        "type": "jin10",
+        "name": "金十数据",
+        "cat": "commodities",
+        "url": "https://cdn.jin10.com/data_center/reports/flash_newest.js",
+    },
+    {
+        "type": "wallstreetcn",
+        "name": "华尔街见闻",
+        "cat": "both",
+        "url": "https://api-prod.wallstreetcn.com/apiv1/content/lives/pc?limit=50",
+    },
 ]
 
 # 关键词过滤
@@ -61,38 +70,97 @@ def save_signal_log(log):
 
 # ── 核心流程 ────────────────────────────────────────
 def fetch_all_feeds():
-    """拉取所有RSS源的文章"""
+    """拉取所有信源的文章"""
     all_items = []
-    for src in RSS_SOURCES:
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
+        "Accept": "application/json, text/plain, */*",
+        "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8",
+    }
+
+    for src in SOURCES:
         try:
             print(f"📡 正在拉取 {src['name']}: {src['url']}")
-            resp = requests.get(src["url"], timeout=30, headers={
-                "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
-                "Accept": "application/rss+xml, application/xml, text/xml, */*",
-                "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8",
-            })
+            resp = requests.get(src["url"], timeout=30, headers=headers)
             print(f"   状态码: {resp.status_code}, 大小: {len(resp.text)} bytes")
-            feed = feedparser.parse(resp.text)
-            print(f"   解析到 {len(feed.entries)} 条目")
-            for entry in feed.entries:
-                content = entry.get("description", "") or entry.get("summary", "")
-                content = re.sub(r"<[^>]+>", "", content)[:1000]
-                title = entry.get("title", "")
-                link = entry.get("link", "")
-                if not link:
-                    continue
-                all_items.append({
-                    "title": title,
-                    "content": content,
-                    "link": link,
-                    "source": src["name"],
-                    "cat": src["cat"],
-                    "pub_date": entry.get("published", ""),
-                    "hash": url_hash(link),
-                })
+
+            if src["type"] == "jin10":
+                items = parse_jin10(resp.text, src)
+            elif src["type"] == "wallstreetcn":
+                items = parse_wallstreetcn(resp.json(), src)
+            else:
+                items = []
+
+            print(f"   解析到 {len(items)} 条目")
+            all_items.extend(items)
+
         except Exception as e:
             print(f"❌ 拉取 {src['name']} 失败: {e}")
+
     return all_items
+
+
+def parse_jin10(text, src):
+    """解析金十数据 flash_newest.js"""
+    items = []
+    # 去掉JavaScript外层: var newest = {...};
+    text = text.strip()
+    if text.startswith("var "):
+        text = text[text.index("=") + 1 :].strip()
+    if text.endswith(";"):
+        text = text[:-1]
+    try:
+        data = json.loads(text)
+    except json.JSONDecodeError:
+        return items
+
+    # 数据在 data.flash 或直接是数组
+    flashes = data if isinstance(data, list) else data.get("flash", data.get("data", []))
+    if isinstance(flashes, dict):
+        flashes = list(flashes.values())
+
+    for f in flashes[:80]:  # 最多取80条
+        if isinstance(f, str):
+            continue
+        content = f.get("data", {}).get("content", "") or f.get("content", "")
+        title = f.get("title", "") or content[:80]
+        link = f.get("data", {}).get("link", "") or f.get("link", "") or f"https://www.jin10.com/flash/{f.get('id', '')}"
+        if not content or len(content) < 5:
+            continue
+        items.append({
+            "title": title,
+            "content": content[:1000],
+            "link": link if link.startswith("http") else f"https://www.jin10.com{link}",
+            "source": src["name"],
+            "cat": src["cat"],
+            "pub_date": f.get("time", ""),
+            "hash": url_hash(content[:60] + link),
+        })
+    return items
+
+
+def parse_wallstreetcn(data, src):
+    """解析华尔街见闻 API"""
+    items = []
+    for item in data.get("data", {}).get("items", [])[:80]:
+        content = item.get("content_text", "") or item.get("title", "")
+        title = item.get("title", "") or content[:80]
+        item_id = item.get("id", "")
+        link = f"https://wallstreetcn.com/livenews/{item_id}" if item_id else ""
+        if not content or len(content) < 5:
+            continue
+        ts = item.get("display_time", 0)
+        pub_date = datetime.fromtimestamp(ts).strftime("%a, %d %b %Y %H:%M:%S +0800") if ts else ""
+        items.append({
+            "title": title,
+            "content": content[:1000],
+            "link": link,
+            "source": src["name"],
+            "cat": src["cat"],
+            "pub_date": pub_date,
+            "hash": url_hash(content[:60] + link),
+        })
+    return items
 
 def filter_by_keyword(items):
     """关键词过滤"""
