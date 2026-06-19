@@ -295,11 +295,13 @@ def build_rss_xml(channel_title, channel_desc, link_suffix, items):
 def generate_rss_items(articles, analysis_results):
     """将分析结果转为RSS条目"""
     rss_items = []
-    analysis_map = {}
-    for r in analysis_results:
-        analysis_map[r.get("idx", -1)] = r
+    # 按顺序配对：结果数可能少于文章数（DeepSeek截断），只取能配对的
+    if len(analysis_results) < len(articles):
+        print(f"   ⚠️ 分析结果({len(analysis_results)})少于文章({len(articles)})，仅配对前{len(analysis_results)}篇")
 
-    for i, art in enumerate(articles):
+    for i in range(min(len(articles), len(analysis_results))):
+        art = articles[i]
+        ai = analysis_results[i]
         ai = analysis_map.get(i, {})
         min_impact = 1 if art["cat"] in ("both", "a-stocks") else 2
         if ai.get("impact", 0) < min_impact:
@@ -307,27 +309,25 @@ def generate_rss_items(articles, analysis_results):
 
     impacts = [r.get("impact", 0) for r in analysis_results]
     print(f"   AI评分: 0★={impacts.count(0)} 1★={impacts.count(1)} 2★={impacts.count(2)} 3★={impacts.count(3)} 4★={impacts.count(4)} 5★={impacts.count(5)}")
-    ai_idxs = sorted([r.get("idx", -1) for r in analysis_results])
-    a_idxs = [i for i, art in enumerate(articles) if art["cat"] in ("both", "a-stocks")]
-    print(f"   idx范围: {ai_idxs[:3]}...{ai_idxs[-3:]}, A股idx: {a_idxs[:5]}")
-    a_stock_passed = sum(1 for i in a_idxs if analysis_map.get(i, {}).get("impact", 0) >= 1)
-    commodity_passed = sum(1 for i, art in enumerate(articles)
-                           if art["cat"] == "commodities"
-                           and analysis_map.get(i, {}).get("impact", 0) >= 2)
-    print(f"   通过: A股>={a_stock_passed} 商品>={commodity_passed}")
+    a_passed = sum(1 for i in range(min(len(articles), len(analysis_results)))
+                   if articles[i]["cat"] in ("both", "a-stocks")
+                   and analysis_results[i].get("impact", 0) >= 1)
+    c_passed = sum(1 for i in range(min(len(articles), len(analysis_results)))
+                   if articles[i]["cat"] == "commodities"
+                   and analysis_results[i].get("impact", 0) >= 2)
+    print(f"   通过: A股>={a_passed} 商品>={c_passed}")
 
-    for i, art in enumerate(articles):
-        ai = analysis_map.get(i, {})
+    for i in range(min(len(articles), len(analysis_results))):
+        art = articles[i]
+        ai = analysis_results[i]
         min_impact = 1 if art["cat"] in ("both", "a-stocks") else 2
         if ai.get("impact", 0) < min_impact:
             continue  # 商品>=2★，A股>=1★
 
-        # 构建标题
         sentiment_emoji = "🔴" if (ai.get("sentiment", 0) < -0.3) else ("🟢" if ai.get("sentiment", 0) > 0.3 else "🟡")
         impact_stars = "★" * ai.get("impact", 2)
         rss_title = f"[{impact_stars}{sentiment_emoji}] {ai.get('title_cn', art['title'])}"
 
-        # 构建描述
         commodities = ", ".join(ai.get("commodities", [])) or "无"
         a_stocks = ", ".join(ai.get("a_stocks", [])) or "无"
         tags = ", ".join(ai.get("tags", [])) or "无"
@@ -454,7 +454,7 @@ def main():
 
     # 4. AI分析 (分批, 每批10篇)
     all_analysis = []
-    batch_size = 10
+    batch_size = 5
     for i in range(0, len(new_items), batch_size):
         batch = new_items[i : i + batch_size]
         print(f"🤖 DeepSeek分析: {i+1}-{min(i+batch_size, len(new_items))}/{len(new_items)}")
