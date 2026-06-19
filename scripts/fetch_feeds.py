@@ -305,6 +305,23 @@ def generate_rss_items(articles, analysis_results):
         if ai.get("impact", 0) < min_impact:
             continue  # 商品>=2★，A股>=1★
 
+    # 打印分析结果分布
+    impacts = [r.get("impact", 0) for r in analysis_results]
+    print(f"   AI评分分布: 0★={impacts.count(0)}, 1★={impacts.count(1)}, 2★={impacts.count(2)}, 3★={impacts.count(3)}, 4★={impacts.count(4)}, 5★={impacts.count(5)}")
+    a_stock_passed = sum(1 for i, art in enumerate(articles)
+                         if art["cat"] in ("both", "a-stocks")
+                         and analysis_map.get(i, {}).get("impact", 0) >= 1)
+    commodity_passed = sum(1 for i, art in enumerate(articles)
+                           if art["cat"] == "commodities"
+                           and analysis_map.get(i, {}).get("impact", 0) >= 2)
+    print(f"   >=1★(A股): {a_stock_passed}篇, >=2★(商品): {commodity_passed}篇")
+
+    for i, art in enumerate(articles):
+        ai = analysis_map.get(i, {})
+        min_impact = 1 if art["cat"] in ("both", "a-stocks") else 2
+        if ai.get("impact", 0) < min_impact:
+            continue  # 商品>=2★，A股>=1★
+
         # 构建标题
         sentiment_emoji = "🔴" if (ai.get("sentiment", 0) < -0.3) else ("🟢" if ai.get("sentiment", 0) > 0.3 else "🟡")
         impact_stars = "★" * ai.get("impact", 2)
