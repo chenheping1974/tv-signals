@@ -20,12 +20,6 @@ SIGNAL_LOG = DATA_DIR / "signal_log.json"
 # 信源配置 — 直接API，不经过RSSHub
 SOURCES = [
     {
-        "type": "jin10",
-        "name": "金十数据",
-        "cat": "commodities",
-        "url": "https://flash-api.jin10.com/get_flash_list?channel=-8200&vip=1&max_time=&min_time=&limit=50",
-    },
-    {
         "type": "wallstreetcn",
         "name": "华尔街见闻",
         "cat": "both",
@@ -133,56 +127,54 @@ def parse_jin10(text, src):
 
 
 def parse_wallstreetcn(data, src):
-    """解析华尔街见闻 API"""
+    """解析华尔街见闻 API — 按频道提取"""
     items = []
-    # 支持多种返回结构
-    live_list = data if isinstance(data, list) else data.get("data", data)
+    inner = data.get("data", {})
+    if not isinstance(inner, dict):
+        return items
 
-    if isinstance(live_list, dict):
-        live_list = live_list.get("items", live_list.get("list", []))
+    # 关注的频道: commodity(商品), global(宏观), a_stock(A股), forex(外汇)
+    channels = ["commodity", "global", "a_stock", "forex"]
 
-    if not isinstance(live_list, list):
-        live_list = [live_list]
-
-    print(f"   顶层keys: {list(data.keys()) if isinstance(data, dict) else 'not dict'}")
-    if isinstance(data, dict) and "data" in data:
-        inner = data["data"]
-        print(f"   data层keys: {list(inner.keys()) if isinstance(inner, dict) else type(inner)}")
-        if isinstance(inner, dict):
-            for k in inner:
-                v = inner[k]
-                if isinstance(v, list):
-                    print(f"   '{k}' = list[{len(v)}]")
-                    if v:
-                        print(f"   首条: {json.dumps(v[0], ensure_ascii=False)[:300]}")
-                elif isinstance(v, dict):
-                    print(f"   '{k}' = dict[{len(v)}] keys={list(v.keys())[:10]}")
-                else:
-                    print(f"   '{k}' = {type(v).__name__}: {str(v)[:100]}")
-    print(f"   解析到: {len(live_list)} 条")
-
-    for item in live_list[:80]:
-        if not isinstance(item, dict):
+    for channel in channels:
+        ch_data = inner.get(channel, {})
+        if not isinstance(ch_data, dict):
             continue
-        content = item.get("content_text", "") or item.get("content", "") or item.get("title", "")
-        title = item.get("title", "") or content[:80]
-        item_id = item.get("id", "")
-        link = f"https://wallstreetcn.com/livenews/{item_id}" if item_id else ""
-        if not content or len(content) < 5:
+        ch_items = ch_data.get("items", [])
+        if not isinstance(ch_items, list):
             continue
-        ts = item.get("display_time", 0)
-        pub_date = ""
-        if ts and ts > 1000000000:
-            pub_date = datetime.fromtimestamp(ts).strftime("%a, %d %b %Y %H:%M:%S +0800")
-        items.append({
-            "title": title,
-            "content": content[:1000],
-            "link": link,
-            "source": src["name"],
-            "cat": src["cat"],
-            "pub_date": pub_date,
-            "hash": url_hash(content[:60] + link),
-        })
+        print(f"   {channel}: {len(ch_items)} 条")
+
+        for item in ch_items:
+            if not isinstance(item, dict):
+                continue
+            content = item.get("content_text", "") or item.get("content", "")
+            title = item.get("title", "") or content[:80]
+            item_id = item.get("id", "")
+            link = f"https://wallstreetcn.com/livenews/{item_id}" if item_id else ""
+            if not content or len(content) < 5:
+                continue
+            ts = item.get("display_time", 0)
+            pub_date = ""
+            if ts and ts > 1000000000:
+                pub_date = datetime.fromtimestamp(ts).strftime("%a, %d %b %Y %H:%M:%S +0800")
+            # 按频道分配类别
+            cat = src["cat"]
+            if channel in ("commodity", "forex"):
+                cat = "commodities"
+            elif channel in ("a_stock", "global"):
+                cat = "both"
+            items.append({
+                "title": title,
+                "content": content[:1000],
+                "link": link,
+                "source": f"{src['name']}({channel})",
+                "cat": cat,
+                "pub_date": pub_date,
+                "hash": url_hash(content[:60] + link),
+            })
+
+    print(f"   解析到 {len(items)} 条")
     return items
 
 def filter_by_keyword(items):
