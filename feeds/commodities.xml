@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>大宗商品精选情报</title>
+    <link>https://{你的用户名}.github.io/tv-signals/feeds/commodities.xml</link>
+    <description>AI精选大宗商品情报 — 黄金·白银·原油·美铜·伦铝·豆粕 | DeepSeek分析 + 影响力评级</description>
+    <language>zh-CN</language>
+    <lastBuildDate>Mon, 19 Jun 2026 21:00:00 +0800</lastBuildDate>
+    <atom:link href="https://{你的用户名}.github.io/tv-signals/feeds/commodities.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>[★5🔴] 【示例】智利Escondida铜矿工会宣布罢工</title>
+      <link>https://example.com/sample-article</link>
+      <description>
+        &lt;p&gt;&lt;strong&gt;摘要&lt;/strong&gt;：全球最大铜矿工人投票支持罢工，影响全球约5%铜供应，若持续将推高铜价。&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;情绪&lt;/strong&gt;：🔴 利空供应 (-0.7)&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;关联标的&lt;/strong&gt;：HG=F, SCCO, FCX, 紫金矿业(601899), 江西铜业(600362)&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;分类&lt;/strong&gt;：供应中断 | 工业金属&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;可信度&lt;/strong&gt;：★★★★☆ (Reuters) | 处理时间：2026-06-19 21:00&lt;/p&gt;
+      </description>
+      <pubDate>Mon, 19 Jun 2026 14:30:00 +0800</pubDate>
+      <guid isPermaLink="false">sample-escondida-strike-20260619</guid>
+      <category>供应中断</category>
+    </item>
+  </channel>
+</rss>
