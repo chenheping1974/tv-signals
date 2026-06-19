@@ -67,7 +67,9 @@ def fetch_all_feeds():
         try:
             print(f"📡 正在拉取 {src['name']}: {src['url']}")
             resp = requests.get(src["url"], timeout=30, headers={
-                "User-Agent": "tv-signals/1.0 (RSS Reader)"
+                "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
+                "Accept": "application/rss+xml, application/xml, text/xml, */*",
+                "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8",
             })
             print(f"   状态码: {resp.status_code}, 大小: {len(resp.text)} bytes")
             feed = feedparser.parse(resp.text)
