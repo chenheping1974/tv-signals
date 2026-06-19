@@ -392,22 +392,25 @@ def load_existing_items(filepath):
         return []
     text = filepath.read_text()
     items = []
-    # 简单解析item块
     for match in re.finditer(r"<item>(.*?)</item>", text, re.DOTALL):
         block = match.group(1)
-        title_m = re.search(r"<title>(.*?)</title>", block)
         link_m = re.search(r"<link>(.*?)</link>", block)
+        link = link_m.group(1) if link_m else ""
+        # 跳过示例条目
+        if "example.com" in link:
+            continue
+        title_m = re.search(r"<title>(.*?)</title>", block)
         desc_m = re.search(r"<description>(.*?)</description>", block, re.DOTALL)
         pub_m = re.search(r"<pubDate>(.*?)</pubDate>", block)
         guid_m = re.search(r"<guid[^>]*>(.*?)</guid>", block)
         items.append({
             "rss_title": title_m.group(1) if title_m else "",
             "rss_desc": desc_m.group(1) if desc_m else "",
-            "link": link_m.group(1) if link_m else "",
+            "link": link,
             "pub_date": pub_m.group(1) if pub_m else "",
-            "hash": guid_m.group(1) if guid_m else url_hash(link_m.group(1) if link_m else ""),
+            "hash": guid_m.group(1) if guid_m else url_hash(link),
             "tags": [],
-            "cat": "commodities",  # 从文件名判断，简化处理
+            "cat": "commodities",
         })
     return items
 
