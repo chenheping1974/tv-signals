@@ -301,8 +301,9 @@ def generate_rss_items(articles, analysis_results):
 
     for i, art in enumerate(articles):
         ai = analysis_map.get(i, {})
-        if ai.get("impact", 0) < 2:
-            continue  # 只保留星级>=2的
+        min_impact = 1 if art["cat"] in ("both", "a-stocks") else 2
+        if ai.get("impact", 0) < min_impact:
+            continue  # 商品>=2★，A股>=1★
 
         # 构建标题
         sentiment_emoji = "🔴" if (ai.get("sentiment", 0) < -0.3) else ("🟢" if ai.get("sentiment", 0) > 0.3 else "🟡")
