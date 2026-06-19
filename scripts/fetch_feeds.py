@@ -144,9 +144,22 @@ def parse_wallstreetcn(data, src):
     if not isinstance(live_list, list):
         live_list = [live_list]
 
-    print(f"   WSJ数据结构: type={type(live_list)}, len={len(live_list)}")
-    if live_list:
-        print(f"   首条样例: {json.dumps(live_list[0], ensure_ascii=False)[:300]}")
+    print(f"   顶层keys: {list(data.keys()) if isinstance(data, dict) else 'not dict'}")
+    if isinstance(data, dict) and "data" in data:
+        inner = data["data"]
+        print(f"   data层keys: {list(inner.keys()) if isinstance(inner, dict) else type(inner)}")
+        if isinstance(inner, dict):
+            for k in inner:
+                v = inner[k]
+                if isinstance(v, list):
+                    print(f"   '{k}' = list[{len(v)}]")
+                    if v:
+                        print(f"   首条: {json.dumps(v[0], ensure_ascii=False)[:300]}")
+                elif isinstance(v, dict):
+                    print(f"   '{k}' = dict[{len(v)}] keys={list(v.keys())[:10]}")
+                else:
+                    print(f"   '{k}' = {type(v).__name__}: {str(v)[:100]}")
+    print(f"   解析到: {len(live_list)} 条")
 
     for item in live_list[:80]:
         if not isinstance(item, dict):
