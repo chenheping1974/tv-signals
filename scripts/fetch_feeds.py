@@ -302,7 +302,6 @@ def generate_rss_items(articles, analysis_results):
     for i in range(min(len(articles), len(analysis_results))):
         art = articles[i]
         ai = analysis_results[i]
-        ai = analysis_map.get(i, {})
         min_impact = 1 if art["cat"] in ("both", "a-stocks") else 2
         if ai.get("impact", 0) < min_impact:
             continue  # 商品>=2★，A股>=1★
