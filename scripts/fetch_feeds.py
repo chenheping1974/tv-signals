@@ -65,11 +65,15 @@ def fetch_all_feeds():
     all_items = []
     for src in RSS_SOURCES:
         try:
-            feed = feedparser.parse(src["url"])
+            print(f"📡 正在拉取 {src['name']}: {src['url']}")
+            resp = requests.get(src["url"], timeout=30, headers={
+                "User-Agent": "tv-signals/1.0 (RSS Reader)"
+            })
+            print(f"   状态码: {resp.status_code}, 大小: {len(resp.text)} bytes")
+            feed = feedparser.parse(resp.text)
+            print(f"   解析到 {len(feed.entries)} 条目")
             for entry in feed.entries:
-                # 提取文本内容
                 content = entry.get("description", "") or entry.get("summary", "")
-                # 去掉HTML标签
                 content = re.sub(r"<[^>]+>", "", content)[:1000]
                 title = entry.get("title", "")
                 link = entry.get("link", "")
