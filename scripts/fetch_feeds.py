@@ -23,7 +23,7 @@ SOURCES = [
         "type": "jin10",
         "name": "金十数据",
         "cat": "commodities",
-        "url": "https://cdn.jin10.com/data_center/reports/flash_newest.js",
+        "url": "https://flash-api.jin10.com/get_flash_list?channel=-8200&vip=1&max_time=&min_time=&limit=50",
     },
     {
         "type": "wallstreetcn",
@@ -101,36 +101,29 @@ def fetch_all_feeds():
 
 
 def parse_jin10(text, src):
-    """解析金十数据 flash_newest.js"""
+    """解析金十数据 API"""
     items = []
-    # 去掉JavaScript外层: var newest = {...};
-    text = text.strip()
-    if text.startswith("var "):
-        text = text[text.index("=") + 1 :].strip()
-    if text.endswith(";"):
-        text = text[:-1]
     try:
         data = json.loads(text)
     except json.JSONDecodeError:
         return items
 
-    # 数据在 data.flash 或直接是数组
-    flashes = data if isinstance(data, list) else data.get("flash", data.get("data", []))
-    if isinstance(flashes, dict):
-        flashes = list(flashes.values())
+    flashes = data.get("data", data) if isinstance(data, dict) else data
+    if not isinstance(flashes, list):
+        flashes = [flashes]
 
-    for f in flashes[:80]:  # 最多取80条
-        if isinstance(f, str):
+    for f in flashes[:80]:
+        if not isinstance(f, dict):
             continue
-        content = f.get("data", {}).get("content", "") or f.get("content", "")
-        title = f.get("title", "") or content[:80]
-        link = f.get("data", {}).get("link", "") or f.get("link", "") or f"https://www.jin10.com/flash/{f.get('id', '')}"
+        content = f.get("content", "") or f.get("data", {}).get("content", "")
         if not content or len(content) < 5:
             continue
+        fid = f.get("id", "")
+        link = f"https://www.jin10.com/flash/{fid}" if fid else ""
         items.append({
-            "title": title,
+            "title": content[:80],
             "content": content[:1000],
-            "link": link if link.startswith("http") else f"https://www.jin10.com{link}",
+            "link": link,
             "source": src["name"],
             "cat": src["cat"],
             "pub_date": f.get("time", ""),
@@ -142,15 +135,32 @@ def parse_jin10(text, src):
 def parse_wallstreetcn(data, src):
     """解析华尔街见闻 API"""
     items = []
-    for item in data.get("data", {}).get("items", [])[:80]:
-        content = item.get("content_text", "") or item.get("title", "")
+    # 支持多种返回结构
+    live_list = data if isinstance(data, list) else data.get("data", data)
+
+    if isinstance(live_list, dict):
+        live_list = live_list.get("items", live_list.get("list", []))
+
+    if not isinstance(live_list, list):
+        live_list = [live_list]
+
+    print(f"   WSJ数据结构: type={type(live_list)}, len={len(live_list)}")
+    if live_list:
+        print(f"   首条样例: {json.dumps(live_list[0], ensure_ascii=False)[:300]}")
+
+    for item in live_list[:80]:
+        if not isinstance(item, dict):
+            continue
+        content = item.get("content_text", "") or item.get("content", "") or item.get("title", "")
         title = item.get("title", "") or content[:80]
         item_id = item.get("id", "")
         link = f"https://wallstreetcn.com/livenews/{item_id}" if item_id else ""
         if not content or len(content) < 5:
             continue
         ts = item.get("display_time", 0)
-        pub_date = datetime.fromtimestamp(ts).strftime("%a, %d %b %Y %H:%M:%S +0800") if ts else ""
+        pub_date = ""
+        if ts and ts > 1000000000:
+            pub_date = datetime.fromtimestamp(ts).strftime("%a, %d %b %Y %H:%M:%S +0800")
         items.append({
             "title": title,
             "content": content[:1000],
