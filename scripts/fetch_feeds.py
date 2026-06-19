@@ -416,7 +416,14 @@ def main():
 
     # 2. 过滤
     filtered = filter_by_keyword(all_items)
+    # 统计各频道/信源分布
+    from collections import Counter
+    src_count = Counter(f["source"] for f in filtered)
     print(f"🔍 关键词过滤后: {len(filtered)} 篇")
+    for k, v in src_count.most_common():
+        print(f"   {k}: {v} 篇")
+    cat_count = Counter(f["cat"] for f in filtered)
+    print(f"   分类: {dict(cat_count)}")
 
     # 3. 去重
     processed = load_processed()
