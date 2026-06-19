@@ -2,11 +2,11 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>A股精选情报</title>
-    <link>https://{你的用户名}.github.io/tv-signals/feeds/a-stocks.xml</link>
+    <link>https://chenheping1974.github.io/tv-signals/feeds/a-stocks.xml</link>
     <description>AI精选A股情报 — 宏观政策·行业板块·个股信号 | DeepSeek分析 + 影响力评级</description>
     <language>zh-CN</language>
     <lastBuildDate>Mon, 19 Jun 2026 21:00:00 +0800</lastBuildDate>
-    <atom:link href="https://{你的用户名}.github.io/tv-signals/feeds/a-stocks.xml" rel="self" type="application/rss+xml"/>
+    <atom:link href="https://chenheping1974.github.io/tv-signals/feeds/a-stocks.xml" rel="self" type="application/rss+xml"/>
     <item>
       <title>[★5🟢] 【示例】央行超预期降准50BP，释放长期资金约1万亿</title>
       <link>https://example.com/sample-article</link>

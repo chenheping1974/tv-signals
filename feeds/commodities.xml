@@ -2,11 +2,11 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>大宗商品精选情报</title>
-    <link>https://{你的用户名}.github.io/tv-signals/feeds/commodities.xml</link>
+    <link>https://chenheping1974.github.io/tv-signals/feeds/commodities.xml</link>
     <description>AI精选大宗商品情报 — 黄金·白银·原油·美铜·伦铝·豆粕 | DeepSeek分析 + 影响力评级</description>
     <language>zh-CN</language>
     <lastBuildDate>Mon, 19 Jun 2026 21:00:00 +0800</lastBuildDate>
-    <atom:link href="https://{你的用户名}.github.io/tv-signals/feeds/commodities.xml" rel="self" type="application/rss+xml"/>
+    <atom:link href="https://chenheping1974.github.io/tv-signals/feeds/commodities.xml" rel="self" type="application/rss+xml"/>
     <item>
       <title>[★5🔴] 【示例】智利Escondida铜矿工会宣布罢工</title>
       <link>https://example.com/sample-article</link>
