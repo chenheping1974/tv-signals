@@ -89,7 +89,7 @@ def fetch_all_stocks():
 
     # 批量下载筛选（每批500只，只取info）
     filtered = []
-    batch_size = 500
+    batch_size = 50
     for batch_start in range(0, len(valid), batch_size):
         batch = valid[batch_start:batch_start+batch_size]
         tickers = []
