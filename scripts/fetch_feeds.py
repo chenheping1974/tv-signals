@@ -161,12 +161,8 @@ def parse_wallstreetcn(data, src):
             pub_date = ""
             if ts and ts > 1000000000:
                 pub_date = datetime.fromtimestamp(ts).strftime("%a, %d %b %Y %H:%M:%S +0800")
-            # 按频道分配类别
-            cat = src["cat"]
-            if channel in ("commodity", "forex"):
-                cat = "commodities"
-            elif channel in ("a_stock", "global"):
-                cat = "both"
+            # 所有文章默认进商品Feed；AI分析后根据a_stocks字段决定是否也进A股Feed
+            cat = "commodities"
             items.append({
                 "title": title,
                 "content": content[:1000],
@@ -339,6 +335,10 @@ def generate_rss_items(articles, analysis_results):
             f"<p><strong>可信度</strong>：{'★' * ai.get('credibility', 3)} | 来源: {art['source']} | {datetime.now().strftime('%Y-%m-%d %H:%M')}</p>"
         )
 
+        # AI判断关联A股 → 进A股Feed
+        has_a_stock = bool(ai.get("a_stocks") and len(ai.get("a_stocks", [])) > 0)
+        cat = "both" if has_a_stock else art["cat"]
+
         rss_items.append({
             "rss_title": rss_title,
             "rss_desc": rss_desc,
@@ -346,7 +346,7 @@ def generate_rss_items(articles, analysis_results):
             "pub_date": art.get("pub_date", ""),
             "hash": art["hash"],
             "tags": ai.get("tags", []),
-            "cat": art["cat"],
+            "cat": cat,
         })
 
     return rss_items
