@@ -5,164 +5,84 @@
     <link>https://chenheping1974.github.io/tv-signals/feeds/commodities.xml</link>
     <description>AI精选大宗商品情报 — 黄金·白银·原油·美铜·伦铝·豆粕 | DeepSeek分析 + 影响力评级</description>
     <language>zh-CN</language>
-    <lastBuildDate>Sat, 20 Jun 2026 10:41:46 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 20 Jun 2026 23:04:59 +0800</lastBuildDate>
     <atom:link href="https://chenheping1974.github.io/tv-signals/feeds/commodities.xml" rel="self" type="application/rss+xml"/>
     <item>
-      <title>[★★★★🔴] 本周已有11艘油轮运载2000万桶原油驶离伊朗港口</title>
-      <link>https://wallstreetcn.com/livenews/3122133</link>
-      <description><p><strong>摘要</strong>：伊朗大量原油外运，可能增加全球供应，施压油价。</p><p><strong>情绪</strong>：🔴 -0.6</p><p><strong>关联商品</strong>：CL=F</p><p><strong>关联A股</strong>：石油板块</p><p><strong>分类</strong>：供应中断, 地缘政治</p><p><strong>可信度</strong>：★★★★ | 来源: 华尔街见闻(forex) | 2026-06-20 02:41</p></description>
-      <pubDate>Fri, 19 Jun 2026 14:41:58 +0800</pubDate>
-      <guid isPermaLink="false">613f2bdaa1020f90</guid>
-      <category>供应中断,地缘政治</category>
-    </item>
-    <item>
-      <title>[★★🟡] 意大利股市继续创收盘历史新高，银行板块本周涨6.7%</title>
-      <link>https://wallstreetcn.com/livenews/3122144</link>
-      <description><p><strong>摘要</strong>：意大利股市创新高，银行板块领涨，但其他欧洲股指涨跌互现。</p><p><strong>情绪</strong>：🟡 0.3</p><p><strong>关联商品</strong>：无</p><p><strong>关联A股</strong>：无</p><p><strong>分类</strong>：行业轮动</p><p><strong>可信度</strong>：★★★★★ | 来源: 华尔街见闻(forex) | 2026-06-20 02:41</p></description>
-      <pubDate>Fri, 19 Jun 2026 15:31:03 +0800</pubDate>
-      <guid isPermaLink="false">12d6cfa92a674258</guid>
-      <category>行业轮动</category>
-    </item>
-    <item>
-      <title>[★★★★🔴] 现货黄金日内跌幅达2%，现货白银跌近3.5%</title>
-      <link>https://wallstreetcn.com/livenews/3121988</link>
-      <description><p><strong>摘要</strong>：贵金属价格大幅下跌，黄金跌2%，白银跌近3.5%。</p><p><strong>情绪</strong>：🔴 -0.8</p><p><strong>关联商品</strong>：GC=F, SI=F</p><p><strong>关联A股</strong>：黄金板块, 白银板块</p><p><strong>分类</strong>：资金面</p><p><strong>可信度</strong>：★★★★★ | 来源: 华尔街见闻(a_stock) | 2026-06-20 02:41</p></description>
-      <pubDate>Fri, 19 Jun 2026 05:06:42 +0800</pubDate>
-      <guid isPermaLink="false">98a37cea29e0f3fd</guid>
-      <category>资金面</category>
-    </item>
-    <item>
-      <title>[★★🟢] 2026端午档首日电影票房破亿 上映数量创近十年同期新高</title>
-      <link>https://wallstreetcn.com/livenews/3121992</link>
-      <description><p><strong>摘要</strong>：端午档首日票房破亿，近20部影片上映，创同期新高，显示消费复苏。</p><p><strong>情绪</strong>：🟢 0.4</p><p><strong>关联商品</strong>：无</p><p><strong>关联A股</strong>：影视, 传媒</p><p><strong>分类</strong>：行业轮动</p><p><strong>可信度</strong>：★★★★★ | 来源: 华尔街见闻(a_stock) | 2026-06-20 02:41</p></description>
-      <pubDate>Fri, 19 Jun 2026 05:28:39 +0800</pubDate>
-      <guid isPermaLink="false">b9e5f0d155d6932b</guid>
-      <category>行业轮动</category>
-    </item>
-    <item>
-      <title>[★★★🟢] 单日37只！基金发行刷新历史纪录</title>
-      <link>https://wallstreetcn.com/livenews/3122033</link>
-      <description><p><strong>摘要</strong>：6月16日37只基金成立创历史新高，权益基金集中发行，显示资金入市热情。</p><p><strong>情绪</strong>：🟢 0.6</p><p><strong>关联商品</strong>：无</p><p><strong>关联A股</strong>：A股</p><p><strong>分类</strong>：资金面</p><p><strong>可信度</strong>：★★★★★ | 来源: 华尔街见闻(a_stock) | 2026-06-20 02:41</p></description>
-      <pubDate>Fri, 19 Jun 2026 08:05:02 +0800</pubDate>
-      <guid isPermaLink="false">28c7721f96fd8e5b</guid>
-      <category>资金面</category>
-    </item>
-    <item>
-      <title>[★★🟡] 中方点名以色列：停止违反停火行为</title>
-      <link>https://wallstreetcn.com/livenews/3122034</link>
-      <description><p><strong>摘要</strong>：中国呼吁以色列遵守停火协议，停止军事行动，关注中东局势。</p><p><strong>情绪</strong>：🟡 -0.2</p><p><strong>关联商品</strong>：CL=F</p><p><strong>关联A股</strong>：无</p><p><strong>分类</strong>：地缘政治</p><p><strong>可信度</strong>：★★★★★ | 来源: 华尔街见闻(a_stock) | 2026-06-20 02:41</p></description>
-      <pubDate>Fri, 19 Jun 2026 08:08:37 +0800</pubDate>
-      <guid isPermaLink="false">d4304166b27adfd8</guid>
-      <category>地缘政治</category>
-    </item>
-    <item>
-      <title>[★★🟡] 潍坊：扩大实施2026年消费品以旧换新品类补贴活动</title>
-      <link>https://wallstreetcn.com/livenews/3122038</link>
-      <description><p><strong>摘要</strong>：潍坊对多类家电产品给予15%补贴，单件最高1500元，刺激消费。</p><p><strong>情绪</strong>：🟡 0.3</p><p><strong>关联商品</strong>：无</p><p><strong>关联A股</strong>：家电, 消费</p><p><strong>分类</strong>：政策变动</p><p><strong>可信度</strong>：★★★★★ | 来源: 华尔街见闻(a_stock) | 2026-06-20 02:41</p></description>
-      <pubDate>Fri, 19 Jun 2026 08:29:22 +0800</pubDate>
-      <guid isPermaLink="false">50886670f901abf9</guid>
-      <category>政策变动</category>
-    </item>
-    <item>
-      <title>[★★★🟢] 广东：实施互联网企业梯度培育计划，争取打造万亿级世界一流互联网企业</title>
-      <link>https://wallstreetcn.com/livenews/3122074</link>
-      <description><p><strong>摘要</strong>：广东发布服务业扩能方案，支持互联网、AI、工业互联网发展，培育万亿级企业。</p><p><strong>情绪</strong>：🟢 0.5</p><p><strong>关联商品</strong>：无</p><p><strong>关联A股</strong>：互联网, AI, 工业互联网</p><p><strong>分类</strong>：政策变动</p><p><strong>可信度</strong>：★★★★★ | 来源: 华尔街见闻(a_stock) | 2026-06-20 02:41</p></description>
-      <pubDate>Fri, 19 Jun 2026 10:33:15 +0800</pubDate>
-      <guid isPermaLink="false">ee9222a993e3ccd4</guid>
-      <category>政策变动</category>
-    </item>
-    <item>
-      <title>[★★🟡] Momenta拟在香港IPO筹资10亿美元</title>
-      <link>https://wallstreetcn.com/livenews/3122077</link>
-      <description><p><strong>摘要</strong>：自动驾驶公司Momenta计划港股上市，估值90亿美元</p><p><strong>情绪</strong>：🟡 0.2</p><p><strong>关联商品</strong>：无</p><p><strong>关联A股</strong>：自动驾驶概念</p><p><strong>分类</strong>：资金面</p><p><strong>可信度</strong>：★★ | 来源: 华尔街见闻(a_stock) | 2026-06-20 02:41</p></description>
-      <pubDate>Fri, 19 Jun 2026 10:49:29 +0800</pubDate>
-      <guid isPermaLink="false">ac18096c7783192d</guid>
-      <category>资金面</category>
-    </item>
-    <item>
-      <title>[★★🟡] 全球科技升温，公募加速布局韩国赛道</title>
-      <link>https://wallstreetcn.com/livenews/3122110</link>
-      <description><p><strong>摘要</strong>：基金公司推出韩国主题ETF，关注AI产业机会，但提示炒作风险</p><p><strong>情绪</strong>：🟡 0.3</p><p><strong>关联商品</strong>：无</p><p><strong>关联A股</strong>：AI概念, 半导体</p><p><strong>分类</strong>：行业轮动</p><p><strong>可信度</strong>：★★★ | 来源: 华尔街见闻(a_stock) | 2026-06-20 02:41</p></description>
-      <pubDate>Fri, 19 Jun 2026 13:17:52 +0800</pubDate>
-      <guid isPermaLink="false">da9c2abb0fd1cc8b</guid>
-      <category>行业轮动</category>
-    </item>
-    <item>
-      <title>[★★★★🔴] 交易员提高对美联储加息押注</title>
-      <link>https://wallstreetcn.com/livenews/3122119</link>
-      <description><p><strong>摘要</strong>：市场充分消化9月加息25基点预期，利空风险资产</p><p><strong>情绪</strong>：🔴 -0.6</p><p><strong>关联商品</strong>：GC=F, CL=F</p><p><strong>关联A股</strong>：无</p><p><strong>分类</strong>：政策变动</p><p><strong>可信度</strong>：★★★★ | 来源: 华尔街见闻(a_stock) | 2026-06-20 02:41</p></description>
-      <pubDate>Fri, 19 Jun 2026 13:50:40 +0800</pubDate>
-      <guid isPermaLink="false">2e95d035a7c21214</guid>
-      <category>政策变动</category>
-    </item>
-    <item>
-      <title>[★★🟢] 布伦特原油日内涨幅达1.0%</title>
-      <link>https://wallstreetcn.com/livenews/3122153</link>
-      <description><p><strong>摘要</strong>：布伦特原油价格上涨1.0%至80.34美元/桶</p><p><strong>情绪</strong>：🟢 0.5</p><p><strong>关联商品</strong>：CL=F</p><p><strong>关联A股</strong>：无</p><p><strong>分类</strong>：无</p><p><strong>可信度</strong>：★★★★★ | 来源: 华尔街见闻(global) | 2026-06-20 02:41</p></description>
-      <pubDate>Fri, 19 Jun 2026 16:20:11 +0800</pubDate>
-      <guid isPermaLink="false">6d0c12775993932e</guid>
-      <category></category>
-    </item>
-    <item>
-      <title>[★★★🟡] 加纳考虑将Gold Fields最大金矿移交本国企业</title>
-      <link>https://wallstreetcn.com/livenews/3122155</link>
-      <description><p><strong>摘要</strong>：加纳拟在2027年将金田公司Tarkwa金矿控制权移交本国企业，或影响黄金供应</p><p><strong>情绪</strong>：🟡 -0.3</p><p><strong>关联商品</strong>：GC=F</p><p><strong>关联A股</strong>：无</p><p><strong>分类</strong>：地缘政治</p><p><strong>可信度</strong>：★★★ | 来源: 华尔街见闻(global) | 2026-06-20 02:41</p></description>
-      <pubDate>Fri, 19 Jun 2026 16:27:58 +0800</pubDate>
-      <guid isPermaLink="false">d94917c46edc85b2</guid>
-      <category>地缘政治</category>
-    </item>
-    <item>
-      <title>[★★★🟡] 英国政府中长期融资成本涨超8个基点</title>
-      <link>https://wallstreetcn.com/livenews/3122157</link>
-      <description><p><strong>摘要</strong>：英国国债收益率上涨，投资者对政治局势担忧重燃。</p><p><strong>情绪</strong>：🟡 -0.3</p><p><strong>关联商品</strong>：无</p><p><strong>关联A股</strong>：无</p><p><strong>分类</strong>：地缘政治</p><p><strong>可信度</strong>：★★★★★ | 来源: 华尔街见闻(global) | 2026-06-20 02:41</p></description>
-      <pubDate>Fri, 19 Jun 2026 16:39:11 +0800</pubDate>
-      <guid isPermaLink="false">3783c53503a3b6aa</guid>
-      <category>地缘政治</category>
-    </item>
-    <item>
-      <title>[★★★🔴] 布伦特8月原油期货收涨0.90%</title>
-      <link>https://wallstreetcn.com/livenews/3122166</link>
-      <description><p><strong>摘要</strong>：布伦特原油小幅收涨，但本周累计下跌7.74%，趋势偏空。</p><p><strong>情绪</strong>：🔴 -0.4</p><p><strong>关联商品</strong>：CL=F</p><p><strong>关联A股</strong>：无</p><p><strong>分类</strong>：库存变化</p><p><strong>可信度</strong>：★★★★★ | 来源: 华尔街见闻(global) | 2026-06-20 02:41</p></description>
-      <pubDate>Fri, 19 Jun 2026 17:18:12 +0800</pubDate>
-      <guid isPermaLink="false">6e9804e80dc57899</guid>
-      <category>库存变化</category>
-    </item>
-    <item>
-      <title>[★★🟡] 美联储：美国上周银行存款增加</title>
-      <link>https://wallstreetcn.com/livenews/3122180</link>
-      <description><p><strong>摘要</strong>：美国银行存款增加590亿美元，显示资金面宽松。</p><p><strong>情绪</strong>：🟡 0.1</p><p><strong>关联商品</strong>：无</p><p><strong>关联A股</strong>：无</p><p><strong>分类</strong>：资金面</p><p><strong>可信度</strong>：★★★★★ | 来源: 华尔街见闻(global) | 2026-06-20 02:41</p></description>
-      <pubDate>Fri, 19 Jun 2026 20:19:19 +0800</pubDate>
-      <guid isPermaLink="false">5a7636413aaa3ab0</guid>
-      <category>资金面</category>
-    </item>
-    <item>
-      <title>[★★★🟡] 伊拉克预计南部油田产量将重新超过300万桶/日</title>
+      <title>[★★★🔴] 伊拉克预计南部油田产量将恢复至300万桶/日以上</title>
       <link>https://wallstreetcn.com/livenews/3122192</link>
-      <description><p><strong>摘要</strong>：伊拉克南部油田产量预计未来1-2个月内恢复至300万桶/日以上，增加供给。</p><p><strong>情绪</strong>：🟡 -0.3</p><p><strong>关联商品</strong>：CL=F</p><p><strong>关联A股</strong>：无</p><p><strong>分类</strong>：供应中断</p><p><strong>可信度</strong>：★★★★ | 来源: 华尔街见闻(global) | 2026-06-20 02:41</p></description>
+      <description><p><strong>摘要</strong>：伊拉克南部油田产量预计增加，可能影响原油供应。</p><p><strong>情绪</strong>：🔴 -0.4</p><p><strong>关联商品</strong>：CL=F</p><p><strong>关联A股</strong>：无</p><p><strong>分类</strong>：供应中断</p><p><strong>可信度</strong>：★★★ | 来源: 华尔街见闻(forex) | 2026-06-20 15:04</p></description>
       <pubDate>Fri, 19 Jun 2026 21:28:08 +0800</pubDate>
       <guid isPermaLink="false">d75ff753c29e729d</guid>
       <category>供应中断</category>
     </item>
     <item>
-      <title>[★★🟡] 普京：俄方和东盟致力于构建多极世界秩序</title>
-      <link>https://wallstreetcn.com/livenews/3122197</link>
-      <description><p><strong>摘要</strong>：俄罗斯与东盟加强合作，推动多极世界秩序，涉及能源、粮食等领域。</p><p><strong>情绪</strong>：🟡 0.2</p><p><strong>关联商品</strong>：无</p><p><strong>关联A股</strong>：无</p><p><strong>分类</strong>：地缘政治</p><p><strong>可信度</strong>：★★★★★ | 来源: 华尔街见闻(global) | 2026-06-20 02:41</p></description>
-      <pubDate>Fri, 19 Jun 2026 22:54:53 +0800</pubDate>
-      <guid isPermaLink="false">82c6e0c256364436</guid>
-      <category>地缘政治</category>
+      <title>[★★★🟡] 布伦特8月原油期货收涨0.90%，本周累跌7.74%</title>
+      <link>https://wallstreetcn.com/livenews/3122166</link>
+      <description><p><strong>摘要</strong>：原油期货小幅反弹，但本周累计跌幅较大。</p><p><strong>情绪</strong>：🟡 -0.3</p><p><strong>关联商品</strong>：CL=F</p><p><strong>关联A股</strong>：石油板块</p><p><strong>分类</strong>：价格波动</p><p><strong>可信度</strong>：★★★★★ | 来源: 华尔街见闻(a_stock) | 2026-06-20 15:04</p></description>
+      <pubDate>Fri, 19 Jun 2026 17:18:12 +0800</pubDate>
+      <guid isPermaLink="false">6e9804e80dc57899</guid>
+      <category>价格波动</category>
     </item>
     <item>
-      <title>[★★★★🔴] 美联储鹰派转向，美国股债双杀，黄金下挫</title>
-      <link>https://wallstreetcn.com/livenews/3121302</link>
-      <description><p><strong>摘要</strong>：美联储鹰派信号引发市场抛售，黄金下跌，原油库存下降支撑油价。</p><p><strong>情绪</strong>：🔴 -0.4</p><p><strong>关联商品</strong>：GC=F, CL=F</p><p><strong>关联A股</strong>：无</p><p><strong>分类</strong>：政策变动, 地缘政治, 库存变化</p><p><strong>可信度</strong>：★★★★★ | 来源: 华尔街见闻(commodity) | 2026-06-20 02:41</p></description>
-      <pubDate>Wed, 17 Jun 2026 23:30:23 +0800</pubDate>
-      <guid isPermaLink="false">9d6154bbbaaab7a4</guid>
-      <category>政策变动,地缘政治,库存变化</category>
+      <title>[★★★★🔴] 金饰克价年内大跌近450元</title>
+      <link>https://wallstreetcn.com/livenews/3122208</link>
+      <description><p><strong>摘要</strong>：国际金价下跌，国内金饰价格大幅回落。</p><p><strong>情绪</strong>：🔴 -0.6</p><p><strong>关联商品</strong>：GC=F</p><p><strong>关联A股</strong>：黄金板块</p><p><strong>分类</strong>：价格波动</p><p><strong>可信度</strong>：★★★★★ | 来源: 华尔街见闻(a_stock) | 2026-06-20 15:04</p></description>
+      <pubDate>Sat, 20 Jun 2026 02:45:46 +0800</pubDate>
+      <guid isPermaLink="false">633554f921d05863</guid>
+      <category>价格波动</category>
+    </item>
+    <item>
+      <title>[★★★🟢] 多家外资行：全球资本对中国市场的信心攀升</title>
+      <link>https://wallstreetcn.com/livenews/3122213</link>
+      <description><p><strong>摘要</strong>：外资机构积极布局中国资产，显示对中国市场信心增强。</p><p><strong>情绪</strong>：🟢 0.8</p><p><strong>关联商品</strong>：无</p><p><strong>关联A股</strong>：A股</p><p><strong>分类</strong>：资金面</p><p><strong>可信度</strong>：★★★★ | 来源: 华尔街见闻(a_stock) | 2026-06-20 15:04</p></description>
+      <pubDate>Sat, 20 Jun 2026 03:24:06 +0800</pubDate>
+      <guid isPermaLink="false">d5204b817dcaf97f</guid>
+      <category>资金面</category>
+    </item>
+    <item>
+      <title>[★★🟡] 京东方A：未来公司资本开支金额将逐渐降低</title>
+      <link>https://wallstreetcn.com/livenews/3122229</link>
+      <description><p><strong>摘要</strong>：京东方A称折旧2025年后下降，资本开支将降低，暂无增发计划。</p><p><strong>情绪</strong>：🟡 0.3</p><p><strong>关联商品</strong>：无</p><p><strong>关联A股</strong>：京东方A</p><p><strong>分类</strong>：政策变动</p><p><strong>可信度</strong>：★★★★★ | 来源: 华尔街见闻(global) | 2026-06-20 15:04</p></description>
+      <pubDate>Sat, 20 Jun 2026 07:56:11 +0800</pubDate>
+      <guid isPermaLink="false">6a48cb01bc2605a6</guid>
+      <category>政策变动</category>
+    </item>
+    <item>
+      <title>[★★🟡] 部分主观私募规模显著缩水</title>
+      <link>https://wallstreetcn.com/livenews/3122232</link>
+      <description><p><strong>摘要</strong>：多家百亿级主观私募规模降至50亿元以下，因净值回撤和规模收缩。</p><p><strong>情绪</strong>：🟡 -0.2</p><p><strong>关联商品</strong>：无</p><p><strong>关联A股</strong>：无</p><p><strong>分类</strong>：资金面</p><p><strong>可信度</strong>：★★★★★ | 来源: 华尔街见闻(global) | 2026-06-20 15:04</p></description>
+      <pubDate>Sat, 20 Jun 2026 08:21:53 +0800</pubDate>
+      <guid isPermaLink="false">5e59e3b28b202322</guid>
+      <category>资金面</category>
+    </item>
+    <item>
+      <title>[★★★★🔴] 美伊达成协议后，伊拉克要求油田开始提高产量</title>
+      <link>https://wallstreetcn.com/livenews/3122251</link>
+      <description><p><strong>摘要</strong>：美伊协议后，伊拉克要求五大油田增产至超300万桶/日，恢复战前水平。</p><p><strong>情绪</strong>：🔴 -0.4</p><p><strong>关联商品</strong>：CL=F</p><p><strong>关联A股</strong>：无</p><p><strong>分类</strong>：政策变动</p><p><strong>可信度</strong>：★★★★★ | 来源: 华尔街见闻(global) | 2026-06-20 15:04</p></description>
+      <pubDate>Sat, 20 Jun 2026 12:08:32 +0800</pubDate>
+      <guid isPermaLink="false">b42c5d21ecea95ac</guid>
+      <category>政策变动</category>
+    </item>
+    <item>
+      <title>[★★★🟡] 伊拉克SOMO：需更多船只进入霍尔木兹海峡才能增产</title>
+      <link>https://wallstreetcn.com/livenews/3122252</link>
+      <description><p><strong>摘要</strong>：伊拉克南部码头装载原油，但需更多船只通过霍尔木兹海峡才能增产。</p><p><strong>情绪</strong>：🟡 0.2</p><p><strong>关联商品</strong>：CL=F</p><p><strong>关联A股</strong>：无</p><p><strong>分类</strong>：供应中断</p><p><strong>可信度</strong>：★★★★ | 来源: 华尔街见闻(global) | 2026-06-20 15:04</p></description>
+      <pubDate>Sat, 20 Jun 2026 12:09:15 +0800</pubDate>
+      <guid isPermaLink="false">0af3027713a75fb8</guid>
+      <category>供应中断</category>
+    </item>
+    <item>
+      <title>[★★★★🟡] 乌克兰打击俄罗斯腹地2000公里处的炼油厂</title>
+      <link>https://wallstreetcn.com/livenews/3122266</link>
+      <description><p><strong>摘要</strong>：乌克兰袭击俄罗斯秋明炼油厂，日加工15.1万桶，影响原油供应。</p><p><strong>情绪</strong>：🟡 -0.3</p><p><strong>关联商品</strong>：CL=F</p><p><strong>关联A股</strong>：无</p><p><strong>分类</strong>：地缘政治</p><p><strong>可信度</strong>：★★★★ | 来源: 华尔街见闻(global) | 2026-06-20 15:04</p></description>
+      <pubDate>Sat, 20 Jun 2026 13:35:10 +0800</pubDate>
+      <guid isPermaLink="false">1a09c9afcc86dbf9</guid>
+      <category>地缘政治</category>
     </item>
     <item>
       <title>[★★🟡] 中信证券：维持美联储年内利率不变判断</title>
       <link>https://wallstreetcn.com/livenews/3121321</link>
-      <description><p><strong>摘要</strong>：中信证券认为美联储年内不会加息，但市场不确定性上升，短期利空风险资产。</p><p><strong>情绪</strong>：🟡 0.1</p><p><strong>关联商品</strong>：GC=F</p><p><strong>关联A股</strong>：无</p><p><strong>分类</strong>：政策变动</p><p><strong>可信度</strong>：★★★ | 来源: 华尔街见闻(commodity) | 2026-06-20 02:41</p></description>
+      <description><p><strong>摘要</strong>：中信认为沃什不会年内加息，地缘风险缓解，维持利率不变。</p><p><strong>情绪</strong>：🟡 0.1</p><p><strong>关联商品</strong>：GC=F, CL=F</p><p><strong>关联A股</strong>：无</p><p><strong>分类</strong>：政策变动</p><p><strong>可信度</strong>：★★★ | 来源: 华尔街见闻(commodity) | 2026-06-20 15:04</p></description>
       <pubDate>Thu, 18 Jun 2026 00:19:41 +0800</pubDate>
       <guid isPermaLink="false">1e1e9f745810791b</guid>
       <category>政策变动</category>
@@ -170,7 +90,7 @@
     <item>
       <title>[★★★🟡] 中金：维持美联储年内不降息判断，提示明年加息风险</title>
       <link>https://wallstreetcn.com/livenews/3121324</link>
-      <description><p><strong>摘要</strong>：中金认为美联储年内利率不变，但点阵图转鹰，加息风险上升，利空黄金。</p><p><strong>情绪</strong>：🟡 -0.3</p><p><strong>关联商品</strong>：GC=F</p><p><strong>关联A股</strong>：无</p><p><strong>分类</strong>：政策变动</p><p><strong>可信度</strong>：★★★ | 来源: 华尔街见闻(commodity) | 2026-06-20 02:41</p></description>
+      <description><p><strong>摘要</strong>：中金认为美联储年内不降息，点阵图转鹰，缩表倾向明确。</p><p><strong>情绪</strong>：🟡 -0.3</p><p><strong>关联商品</strong>：GC=F, CL=F</p><p><strong>关联A股</strong>：无</p><p><strong>分类</strong>：政策变动</p><p><strong>可信度</strong>：★★★ | 来源: 华尔街见闻(commodity) | 2026-06-20 15:04</p></description>
       <pubDate>Thu, 18 Jun 2026 00:28:18 +0800</pubDate>
       <guid isPermaLink="false">7e58b3a8ead444c5</guid>
       <category>政策变动</category>
@@ -178,74 +98,154 @@
     <item>
       <title>[★★★🟡] 华泰证券：9月前美联储维持利率不变，年底加息概率近50%</title>
       <link>https://wallstreetcn.com/livenews/3121326</link>
-      <description><p><strong>摘要</strong>：华泰证券预计美联储9月前按兵不动，年底加息概率上升，利空大宗商品。</p><p><strong>情绪</strong>：🟡 -0.2</p><p><strong>关联商品</strong>：GC=F, CL=F</p><p><strong>关联A股</strong>：无</p><p><strong>分类</strong>：政策变动</p><p><strong>可信度</strong>：★★★ | 来源: 华尔街见闻(commodity) | 2026-06-20 02:41</p></description>
+      <description><p><strong>摘要</strong>：华泰预计美联储9月前按兵不动，年底加息概率上升，美元或走强。</p><p><strong>情绪</strong>：🟡 -0.2</p><p><strong>关联商品</strong>：GC=F, CL=F</p><p><strong>关联A股</strong>：无</p><p><strong>分类</strong>：政策变动</p><p><strong>可信度</strong>：★★★ | 来源: 华尔街见闻(commodity) | 2026-06-20 15:04</p></description>
       <pubDate>Thu, 18 Jun 2026 00:47:10 +0800</pubDate>
       <guid isPermaLink="false">d6e39f4730bd0aaf</guid>
       <category>政策变动</category>
     </item>
     <item>
-      <title>[★★★🟡] 中国5月氧化铝出口同比增36.4%，铝矿砂进口增31.9%</title>
+      <title>[★★★🟡] 中国5月氧化铝出口同比增36.4%，铝矿进口增31.9%</title>
       <link>https://wallstreetcn.com/livenews/3121386</link>
-      <description><p><strong>摘要</strong>：中国5月氧化铝出口大增，铝矿砂进口增加，显示铝土矿需求旺盛，铝供应偏紧。</p><p><strong>情绪</strong>：🟡 0.3</p><p><strong>关联商品</strong>：AH=F</p><p><strong>关联A股</strong>：铝业板块</p><p><strong>分类</strong>：库存变化</p><p><strong>可信度</strong>：★★★★★ | 来源: 华尔街见闻(commodity) | 2026-06-20 02:41</p></description>
+      <description><p><strong>摘要</strong>：中国5月氧化铝出口大增，铝矿进口增加，铝材进口下降，反映铝产业链外强内弱。</p><p><strong>情绪</strong>：🟡 0.3</p><p><strong>关联商品</strong>：AH=F</p><p><strong>关联A股</strong>：铝板块</p><p><strong>分类</strong>：库存变化</p><p><strong>可信度</strong>：★★★★★ | 来源: 华尔街见闻(commodity) | 2026-06-20 15:04</p></description>
       <pubDate>Thu, 18 Jun 2026 02:46:14 +0800</pubDate>
       <guid isPermaLink="false">565414c56f833dcf</guid>
       <category>库存变化</category>
     </item>
     <item>
-      <title>[★★🟡] 提醒：日内请重点关注（以下均为北京时间）</title>
-      <link>https://wallstreetcn.com/livenews/3121421</link>
-      <description><p><strong>摘要</strong>：今日多项经济数据和央行决议，关注市场波动。</p><p><strong>情绪</strong>：🟡 0</p><p><strong>关联商品</strong>：无</p><p><strong>关联A股</strong>：无</p><p><strong>分类</strong>：政策变动</p><p><strong>可信度</strong>：★★★★★ | 来源: 华尔街见闻(commodity) | 2026-06-20 02:41</p></description>
-      <pubDate>Thu, 18 Jun 2026 04:35:38 +0800</pubDate>
-      <guid isPermaLink="false">21ed87f9f0c5fbef</guid>
-      <category>政策变动</category>
-    </item>
-    <item>
-      <title>[★★★★🔴] 广期所碳酸锂主力合约下跌5%，报163000元/吨。</title>
+      <title>[★★★★🔴] 碳酸锂主力合约下跌5%</title>
       <link>https://wallstreetcn.com/livenews/3121461</link>
-      <description><p><strong>摘要</strong>：碳酸锂期货大跌5%，价格承压。</p><p><strong>情绪</strong>：🔴 -0.8</p><p><strong>关联商品</strong>：AH=F</p><p><strong>关联A股</strong>：无</p><p><strong>分类</strong>：资金面</p><p><strong>可信度</strong>：★★★★★ | 来源: 华尔街见闻(commodity) | 2026-06-20 02:41</p></description>
+      <description><p><strong>摘要</strong>：广期所碳酸锂期货大跌5%至163000元/吨，空头压力显著。</p><p><strong>情绪</strong>：🔴 -0.8</p><p><strong>关联商品</strong>：AH=F</p><p><strong>关联A股</strong>：碳酸锂板块</p><p><strong>分类</strong>：资金面</p><p><strong>可信度</strong>：★★★★★ | 来源: 华尔街见闻(commodity) | 2026-06-20 15:04</p></description>
       <pubDate>Thu, 18 Jun 2026 06:17:29 +0800</pubDate>
       <guid isPermaLink="false">e5aa352b29a7451b</guid>
       <category>资金面</category>
     </item>
     <item>
-      <title>[★★🟢] 陈果市场分化点评： 我们比昨天更看好A股的非硅基优质资产</title>
+      <title>[★★🟢] 陈果看好A股非硅基优质资产</title>
       <link>https://wallstreetcn.com/livenews/3121511</link>
-      <description><p><strong>摘要</strong>：策略师看好非硅基优质资产，因红利资产抛售导致打折。</p><p><strong>情绪</strong>：🟢 0.6</p><p><strong>关联商品</strong>：无</p><p><strong>关联A股</strong>：非硅基优质资产</p><p><strong>分类</strong>：行业轮动</p><p><strong>可信度</strong>：★★ | 来源: 华尔街见闻(commodity) | 2026-06-20 02:41</p></description>
+      <description><p><strong>摘要</strong>：策略师认为红利资产抛售导致非硅基优质资产打折，更看好其前景。</p><p><strong>情绪</strong>：🟢 0.6</p><p><strong>关联商品</strong>：无</p><p><strong>关联A股</strong>：非硅基优质资产</p><p><strong>分类</strong>：行业轮动</p><p><strong>可信度</strong>：★★ | 来源: 华尔街见闻(commodity) | 2026-06-20 15:04</p></description>
       <pubDate>Thu, 18 Jun 2026 07:34:47 +0800</pubDate>
       <guid isPermaLink="false">ad7104403a83088e</guid>
       <category>行业轮动</category>
     </item>
     <item>
-      <title>[★★★🟢] 伦敦金属交易所(LME)：铜库存减少1800吨，铝库存减少1000吨，铅库存减少325吨，锌库存减少1475吨，镍库存减少96吨，锡库存减少5吨。</title>
+      <title>[★★★🟢] LME基本金属库存普遍减少</title>
       <link>https://wallstreetcn.com/livenews/3121556</link>
-      <description><p><strong>摘要</strong>：LME多种金属库存减少，可能支撑价格。</p><p><strong>情绪</strong>：🟢 0.5</p><p><strong>关联商品</strong>：HG=F, AH=F, ZM=F</p><p><strong>关联A股</strong>：无</p><p><strong>分类</strong>：库存变化</p><p><strong>可信度</strong>：★★★★★ | 来源: 华尔街见闻(commodity) | 2026-06-20 02:41</p></description>
+      <description><p><strong>摘要</strong>：LME铜铝铅锌镍锡库存均下降，显示供应收紧。</p><p><strong>情绪</strong>：🟢 0.5</p><p><strong>关联商品</strong>：HG=F, AH=F, ZM=F</p><p><strong>关联A股</strong>：有色金属</p><p><strong>分类</strong>：库存变化</p><p><strong>可信度</strong>：★★★★★ | 来源: 华尔街见闻(commodity) | 2026-06-20 15:04</p></description>
       <pubDate>Thu, 18 Jun 2026 08:01:01 +0800</pubDate>
       <guid isPermaLink="false">be1374628d915d08</guid>
       <category>库存变化</category>
     </item>
     <item>
-      <title>[★★★🟡] 碳酸锂期货及期权将迎境外交易者，7月3日起正式交易</title>
+      <title>[★★★🟡] 碳酸锂期货及期权将迎境外交易者</title>
       <link>https://wallstreetcn.com/livenews/3121571</link>
-      <description><p><strong>摘要</strong>：广期所引入境外交易者参与碳酸锂期货期权，国际化提升价格影响力。</p><p><strong>情绪</strong>：🟡 0.3</p><p><strong>关联商品</strong>：AH=F</p><p><strong>关联A股</strong>：无</p><p><strong>分类</strong>：政策变动</p><p><strong>可信度</strong>：★★★★★ | 来源: 华尔街见闻(commodity) | 2026-06-20 02:41</p></description>
+      <description><p><strong>摘要</strong>：广期所7月3日起引入境外交易者参与碳酸锂期货及期权交易，增强价格影响力。</p><p><strong>情绪</strong>：🟡 0.3</p><p><strong>关联商品</strong>：AH=F</p><p><strong>关联A股</strong>：碳酸锂板块</p><p><strong>分类</strong>：政策变动</p><p><strong>可信度</strong>：★★★★★ | 来源: 华尔街见闻(commodity) | 2026-06-20 15:04</p></description>
       <pubDate>Thu, 18 Jun 2026 08:45:28 +0800</pubDate>
       <guid isPermaLink="false">a393d85e8ab79f03</guid>
       <category>政策变动</category>
     </item>
     <item>
-      <title>[★★🟡] 枧下窝锂矿用地预审有新进展，离正式审批还有距离</title>
+      <title>[★★🟡] 枧下窝锂矿用地预审有新进展，但离正式审批还有距离</title>
       <link>https://wallstreetcn.com/livenews/3121706</link>
-      <description><p><strong>摘要</strong>：锂矿项目用地预审获批，但距正式审批仍远，短期影响有限。</p><p><strong>情绪</strong>：🟡 0.1</p><p><strong>关联商品</strong>：无</p><p><strong>关联A股</strong>：锂矿板块</p><p><strong>分类</strong>：政策变动</p><p><strong>可信度</strong>：★★★★ | 来源: 华尔街见闻(commodity) | 2026-06-20 02:41</p></description>
+      <description><p><strong>摘要</strong>：江西锂矿项目用地预审获批，但距正式审批尚远，供应增量有限。</p><p><strong>情绪</strong>：🟡 0</p><p><strong>关联商品</strong>：无</p><p><strong>关联A股</strong>：锂矿板块</p><p><strong>分类</strong>：政策变动</p><p><strong>可信度</strong>：★★★★ | 来源: 华尔街见闻(commodity) | 2026-06-20 15:04</p></description>
       <pubDate>Thu, 18 Jun 2026 11:29:59 +0800</pubDate>
       <guid isPermaLink="false">685d2e14bc51d312</guid>
       <category>政策变动</category>
     </item>
     <item>
-      <title>[★★🟡] 美国6月12日当周EIA天然气库存变动730亿立方英尺</title>
+      <title>[★★★🟡] 美国6月12日当周EIA天然气库存变动730亿立方英尺</title>
       <link>https://wallstreetcn.com/livenews/3121778</link>
-      <description><p><strong>摘要</strong>：天然气库存增加730亿立方英尺，数据与上篇一致。</p><p><strong>情绪</strong>：🟡 0.2</p><p><strong>关联商品</strong>：NG=F</p><p><strong>关联A股</strong>：无</p><p><strong>分类</strong>：库存变化</p><p><strong>可信度</strong>：★★★★★ | 来源: 华尔街见闻(commodity) | 2026-06-20 02:41</p></description>
+      <description><p><strong>摘要</strong>：EIA天然气库存增加730亿立方英尺，数据与上篇一致。</p><p><strong>情绪</strong>：🟡 0.3</p><p><strong>关联商品</strong>：NG=F</p><p><strong>关联A股</strong>：无</p><p><strong>分类</strong>：库存变化</p><p><strong>可信度</strong>：★★★★★ | 来源: 华尔街见闻(commodity) | 2026-06-20 15:04</p></description>
       <pubDate>Thu, 18 Jun 2026 14:30:02 +0800</pubDate>
       <guid isPermaLink="false">2a70356ae55ecdec</guid>
       <category>库存变化</category>
+    </item>
+    <item>
+      <title>[★★★🟡] 美国EIA天然气库存增加730亿立方英尺，低于预期</title>
+      <link>https://wallstreetcn.com/livenews/3121779</link>
+      <description><p><strong>摘要</strong>：EIA天然气库存增730亿立方英尺，低于预期780亿，库存增幅放缓。</p><p><strong>情绪</strong>：🟡 0.3</p><p><strong>关联商品</strong>：NG=F</p><p><strong>关联A股</strong>：无</p><p><strong>分类</strong>：库存变化</p><p><strong>可信度</strong>：★★★★★ | 来源: 华尔街见闻(commodity) | 2026-06-20 15:04</p></description>
+      <pubDate>Thu, 18 Jun 2026 14:30:15 +0800</pubDate>
+      <guid isPermaLink="false">1aaec648478a7046</guid>
+      <category>库存变化</category>
+    </item>
+    <item>
+      <title>[★★★🟡] 高盛：沃什鹰派立场将加剧短端美债波动</title>
+      <link>https://wallstreetcn.com/livenews/3121802</link>
+      <description><p><strong>摘要</strong>：高盛认为沃什鹰派讲话使市场预期美联储更早加息，短端美债波动加大。</p><p><strong>情绪</strong>：🟡 -0.2</p><p><strong>关联商品</strong>：GC=F</p><p><strong>关联A股</strong>：无</p><p><strong>分类</strong>：政策变动</p><p><strong>可信度</strong>：★★★ | 来源: 华尔街见闻(commodity) | 2026-06-20 15:04</p></description>
+      <pubDate>Thu, 18 Jun 2026 15:12:25 +0800</pubDate>
+      <guid isPermaLink="false">f19b7115798b6137</guid>
+      <category>政策变动</category>
+    </item>
+    <item>
+      <title>[★★★🟡] LME基本金属收盘涨跌互现，铜铝镍锡下跌</title>
+      <link>https://wallstreetcn.com/livenews/3121833</link>
+      <description><p><strong>摘要</strong>：LME铜铝镍锡收跌，锌铅收涨，铜跌124美元报13690美元/吨。</p><p><strong>情绪</strong>：🟡 -0.3</p><p><strong>关联商品</strong>：HG=F, AH=F</p><p><strong>关联A股</strong>：无</p><p><strong>分类</strong>：库存变化</p><p><strong>可信度</strong>：★★★★★ | 来源: 华尔街见闻(commodity) | 2026-06-20 15:04</p></description>
+      <pubDate>Thu, 18 Jun 2026 16:51:32 +0800</pubDate>
+      <guid isPermaLink="false">71ac877ae76ad6d6</guid>
+      <category>库存变化</category>
+    </item>
+    <item>
+      <title>[★★🟡] 美国6月19日当周石油钻井数 433，前值 433</title>
+      <link>https://wallstreetcn.com/livenews/3121842</link>
+      <description><p><strong>摘要</strong>：石油钻井数持平，供应预期稳定。</p><p><strong>情绪</strong>：🟡 0</p><p><strong>关联商品</strong>：CL=F</p><p><strong>关联A股</strong>：无</p><p><strong>分类</strong>：库存变化</p><p><strong>可信度</strong>：★★★★★ | 来源: 华尔街见闻(commodity) | 2026-06-20 15:04</p></description>
+      <pubDate>Thu, 18 Jun 2026 17:01:41 +0800</pubDate>
+      <guid isPermaLink="false">e2bccf41a710edba</guid>
+      <category>库存变化</category>
+    </item>
+    <item>
+      <title>[★★★🟢] 高盛：上调三季度铝价预期至330美元，之前预计3200美元</title>
+      <link>https://wallstreetcn.com/livenews/3121863</link>
+      <description><p><strong>摘要</strong>：高盛上调铝价预期，但预计2026年供应过剩72万吨。</p><p><strong>情绪</strong>：🟢 0.5</p><p><strong>关联商品</strong>：AH=F</p><p><strong>关联A股</strong>：铝板块</p><p><strong>分类</strong>：政策变动</p><p><strong>可信度</strong>：★★★ | 来源: 华尔街见闻(commodity) | 2026-06-20 15:04</p></description>
+      <pubDate>Thu, 18 Jun 2026 19:21:13 +0800</pubDate>
+      <guid isPermaLink="false">60b40e40ce877935</guid>
+      <category>政策变动</category>
+    </item>
+    <item>
+      <title>[★★★🔴] 周四纽约尾盘，彭博谷物分类指数跌0.92%，CBOT大豆期货跌0.63%</title>
+      <link>https://wallstreetcn.com/livenews/3121872</link>
+      <description><p><strong>摘要</strong>：谷物和大豆期货普遍下跌，豆油跌幅较大。</p><p><strong>情绪</strong>：🔴 -0.6</p><p><strong>关联商品</strong>：ZM=F</p><p><strong>关联A股</strong>：无</p><p><strong>分类</strong>：天气</p><p><strong>可信度</strong>：★★★★★ | 来源: 华尔街见闻(commodity) | 2026-06-20 15:04</p></description>
+      <pubDate>Thu, 18 Jun 2026 19:44:02 +0800</pubDate>
+      <guid isPermaLink="false">d3d1880a44716a16</guid>
+      <category>天气</category>
+    </item>
+    <item>
+      <title>[★★★🟡] 10年期美债收益率在沃什首秀次日回撤超3个基点，两年期实际收益率一度涨穿2%</title>
+      <link>https://wallstreetcn.com/livenews/3121874</link>
+      <description><p><strong>摘要</strong>：美债收益率普遍下跌，两年期TIPS收益率上涨，实际利率上升。</p><p><strong>情绪</strong>：🟡 -0.3</p><p><strong>关联商品</strong>：无</p><p><strong>关联A股</strong>：无</p><p><strong>分类</strong>：政策变动</p><p><strong>可信度</strong>：★★★★ | 来源: 华尔街见闻(commodity) | 2026-06-20 15:04</p></description>
+      <pubDate>Thu, 18 Jun 2026 19:53:05 +0800</pubDate>
+      <guid isPermaLink="false">c4e164cd31dfa832</guid>
+      <category>政策变动</category>
+    </item>
+    <item>
+      <title>[★★🟡] 新兴市场ETF收涨超3.2%，与纳指ETF领跑美股大类资产类ETF</title>
+      <link>https://wallstreetcn.com/livenews/3121889</link>
+      <description><p><strong>摘要</strong>：新兴市场ETF和纳指ETF领涨，黄金ETF收跌，大豆基金跌0.70%。</p><p><strong>情绪</strong>：🟡 0.2</p><p><strong>关联商品</strong>：GC=F, ZM=F</p><p><strong>关联A股</strong>：无</p><p><strong>分类</strong>：行业轮动</p><p><strong>可信度</strong>：★★★★ | 来源: 华尔街见闻(commodity) | 2026-06-20 15:04</p></description>
+      <pubDate>Thu, 18 Jun 2026 20:28:49 +0800</pubDate>
+      <guid isPermaLink="false">6437a1b81e60b659</guid>
+      <category>行业轮动</category>
+    </item>
+    <item>
+      <title>[★★★🔴] 周四纽约尾盘：现货黄金跌1.10%，白银跌3.27%</title>
+      <link>https://wallstreetcn.com/livenews/3121895</link>
+      <description><p><strong>摘要</strong>：贵金属普遍下跌，黄金跌1.1%，白银跌3.27%，铜期货跌1.76%。</p><p><strong>情绪</strong>：🔴 -0.6</p><p><strong>关联商品</strong>：GC=F, HG=F</p><p><strong>关联A股</strong>：贵金属板块</p><p><strong>分类</strong>：资金面</p><p><strong>可信度</strong>：★★★★★ | 来源: 华尔街见闻(commodity) | 2026-06-20 15:04</p></description>
+      <pubDate>Thu, 18 Jun 2026 20:57:26 +0800</pubDate>
+      <guid isPermaLink="false">5ab10cb3bd862b3c</guid>
+      <category>资金面</category>
+    </item>
+    <item>
+      <title>[★★★★🟡] 华尔街见闻早餐：美伊临时协议落地，布油盘中跌近4%后转涨</title>
+      <link>https://wallstreetcn.com/livenews/3121933</link>
+      <description><p><strong>摘要</strong>：美伊临时协议解除海上封锁，布油盘中大跌后转涨；黄金白银大跌；美元指数创新高。</p><p><strong>情绪</strong>：🟡 0.2</p><p><strong>关联商品</strong>：CL=F, GC=F</p><p><strong>关联A股</strong>：石油板块, 贵金属板块</p><p><strong>分类</strong>：地缘政治</p><p><strong>可信度</strong>：★★★★ | 来源: 华尔街见闻(commodity) | 2026-06-20 15:04</p></description>
+      <pubDate>Thu, 18 Jun 2026 23:25:27 +0800</pubDate>
+      <guid isPermaLink="false">985782b35b0982ce</guid>
+      <category>地缘政治</category>
+    </item>
+    <item>
+      <title>[★★★★🔴] 中国商务部：自6月20日起对澳大利亚进口牛肉加征55%关税</title>
+      <link>https://wallstreetcn.com/livenews/3121941</link>
+      <description><p><strong>摘要</strong>：中国对澳大利亚牛肉加征55%关税，因进口量达触发水平，影响牛肉进口成本。</p><p><strong>情绪</strong>：🔴 -0.8</p><p><strong>关联商品</strong>：无</p><p><strong>关联A股</strong>：牛肉板块</p><p><strong>分类</strong>：政策变动</p><p><strong>可信度</strong>：★★★★★ | 来源: 华尔街见闻(commodity) | 2026-06-20 15:04</p></description>
+      <pubDate>Fri, 19 Jun 2026 00:34:14 +0800</pubDate>
+      <guid isPermaLink="false">d1e2fe90fc04a54d</guid>
+      <category>政策变动</category>
     </item>
   </channel>
 </rss>
