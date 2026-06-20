@@ -130,7 +130,7 @@ def predict_single(predictor, ohlcv, code):
         return None
     try:
         last_date = pd.to_datetime(df["date"]).iloc[-1]
-        y_ts = pd.date_range(start=last_date + pd.Timedelta(days=1), periods=PRED_DAYS, freq="B")
+        y_ts = pd.Series(pd.date_range(start=last_date + pd.Timedelta(days=1), periods=PRED_DAYS, freq="B"))
         result = predictor.predict(
             df=df[["open", "high", "low", "close"]],
             x_timestamp=pd.to_datetime(df["date"]),
