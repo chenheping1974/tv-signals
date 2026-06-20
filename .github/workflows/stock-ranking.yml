@@ -1,0 +1,52 @@
+name: A股横截面选股
+
+on:
+  schedule:
+    - cron: '30 8 * * 1-5'   # UTC 08:30 = 北京时间 16:30, 仅交易日
+  workflow_dispatch:
+
+jobs:
+  ranking:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    timeout-minutes: 360
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 缓存模型
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/huggingface
+          key: hf-models-kronos-v1
+
+      - name: 安装依赖
+        run: |
+          pip install --upgrade pip
+          pip install akshare pandas numpy requests
+          pip install torch --index-url https://download.pytorch.org/whl/cpu
+          # Kronos: clone repo + install minimal deps
+          git clone --depth 1 https://github.com/shiyu-coder/Kronos /tmp/kronos_repo
+          pip install -r /tmp/kronos_repo/requirements.txt 2>/dev/null || true
+          pip install transformers accelerate safetensors
+
+      - name: 批量预测
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: |
+          export PYTHONPATH="/tmp/kronos_repo:$PYTHONPATH"
+          python scripts/stock_ranking.py
+
+      - name: 提交结果
+        run: |
+          git config user.name "kronos-bot"
+          git config user.email "bot@tv-signals.local"
+          git add data/ranking.json
+          git diff --staged --quiet || (git commit -m "自动更新A股选股榜单 [$(date +%Y-%m-%d)]" && git push)
