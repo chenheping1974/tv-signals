@@ -30,7 +30,7 @@ jobs:
       - name: 安装依赖
         run: |
           pip install --upgrade pip
-          pip install yfinance pandas numpy requests
+          pip install yfinance pandas numpy requests pyarrow
           pip install torch --index-url https://download.pytorch.org/whl/cpu
           # Kronos: clone repo + install minimal deps
           git clone --depth 1 https://github.com/shiyu-coder/Kronos /tmp/kronos_repo
@@ -46,11 +46,11 @@ jobs:
 
       - name: 提交结果
         run: |
-          if [ -f data/ranking.json ]; then
-            git config user.name "kronos-bot"
-            git config user.email "bot@tv-signals.local"
-            git add data/ranking.json
-            git diff --staged --quiet || (git commit -m "自动更新A股选股榜单 [$(date +%Y-%m-%d)]" && git push)
+          git config user.name "kronos-bot"
+          git config user.email "bot@tv-signals.local"
+          git add data/ranking.json data/ohlcv.parquet 2>/dev/null || true
+          if [ -f data/ranking.json ] || [ -f data/ohlcv.parquet ]; then
+            git diff --staged --quiet || (git commit -m "更新选股+OHLCV [$(date +%Y-%m-%d)]" && git push)
           else
-            echo "⚠️ ranking.json 未生成，跳过提交"
+            echo "⚠️ 无文件可提交"
           fi
