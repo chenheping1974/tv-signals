@@ -24,57 +24,95 @@ BATCH_SIZE = 10    # 每10只存一次进度
 MAX_STOCKS = 1000  # 目标粗筛数量
 PRED_DAYS = 30     # 预测未来天数
 
-# ── 粗筛函数 ────────────────────────────────────────
-def fetch_all_stocks():
-    """akshare拉全市场股票，粗筛到~1000只"""
-    print("📊 拉取全市场股票数据...")
-    try:
-        import akshare as ak
-        df = ak.stock_zh_a_spot_em()
-    except Exception as e:
-        print(f"❌ akshare 拉取失败: {e}")
-        return pd.DataFrame()
+# ── 股票池（预生成的沪深主板+创业板清单）────────────────
+# 避免依赖 akshare（GitHub Actions US 机房连不上）
+# 使用 yfinance 拉单只数据，再用基本面 API 补充筛选
+STOCK_POOL_URL = "https://raw.githubusercontent.com/chenheping1974/tv-signals/main/data/stock_pool.json"
 
-    print(f"   全市场: {len(df)} 只")
-    df["代码"] = df["代码"].astype(str)
+
+def build_stock_pool():
+    """如果本地没有 stock_pool.json，从远程读取或生成默认池"""
+    pool_file = DATA_DIR / "stock_pool.json"
+    if pool_file.exists():
+        return json.loads(pool_file.read_text())
+
+    print("📥 下载预生成股票池...")
+    try:
+        r = requests.get(STOCK_POOL_URL, timeout=30)
+        stocks = r.json()
+        pool_file.write_text(json.dumps(stocks, ensure_ascii=False))
+        return stocks
+    except:
+        pass
+
+    # fallback: 使用内置清单（沪深300 + 中证500 核心成分）
+    print("⚠️ 无法下载，使用内置核心池")
+    return FALLBACK_POOL
+
+# 内置备选：沪深300+中证500去重（代码+名称）
+FALLBACK_POOL = [
+    {"code": "600519", "name": "贵州茅台"}, {"code": "000858", "name": "五粮液"},
+    {"code": "601318", "name": "中国平安"}, {"code": "600036", "name": "招商银行"},
+    {"code": "000333", "name": "美的集团"},   {"code": "002415", "name": "海康威视"},
+    {"code": "600276", "name": "恒瑞医药"},   {"code": "000651", "name": "格力电器"},
+    {"code": "601012", "name": "隆基绿能"},   {"code": "002714", "name": "牧原股份"},
+    {"code": "600887", "name": "伊利股份"},   {"code": "000002", "name": "万科A"},
+    {"code": "601899", "name": "紫金矿业"},   {"code": "600547", "name": "山东黄金"},
+    {"code": "600362", "name": "江西铜业"},   {"code": "000807", "name": "云铝股份"},
+    {"code": "601600", "name": "中国铝业"},   {"code": "601857", "name": "中国石油"},
+    {"code": "600028", "name": "中国石化"},   {"code": "603993", "name": "洛阳钼业"},
+    {"code": "600111", "name": "北方稀土"},   {"code": "002460", "name": "赣锋锂业"},
+    {"code": "000876", "name": "新希望"},     {"code": "002311", "name": "海大集团"},
+    {"code": "601088", "name": "中国神华"},   {"code": "600585", "name": "海螺水泥"},
+    {"code": "000725", "name": "京东方A"},    {"code": "002475", "name": "立讯精密"},
+    {"code": "300750", "name": "宁德时代"},   {"code": "300059", "name": "东方财富"},
+    {"code": "300124", "name": "汇川技术"},   {"code": "300274", "name": "阳光电源"},
+    # ... 后续可扩展
+]
+
+
+def fetch_all_stocks():
+    """构建股票池，用 yfinance 粗筛到 ~200 只（减少 Kronos 预测量）"""
+    pool = build_stock_pool()
+    print(f"📊 股票池: {len(pool)} 只")
 
     # 硬过滤
-    df = df[~df["名称"].str.contains("ST|退", na=False)]  # ST/退市
-    df = df[~df["代码"].str.startswith("688")]             # 科创板
-    df = df[~df["代码"].str.match(r"^8\d{5}")]            # 北交所
-    print(f"   排除科创板/北交所/ST: {len(df)} 只")
+    valid = []
+    for s in pool:
+        code = s["code"]
+        if code.startswith("688") or code.startswith("8"):
+            continue  # 科创板/北交所
+        valid.append(s)
 
-    # 流动性: 日均成交额 > 1亿
-    if "成交额" in df.columns:
-        df["成交额"] = pd.to_numeric(df["成交额"], errors="coerce")
-        df = df[df["成交额"] > 100_000_000]  # 1亿
-        print(f"   成交额 > 1亿: {len(df)} 只")
+    print(f"   排除科创板/北交所: {len(valid)} 只")
 
-    # PE过滤: 0 < PE < 200
-    if "市盈率-动态" in df.columns:
-        pe_col = "市盈率-动态"
-    elif "市盈率" in df.columns:
-        pe_col = "市盈率"
-    else:
-        pe_col = None
-    if pe_col:
-        df[pe_col] = pd.to_numeric(df[pe_col], errors="coerce")
-        df = df[(df[pe_col] > 0) & (df[pe_col] < 200)]
-        print(f"   PE 0-200: {len(df)} 只")
+    # yfinance 逐只拉基本面过滤（只保留成交活跃的）
+    filtered = []
+    batch_size = 20
+    for i in range(0, min(len(valid), 500), batch_size):
+        batch = valid[i:i+batch_size]
+        tickers = []
+        for s in batch:
+            code = s["code"]
+            suffix = ".SS" if code.startswith("6") else ".SZ"
+            tickers.append(f"{code}{suffix}")
 
-    # 市值（如果有数据）
-    if "总市值" in df.columns:
-        df["总市值"] = pd.to_numeric(df["总市值"], errors="coerce")
-        df = df[df["总市值"] > 8_000_000_000]  # 80亿
-        print(f"   市值 > 80亿: {len(df)} 只")
+        try:
+            import yfinance as yf
+            for t in tickers:
+                info = yf.Ticker(t).fast_info
+                vol = getattr(info, "last_volume", 0) or 0
+                price = getattr(info, "last_price", 0) or 0
+                if vol > 0 and price > 0 and vol * price > 50_000_000:  # 日成交额 > 5000万
+                    idx = tickers.index(t)
+                    filtered.append(batch[idx])
+        except:
+            # 网络问题 → 保留
+            filtered.extend(batch)
+        print(f"   [{min(i+batch_size, len(valid))}/{len(valid)}] 筛选: {len(filtered)} 只")
 
-    # 取前MAX_STOCKS只（按成交额排序）
-    if "成交额" in df.columns:
-        df = df.sort_values("成交额", ascending=False)
-    df = df.head(MAX_STOCKS)
-
-    print(f"✅ 最终粗筛: {len(df)} 只")
-    return df[["代码", "名称"]].reset_index(drop=True)
+    print(f"✅ 最终: {len(filtered)} 只")
+    return pd.DataFrame(filtered)[["code", "name"]].rename(columns={"code": "代码", "name": "名称"})
 
 
 # ── Kronos 预测 ─────────────────────────────────────
@@ -98,23 +136,23 @@ def load_kronos():
 
 
 def fetch_stock_ohlcv(code):
-    """拉单只股票1年日线OHLCV"""
-    suffix = "SH" if code.startswith(("6", "5")) else "SZ"
+    """用 yfinance 拉单只股票1年日线OHLCV"""
+    import yfinance as yf
+    suffix = ".SS" if code.startswith("6") else ".SZ"
+    symbol = f"{code}{suffix}"
     try:
-        import akshare as ak
-        df = ak.stock_zh_a_hist(symbol=code, period="daily",
-                                start_date=(datetime.now() - timedelta(days=400)).strftime("%Y%m%d"),
-                                end_date=datetime.now().strftime("%Y%m%d"),
-                                adjust="qfq")
+        ticker = yf.Ticker(symbol)
+        df = ticker.history(period="1y")
         if df is None or len(df) < 100:
             return None
-        df = df.rename(columns={"日期": "date", "开盘": "open", "最高": "high",
-                                 "最低": "low", "收盘": "close", "成交量": "volume"})
-        # 确保有OHLC列
+        df = df.reset_index()
+        df = df.rename(columns={"Date": "date", "Open": "open", "High": "high",
+                                 "Low": "low", "Close": "close"})
+        df["date"] = pd.to_datetime(df["date"]).dt.tz_localize(None)
         for col in ["open", "high", "low", "close"]:
             if col not in df.columns:
                 return None
-        return df[["date", "open", "high", "low", "close"]].dropna()
+        return df[["date", "open", "high", "low", "close"]].dropna().tail(512)
     except Exception as e:
         print(f"   ⚠️ {code} 数据拉取失败: {e}")
         return None

@@ -30,7 +30,7 @@ jobs:
       - name: 安装依赖
         run: |
           pip install --upgrade pip
-          pip install akshare pandas numpy requests
+          pip install yfinance pandas numpy requests
           pip install torch --index-url https://download.pytorch.org/whl/cpu
           # Kronos: clone repo + install minimal deps
           git clone --depth 1 https://github.com/shiyu-coder/Kronos /tmp/kronos_repo
