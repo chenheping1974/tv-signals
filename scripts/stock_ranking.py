@@ -167,7 +167,7 @@ def predict_single(predictor, code, name):
     try:
         result = predictor.predict(
             df=df[["open", "high", "low", "close"]],
-            x_timestamp=df["date"].tolist(),
+            x_timestamp=pd.to_datetime(df["date"]).astype(str).tolist(),
             y_timestamp=None,
             pred_len=PRED_DAYS,
             T=1.0,
