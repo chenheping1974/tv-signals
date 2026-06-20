@@ -141,27 +141,40 @@ def load_kronos():
     return predictor
 
 
-def fetch_stock_ohlcv(code):
-    """用 yfinance 拉单只股票1年日线OHLCV"""
+# 批量缓存的 OHLCV 数据
+_OHLCV_CACHE = {}
+
+def fetch_batch_ohlcv(codes):
+    """用 yfinance 批量下载 OHLCV（一次请求多只，避免限流）"""
     import yfinance as yf
-    suffix = ".SS" if code.startswith("6") else ".SZ"
-    symbol = f"{code}{suffix}"
+    symbols = []
+    for c in codes:
+        suffix = ".SS" if c.startswith("6") else ".SZ"
+        symbols.append(f"{c}{suffix}")
     try:
-        ticker = yf.Ticker(symbol)
-        df = ticker.history(period="1y")
-        if df is None or len(df) < 100:
-            return None
-        df = df.reset_index()
-        df = df.rename(columns={"Date": "date", "Open": "open", "High": "high",
-                                 "Low": "low", "Close": "close"})
-        df["date"] = pd.to_datetime(df["date"]).dt.tz_localize(None)
-        for col in ["open", "high", "low", "close"]:
-            if col not in df.columns:
-                return None
-        return df[["date", "open", "high", "low", "close"]].dropna().tail(512)
+        data = yf.download(symbols, period="1y", progress=False, threads=True, group_by="ticker")
+        for i, sym in enumerate(symbols):
+            if sym in data.columns:
+                df = data[sym].dropna()
+                if len(df) >= 100:
+                    df = df.reset_index()
+                    df.columns = [c.lower() for c in df.columns]
+                    df = df.rename(columns={"date": "date", "open": "open",
+                                             "high": "high", "low": "low", "close": "close"})
+                    df["date"] = pd.to_datetime(df["date"])
+                    if hasattr(df["date"], "dt"):
+                        df["date"] = df["date"].dt.tz_localize(None)
+                    for col in ["open", "high", "low", "close"]:
+                        if col in df.columns:
+                            key = codes[i]
+                            _OHLCV_CACHE[key] = df[["date", "open", "high", "low", "close"]].tail(512)
     except Exception as e:
-        print(f"   ⚠️ {code} 数据拉取失败: {e}")
-        return None
+        print(f"   ⚠️ 批量下载失败: {e}")
+
+
+def fetch_stock_ohlcv(code):
+    """从缓存取单只股票OHLCV"""
+    return _OHLCV_CACHE.get(code, None)
 
 
 def predict_single(predictor, code, name):
@@ -222,10 +235,19 @@ def main():
     print("🤖 加载 Kronos-small 模型...")
     predictor = load_kronos()
 
-    # 4. 逐只预测
+    # 4. 逐批下载 + 预测
     total = len(stocks)
+    ohclv_batch = 50  # 每批下载50只OHLCV
     print(f"🔮 开始预测 {total} 只股票（剩余 {total - start_idx} 只）...")
     for i in range(start_idx, total):
+        # 批量预下载 OHLCV
+        if i % ohclv_batch == 0:
+            batch_end = min(i + ohclv_batch, total)
+            batch_codes = [stocks.iloc[j]["代码"] for j in range(i, batch_end)]
+            print(f"📥 批量下载 OHLCV [{i+1}-{batch_end}]...")
+            fetch_batch_ohlcv(batch_codes)
+            time.sleep(2)  # 避免限流
+
         row = stocks.iloc[i]
         code, name = row["代码"], row["名称"]
         print(f"   [{i+1}/{total}] {code} {name}...", end=" ", flush=True)
@@ -239,7 +261,6 @@ def main():
         else:
             print("⏭️ 跳过")
 
-        # 每BATCH_SIZE只保存断点
         if (i + 1) % BATCH_SIZE == 0:
             progress = {"results": results, "next_idx": i + 1, "total": total,
                         "updated": datetime.now().isoformat()}
