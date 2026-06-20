@@ -335,9 +335,10 @@ def generate_rss_items(articles, analysis_results):
             f"<p><strong>可信度</strong>：{'★' * ai.get('credibility', 3)} | 来源: {art['source']} | {datetime.now().strftime('%Y-%m-%d %H:%M')}</p>"
         )
 
-        # AI判断关联A股 → 进A股Feed
-        has_a_stock = bool(ai.get("a_stocks") and len(ai.get("a_stocks", [])) > 0)
-        cat = "both" if has_a_stock else art["cat"]
+        # 进A股Feed条件：来源是A股频道 且 AI确认关联A股
+        from_astock = "a_stock" in art.get("source", "")
+        ai_found_astock = bool(ai.get("a_stocks") and len(ai.get("a_stocks", [])) > 0)
+        cat = "both" if (from_astock and ai_found_astock) else art["cat"]
 
         rss_items.append({
             "rss_title": rss_title,
