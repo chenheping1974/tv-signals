@@ -1,103 +1,101 @@
-# 2026-06-19 沟通笔记
+# 项目沟通笔记
 
-## 项目目标
+---
 
-构建一个面向大宗商品和中国A股领域的 AI 驱动 RSS 信息系统。核心追踪标的：黄金、白银、原油、美铜、伦铝、豆粕、A股。
+## 2026-06-19 — 情报系统搭建
 
-## 需求探索过程
+### 项目目标
+构建面向大宗商品和中国A股的 AI 驱动 RSS 信息系统。核心标的：黄金、白银、原油、美铜、伦铝、豆粕、A股。
 
-1. **初始想法**：Feedly + Make + RSSHub + Claude API
-2. **调整为免费方案**：Make 免费版仅 1,000 ops/月 → 降到每天 1 次采集 → 最终放弃 Make，改用 GitHub Actions
-3. **RSSHub 探索**：公共实例 rsshub.app 在用户浏览器可访问，但 GitHub Actions 服务器被 403 封禁
-4. **最终方案**：绕过 RSSHub，直接调用华尔街见闻原始 API
-
-## 关键决策
-
+### 关键决策
 | 决策 | 结论 |
 |------|------|
-| 输出方式 | 精选 RSS Feed（方案A） |
-| RSS 托管 | GitHub Pages（免费） |
-| 编排引擎 | GitHub Actions（免费） |
-| AI 引擎 | DeepSeek（中文更强，~$0/月） |
-| 信源 | 华尔街见闻 API（commodity/global/a_stock/forex 4频道） |
-| 推送终端 | Feedly |
-| 运行频率 | 每天 21:00（北京时间） |
-| TradingView 交叉验证 | 预留扩展接口 |
+| 输出方式 | 精选 RSS Feed（方案A）→ GitHub Pages |
+| 编排引擎 | Make → 放弃 → GitHub Actions |
+| AI 引擎 | Claude API → DeepSeek（中文强、便宜） |
+| 信源 | RSSHub → 放弃（403）→ 华尔街见闻 API 直连 |
+| 推送终端 | Feedly（3 Board：商品/A股/简报） |
+| 运行频率 | 每天 21:00 UTC+8 |
+| 成本 | $0/月 |
 
-## 放弃的方案
-
-- **Make**：免费版 ops 不够，配置复杂，频繁退出登录
-- **RSSHub 公共实例**：从 GitHub Actions IP 被封（403），从用户浏览器可访问但从 AWS 机器不行
+### 放弃的方案
+- **Make**：免费版 1,000 ops/月不够，GUI 配置复杂
+- **RSSHub 公共实例**：GitHub Actions 机房 IP 被 Cloudflare 403 拦截
 - **RSSHub 自部署**：Railway/Render 部署失败
-- **金十数据 API**：502 不可用
-- **财联社 API**：未找到可用端点
+- **金十数据 API**：502；**财联社 API**：未找到可用端点
 
-## 最终架构
-
+### 最终架构
 ```
-华尔街见闻 API（商品/宏观/A股/外汇4频道）
-        │
-        ▼ (每天UTC 13:00 = 北京时间21:00)
-GitHub Actions（免费）
-        │
-        ▼ Python 脚本
-DeepSeek API（deepseek-chat）
-        │
-        ▼ git push
-GitHub Pages（免费）
-        │
-        ▼ RSS Feed
-Feedly（用户已有）
+华尔街见闻 API（commodity/global/a_stock/forex 4频道）
+    → GitHub Actions（每天 21:00）
+    → Python 脚本（采集→过滤→去重→DeepSeek分析→生成RSS）
+    → GitHub Pages
+    → Feedly
 ```
 
-## 文件结构
+### 关键Bug修复
+- **A股 Feed 只有1条**：DeepSeek 每批 idx 从0编号，多批覆盖。改为顺序配对 `articles[i] ↔ analysis_results[i]`
+- **A股混入商品**：双把关（来源必须是 a_stock 频道 + AI 确认关联A股），A股 Feed 不合并历史
+- **评分阈值**：商品 ≥2★，A股 ≥1★
+- **Feedly 缓存**：GitHub Pages 更新后 Feedly 2-6 小时延迟，Unfollow+Follow 强制刷新
 
+---
+
+## 2026-06-20 — Chronos-2 + TimesFM 预测模型
+
+### 讨论
+对比 Chronos-2 (Amazon, 120M) vs TimesFM 2.5 (Google, 200M)。选择 Chronos-2 —— 多变量 group attention 适合商品联动场景，Apache 2.0 免费，CPU 可跑。
+
+### 部署：Hugging Face Spaces Gradio 应用
+- 踩坑：Factory Rebuild 卡死 Node.js 安装（网络问题）；
+  pydantic 版本冲突；SSR 代理连不上；
+  Chronos-2 DataFrame 格式要求（timestamp/target/item_id 三列）；
+  时区问题（`pd.to_datetime(utc=True).tz_localize(None)`）；
+  频率推断（加 `freq='B'` 参数）；
+  pandas iloc 索引歧义；
+  Plotly 用 `gr.Plot` 不显示 → `gr.Plotly`
+- 最终成功：`1348122919qqcom-commodity-forecast.hf.space`
+
+### 架构
 ```
-tv-signals/
-├── feeds/
-│   ├── commodities.xml    大宗商品精选（≥2★）
-│   └── a-stocks.xml       A股精选（≥2★）
-├── scripts/
-│   └── fetch_feeds.py     核心采集+AI处理脚本
-├── data/
-│   ├── processed_urls.json   去重索引
-│   └── signal_log.json       信号日志
-├── .github/workflows/
-│   └── daily-signals.yml     GitHub Actions 定时触发
-└── requirements.txt
+用户浏览器
+    → HF Spaces (Gradio, Free CPU)
+    → Yahoo Finance (价格数据)
+    → Chronos-2 (120M, 预测)
+    → DeepSeek API (综合判断)
+    → GitHub Pages RSS (情报)
+    → 返回：交互式图表 + AI判断 + 新闻
 ```
 
-## 成本
+### 功能
+- 4个标签：综合看盘 / 商品预测（7品种） / A股预测（自选+任意代码） / 情报（RSS读取）
+- Plotly 交互式图表（滚轮缩放、拖拽、悬停）
+- 综合看盘：Chronos-2预测 + 关联新闻 + DeepSeek交叉判断
+- 配色：Ocean 深海科技风
 
-**$0/月** — 全部组件免费：GitHub Actions（公开仓库无限）、GitHub Pages、DeepSeek（免费额度内）、华尔街见闻 API（公开）。
+### SSH 配置
+- HF Spaces 本质是 Git 仓库：`git@hf.co:spaces/1348122919qqcom/commodity-forecast`
+- 添加 SSH Key 后直接 `git push`，无需手动上传
 
-## 调试过程中的关键发现
+### 用户偏好
+- 最优方案优先，拒绝低效试错
+- 部署类优先配 SSH/Git，不做手动上传
+- 先校验再推送
 
-### A股 Feed 始终只有 1 条的根因
-DeepSeek 返回分析结果时，每批文章的 `idx` 都从 0 开始编号。第1批(0-4)返回 idx 0-4，第2批(5-9)也返回 idx 0-4，依此类推。用 `analysis_map.get(idx)` 映射时，后面的批次覆盖了前面的，导致只有前 10 篇文章有分析结果。A股文章在 idx 31-35，全被跳过。
-**解决**：不依赖 DeepSeek 返回的 idx，按顺序直接配对 `articles[i] ↔ analysis_results[i]`。
+---
 
-### 评分阈值
-- 商品：≥2★ 进入精选 Feed
-- A股：≥1★ 进入精选 Feed（日常噪声多，降低门槛避免漏掉政策信号）
+## 两个系统总览
 
-### Feedly 缓存
-GitHub Pages 更新后 Feedly 有 2-6 小时缓存延迟，不会立即刷新。
-
-## RSSHub 和 Make 复盘
-
-### RSSHub 为什么失败
-GitHub Actions 的 Azure 机房 IP 被 rsshub.app 的 Cloudflare 反爬拦截（403）。用户浏览器住宅 IP 可正常访问。非 RSSHub 代码问题，是 IP 信誉差异。
-
-### Make vs GitHub Actions
-- Make 有 Blueprint（JSON）可导出/导入，理论上可由 AI 生成后一键导入
-- 但免费版 1,000 ops/月差距太大（系统需要 ~5,000 ops/月）
-- 现在 GitHub Actions 已稳定运行，性价比更高
-- Make 的可视化面板适合非技术人员排查问题，但有 AI 助手协助时文本日志同样有效
+| | tv-signals (情报) | chronos-forecast (预测) |
+|------|------|------|
+| 功能 | 新闻→AI分析→RSS | 价格→Chronos-2预测→图表 |
+| AI | DeepSeek | Chronos-2 + DeepSeek |
+| 部署 | GitHub Actions | HF Spaces |
+| 输出 | Feedly | 网页 |
+| 频率 | 每天 21:00 | 随时打开 |
+| 费用 | $0 | $0 |
 
 ## 待扩展
-
-- 金十数据（找到可用 API 端点后加入）
+- 两个系统整合：预测结果标注到 RSS Feed
 - TradingView MCP 交叉验证
-- 每日简报自动生成
-- 更多信源（CFTC、EIA、上期所等）
+- 更多信源（CFTC、EIA、上期所）
