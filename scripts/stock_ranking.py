@@ -13,7 +13,7 @@ import numpy as np
 ROOT = Path(__file__).resolve().parent.parent
 DATA_DIR = ROOT / "data"
 DATA_DIR.mkdir(exist_ok=True)
-OHLCV_FILE = DATA_DIR / "ohlcv.parquet"
+OHLCV_FILE = DATA_DIR / "ohlcv.csv.gz"
 RANKING_FILE = DATA_DIR / "ranking.json"
 PROGRESS_FILE = DATA_DIR / "ranking_progress.json"
 STOCK_POOL_FILE = DATA_DIR / "stock_pool.json"
@@ -58,52 +58,39 @@ def download_sina(code):
 
 # ── OHLCV 增量更新 ─────────────────────────────────
 def update_ohlcv(pool):
-    """增量更新 OHLCV：首次全量下载，每日追加最新"""
-    import requests as req
-
-    if OHLCV_FILE.exists():
-        existing = pd.read_parquet(OHLCV_FILE)
-        existing["date"] = pd.to_datetime(existing["date"])
+    """增量更新 OHLCV：读取已有数据，仅追加当日最新"""
+    existing = pd.read_csv(OHLCV_FILE, parse_dates=["date"]) if OHLCV_FILE.exists() else pd.DataFrame()
+    if not existing.empty:
         last_date = existing["date"].max()
         today = pd.Timestamp.now().normalize()
         if last_date >= today - pd.Timedelta(days=1):
-            print(f"✅ OHLCV 已是最新 (截止 {last_date.date()})")
+            print(f"✅ OHLCV 已最新 (截止 {last_date.date()})")
             return existing
-        print(f"📥 增量更新 {last_date.date()} → {today.date()}")
-        existing_codes = set(existing["code"].unique())
-        to_update = [s for s in pool if s["code"] not in existing_codes][:50]  # 新增的股票
-        if to_update:
-            print(f"   {len(to_update)} 只新股票需要全量下载")
-    else:
-        existing = pd.DataFrame()
-        existing_codes = set()
-        to_update = pool[:800]  # 首次下载前800只
-        print(f"📥 首次下载 OHLCV ({len(to_update)} 只)...")
+        print(f"📥 追加 {last_date.date()} → {today.date()} 数据...")
 
-    new_rows = []
-    all_to_fetch = to_update + [s for s in pool if s["code"] in existing_codes][:100]  # 追加100只已有股票的今日数据
-    for i, s in enumerate(all_to_fetch):
-        df = download_sina(s["code"])
-        if df is not None:
-            new_rows.append(df)
-        if i % 100 == 0:
-            print(f"   [{i+1}/{len(all_to_fetch)}] {len(new_rows)} 只有数据")
-        time.sleep(0.1)  # 避免限流
+    new_rows, codes = [], set(existing["code"].unique()) if not existing.empty else set()
+    for i, s in enumerate(pool):
+        if s["code"] in codes:
+            # 已有历史：只拉最近5个交易日的数据
+            df = download_sina(s["code"])
+            if df is not None and not existing.empty:
+                # 只保留新日期
+                existing_dates = set(existing[existing["code"]==s["code"]]["date"])
+                df = df[~df["date"].isin(existing_dates)]
+            if df is not None and len(df) > 0:
+                new_rows.append(df)
+        if i % 200 == 0:
+            print(f"   [{i+1}/{len(pool)}] {len(new_rows)} 只有新数据")
+        time.sleep(0.05)
 
     if not new_rows:
-        print("⚠️ 无新数据")
         return existing
 
     new_df = pd.concat(new_rows, ignore_index=True)
-    new_df["date"] = pd.to_datetime(new_df["date"])
-    if not existing.empty:
-        combined = pd.concat([existing, new_df], ignore_index=True)
-        combined = combined.drop_duplicates(subset=["date", "code"]).sort_values(["code", "date"])
-    else:
-        combined = new_df.sort_values(["code", "date"])
-
-    combined.to_parquet(OHLCV_FILE, index=False)
-    print(f"✅ OHLCV: {combined['code'].nunique()} 只, {len(combined)} 行, 截止 {combined['date'].max().date()}")
+    combined = pd.concat([existing, new_df], ignore_index=True) if not existing.empty else new_df
+    combined = combined.drop_duplicates(subset=["date", "code"]).sort_values(["code", "date"])
+    combined.to_csv(OHLCV_FILE, index=False, compression="gzip")
+    print(f"✅ OHLCV: {combined['code'].nunique()}只, {len(combined)}行, +{len(new_df)}行")
     return combined
 
     if not new_rows:

@@ -48,8 +48,8 @@ jobs:
         run: |
           git config user.name "kronos-bot"
           git config user.email "bot@tv-signals.local"
-          git add data/ranking.json data/ohlcv.parquet 2>/dev/null || true
-          if [ -f data/ranking.json ] || [ -f data/ohlcv.parquet ]; then
+          git add data/ranking.json data/ohlcv.csv.gz 2>/dev/null || true
+          if [ -f data/ranking.json ] || [ -f data/ohlcv.csv.gz ]; then
             git diff --staged --quiet || (git commit -m "更新选股+OHLCV [$(date +%Y-%m-%d)]" && git push)
           else
             echo "⚠️ 无文件可提交"
