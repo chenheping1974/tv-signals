@@ -72,46 +72,52 @@ FALLBACK_POOL = [
 
 
 def fetch_all_stocks():
-    """构建股票池，用 yfinance 粗筛到 ~200 只（减少 Kronos 预测量）"""
+    """构建股票池，用 yfinance 批量筛选活跃标的 → ~800-1200只"""
+    import yfinance as yf
     pool = build_stock_pool()
-    print(f"📊 股票池: {len(pool)} 只")
+    print(f"📊 原始候选: {len(pool)} 只")
 
     # 硬过滤
     valid = []
     for s in pool:
-        code = s["code"]
+        code = s.get("code", s) if isinstance(s, dict) else s
         if code.startswith("688") or code.startswith("8"):
-            continue  # 科创板/北交所
-        valid.append(s)
+            continue
+        valid.append(code if isinstance(code, str) else s)
 
     print(f"   排除科创板/北交所: {len(valid)} 只")
 
-    # yfinance 逐只拉基本面过滤（只保留成交活跃的）
+    # 批量下载筛选（每批500只，只取info）
     filtered = []
-    batch_size = 20
-    for i in range(0, min(len(valid), 500), batch_size):
-        batch = valid[i:i+batch_size]
+    batch_size = 500
+    for batch_start in range(0, len(valid), batch_size):
+        batch = valid[batch_start:batch_start+batch_size]
         tickers = []
-        for s in batch:
-            code = s["code"]
+        for c in batch:
+            code = c if isinstance(c, str) else c["code"]
             suffix = ".SS" if code.startswith("6") else ".SZ"
             tickers.append(f"{code}{suffix}")
 
         try:
-            import yfinance as yf
-            for t in tickers:
-                info = yf.Ticker(t).fast_info
-                vol = getattr(info, "last_volume", 0) or 0
-                price = getattr(info, "last_price", 0) or 0
-                if vol > 0 and price > 0 and vol * price > 50_000_000:  # 日成交额 > 5000万
-                    idx = tickers.index(t)
-                    filtered.append(batch[idx])
-        except:
-            # 网络问题 → 保留
-            filtered.extend(batch)
-        print(f"   [{min(i+batch_size, len(valid))}/{len(valid)}] 筛选: {len(filtered)} 只")
+            # 批量下载历史数据（1天即可判断是否存在+流动性）
+            data = yf.download(tickers, period="5d", progress=False, threads=True)
+            for i, t in enumerate(tickers):
+                if t in data.columns and len(data[t].dropna()) > 0:
+                    vol = data[t]["Volume"].iloc[-1] if "Volume" in data[t] else 0
+                    close = data[t]["Close"].iloc[-1] if "Close" in data[t] else 0
+                    if vol > 0 and close > 0 and vol * close > 10_000_000:  # 日成交 > 1000万
+                        code = batch[i] if isinstance(batch[i], str) else batch[i]["code"]
+                        filtered.append({"code": code, "name": ""})
+        except Exception as e:
+            print(f"   ⚠️ 批量下载失败: {e}")
+        print(f"   [{min(batch_start+batch_size, len(valid))}/{len(valid)}] 筛选: {len(filtered)} 只")
 
-    print(f"✅ 最终: {len(filtered)} 只")
+    # 如果筛选后太少（网络问题），回退用stock_pool直接传
+    if len(filtered) < 100:
+        print(f"⚠️ 批量筛选结果太少({len(filtered)})，回退直接用候选池")
+        filtered = [{"code": c, "name": ""} for c in valid[:MAX_STOCKS]]
+
+    print(f"✅ 最终粗筛: {len(filtered)} 只")
     return pd.DataFrame(filtered)[["code", "name"]].rename(columns={"code": "代码", "name": "名称"})
 
 
