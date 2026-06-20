@@ -72,53 +72,21 @@ FALLBACK_POOL = [
 
 
 def fetch_all_stocks():
-    """构建股票池，用 yfinance 批量筛选活跃标的 → ~800-1200只"""
-    import yfinance as yf
+    """直接取预生成股票池的前 MAX_STOCKS 只（已被 akshare 验证过，无需 yfinance 二次筛选）"""
     pool = build_stock_pool()
-    print(f"📊 原始候选: {len(pool)} 只")
+    print(f"📊 预生成股票池: {len(pool)} 只")
 
-    # 硬过滤
     valid = []
     for s in pool:
-        code = s.get("code", s) if isinstance(s, dict) else s
+        code = s["code"] if isinstance(s, dict) else s
         if code.startswith("688") or code.startswith("8"):
             continue
-        valid.append(code if isinstance(code, str) else s)
+        valid.append({"code": code, "name": s.get("name", "") if isinstance(s, dict) else ""})
 
-    print(f"   排除科创板/北交所: {len(valid)} 只")
-
-    # 批量下载筛选（每批500只，只取info）
-    filtered = []
-    batch_size = 50
-    for batch_start in range(0, len(valid), batch_size):
-        batch = valid[batch_start:batch_start+batch_size]
-        tickers = []
-        for c in batch:
-            code = c if isinstance(c, str) else c["code"]
-            suffix = ".SS" if code.startswith("6") else ".SZ"
-            tickers.append(f"{code}{suffix}")
-
-        try:
-            # 批量下载历史数据（1天即可判断是否存在+流动性）
-            data = yf.download(tickers, period="5d", progress=False, threads=True)
-            for i, t in enumerate(tickers):
-                if t in data.columns and len(data[t].dropna()) > 0:
-                    vol = data[t]["Volume"].iloc[-1] if "Volume" in data[t] else 0
-                    close = data[t]["Close"].iloc[-1] if "Close" in data[t] else 0
-                    if vol > 0 and close > 0 and vol * close > 10_000_000:  # 日成交 > 1000万
-                        code = batch[i] if isinstance(batch[i], str) else batch[i]["code"]
-                        filtered.append({"code": code, "name": ""})
-        except Exception as e:
-            print(f"   ⚠️ 批量下载失败: {e}")
-        print(f"   [{min(batch_start+batch_size, len(valid))}/{len(valid)}] 筛选: {len(filtered)} 只")
-
-    # 如果筛选后太少（网络问题），回退用stock_pool直接传
-    if len(filtered) < 100:
-        print(f"⚠️ 批量筛选结果太少({len(filtered)})，回退直接用候选池")
-        filtered = [{"code": c, "name": ""} for c in valid[:MAX_STOCKS]]
-
-    print(f"✅ 最终粗筛: {len(filtered)} 只")
-    return pd.DataFrame(filtered)[["code", "name"]].rename(columns={"code": "代码", "name": "名称"})
+    # 直接取前 N 只（池子已按有效股票排序）
+    result = valid[:MAX_STOCKS]
+    print(f"✅ 取前 {len(result)} 只送 Kronos")
+    return pd.DataFrame(result).rename(columns={"code": "代码", "name": "名称"})
 
 
 # ── Kronos 预测 ─────────────────────────────────────
@@ -237,7 +205,7 @@ def main():
 
     # 4. 逐批下载 + 预测
     total = len(stocks)
-    ohclv_batch = 50  # 每批下载50只OHLCV
+    ohclv_batch = 10  # 每批下载10只OHLCV
     print(f"🔮 开始预测 {total} 只股票（剩余 {total - start_idx} 只）...")
     for i in range(start_idx, total):
         # 批量预下载 OHLCV
