@@ -129,9 +129,12 @@ def predict_single(predictor, ohlcv, code):
     if len(df) < 100:
         return None
     try:
+        last_date = pd.to_datetime(df["date"]).iloc[-1]
+        y_ts = pd.date_range(start=last_date + pd.Timedelta(days=1), periods=PRED_DAYS, freq="B")
         result = predictor.predict(
             df=df[["open", "high", "low", "close"]],
             x_timestamp=pd.to_datetime(df["date"]),
+            y_timestamp=y_ts,
             pred_len=PRED_DAYS, T=1.0, top_p=0.9, sample_count=1,
         )
         if result is None or len(result) == 0:
