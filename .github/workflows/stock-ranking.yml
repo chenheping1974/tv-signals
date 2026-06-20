@@ -46,7 +46,11 @@ jobs:
 
       - name: 提交结果
         run: |
-          git config user.name "kronos-bot"
-          git config user.email "bot@tv-signals.local"
-          git add data/ranking.json
-          git diff --staged --quiet || (git commit -m "自动更新A股选股榜单 [$(date +%Y-%m-%d)]" && git push)
+          if [ -f data/ranking.json ]; then
+            git config user.name "kronos-bot"
+            git config user.email "bot@tv-signals.local"
+            git add data/ranking.json
+            git diff --staged --quiet || (git commit -m "自动更新A股选股榜单 [$(date +%Y-%m-%d)]" && git push)
+          else
+            echo "⚠️ ranking.json 未生成，跳过提交"
+          fi
