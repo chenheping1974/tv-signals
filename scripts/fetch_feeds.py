@@ -353,19 +353,16 @@ def generate_rss_items(articles, analysis_results):
     return rss_items
 
 def write_feeds(new_items):
-    """写入RSS XML文件，与已有条目合并"""
-    # 加载旧条目（从现有XML文件中解析）
+    """写入RSS XML文件"""
+    # 商品Feed：合并新旧
     all_commodities = load_existing_items(FEEDS_DIR / "commodities.xml")
-    all_astocks = load_existing_items(FEEDS_DIR / "a-stocks.xml")
-
     for item in new_items:
         if item["cat"] in ("commodities", "both"):
             all_commodities.insert(0, item)
-        if item["cat"] in ("a-stocks", "both"):
-            all_astocks.insert(0, item)
-
-    # 去重 + 限制数量
     all_commodities = dedup_items(all_commodities)[:MAX_ITEMS_PER_FEED]
+
+    # A股Feed：仅用最新分析结果，不做历史合并（保证双重把关纯净）
+    all_astocks = [it for it in new_items if it["cat"] in ("a-stocks", "both")]
     all_astocks = dedup_items(all_astocks)[:MAX_ITEMS_PER_FEED]
 
     # 写文件
