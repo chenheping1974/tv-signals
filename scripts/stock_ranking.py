@@ -47,7 +47,7 @@ def download_sina(code):
             return None
         df = pd.DataFrame(data)
         df = df.rename(columns={"day": "date", "open": "open", "high": "high", "low": "low", "close": "close"})
-        df["date"] = pd.to_datetime(df["date"])
+        df["date"] = pd.to_datetime(df["date"], format='mixed')
         df["code"] = code
         for c in ["open", "high", "low", "close"]:
             df[c] = pd.to_numeric(df[c], errors="coerce")
@@ -105,7 +105,7 @@ def update_ohlcv(pool):
         return existing
 
     new_df = pd.concat(new_rows, ignore_index=True)
-    new_df["date"] = pd.to_datetime(new_df["date"]).dt.normalize()
+    new_df["date"] = pd.to_datetime(new_df["date"], format='mixed').dt.normalize()
 
     if not existing.empty:
         combined = pd.concat([existing, new_df], ignore_index=True)
@@ -136,11 +136,11 @@ def predict_single(predictor, ohlcv, code):
     if len(df) < 60:
         return None
     try:
-        last_date = pd.to_datetime(df["date"]).iloc[-1]
+        last_date = pd.to_datetime(df["date"], format='mixed').iloc[-1]
         y_ts = pd.Series(pd.date_range(start=last_date + pd.Timedelta(days=1), periods=PRED_DAYS, freq="B"))
         result = predictor.predict(
             df=df[["open", "high", "low", "close"]],
-            x_timestamp=pd.to_datetime(df["date"]),
+            x_timestamp=pd.to_datetime(df["date"], format='mixed'),
             y_timestamp=y_ts,
             pred_len=PRED_DAYS, T=1.0, top_p=0.9, sample_count=1,
         )
