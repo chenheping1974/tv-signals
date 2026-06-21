@@ -21,7 +21,7 @@ jobs:
         with: { path: ~/.cache/huggingface, key: hf-kronos-v2 }
       - name: 安装依赖
         run: |
-          pip install pandas numpy requests
+          pip install pandas numpy requests huggingface_hub transformers accelerate safetensors
           pip install torch --index-url https://download.pytorch.org/whl/cpu
           git clone --depth 1 https://github.com/shiyu-coder/Kronos /tmp/kronos_repo -q
       - name: 运行 Batch 0
@@ -48,7 +48,7 @@ jobs:
         with: { path: ~/.cache/huggingface, key: hf-kronos-v2 }
       - name: 安装依赖
         run: |
-          pip install pandas numpy requests
+          pip install pandas numpy requests huggingface_hub transformers accelerate safetensors
           pip install torch --index-url https://download.pytorch.org/whl/cpu
           git clone --depth 1 https://github.com/shiyu-coder/Kronos /tmp/kronos_repo -q
       - name: 运行 Batch 1
