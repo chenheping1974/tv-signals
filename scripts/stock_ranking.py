@@ -19,7 +19,7 @@ PROGRESS_FILE = DATA_DIR / "ranking_progress.json"
 STOCK_POOL_FILE = DATA_DIR / "stock_pool.json"
 
 PRED_DAYS = 30
-MAX_STOCKS = 1000
+MAX_STOCKS = 5000
 BATCH_DL = 5    # 小批量避免超时
 BATCH_PRED = 20  # 每 N 只存一次断点
 
