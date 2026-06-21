@@ -32,6 +32,8 @@ jobs:
           python scripts/stock_ranking.py 0
       - uses: actions/upload-artifact@v4
         with: { name: ranking-0, path: data/ranking-0.json }
+      - uses: actions/upload-artifact@v4
+        with: { name: ohlcv-update, path: data/ohlcv.csv.gz }
 
   # ── Batch 1: 后2165只（与Batch 0并行）──
   batch-1:
@@ -73,6 +75,9 @@ jobs:
         with: { name: ranking-0, path: /tmp/r0 }
       - uses: actions/download-artifact@v4
         with: { name: ranking-1, path: /tmp/r1 }
+      - uses: actions/download-artifact@v4
+        with: { name: ohlcv-update, path: /tmp/ohlcv }
+        continue-on-error: true
       - name: 合并排序
         run: |
           python3 -c "
@@ -89,7 +94,8 @@ jobs:
           "
       - name: 提交
         run: |
+          cp /tmp/ohlcv/data/ohlcv.csv.gz data/ohlcv.csv.gz 2>/dev/null || true
           git config user.name "kronos-bot"
           git config user.email "bot@tv-signals.local"
-          git add data/ranking.json
-          git diff --staged --quiet || (git commit -m "选股合并 [$(date +%Y-%m-%d)]" && git push)
+          git add data/ranking.json data/ohlcv.csv.gz
+          git diff --staged --quiet || (git commit -m "选股+OHLCV更新 [$(date +%Y-%m-%d)]" && git push)
