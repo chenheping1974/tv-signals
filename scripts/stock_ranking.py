@@ -47,7 +47,7 @@ def download_sina(code):
             return None
         df = pd.DataFrame(data)
         df = df.rename(columns={"day": "date", "open": "open", "high": "high", "low": "low", "close": "close"})
-        df["date"] = pd.to_datetime(df["date"], format='mixed')
+        df["date"] = pd.to_datetime(df["date"], format='ISO8601')
         df["code"] = code
         for c in ["open", "high", "low", "close"]:
             df[c] = pd.to_numeric(df[c], errors="coerce")
@@ -61,7 +61,7 @@ def update_ohlcv(pool):
     """增量更新 OHLCV：读取已有数据，仅追加当日最新"""
     existing = pd.read_csv(OHLCV_FILE) if OHLCV_FILE.exists() else pd.DataFrame()
     if not existing.empty:
-        existing["date"] = pd.to_datetime(existing["date"], format='mixed')
+        existing["date"] = pd.to_datetime(existing["date"], format='ISO8601')
         last_date = existing["date"].max()
         today = pd.Timestamp.now().normalize()
         if last_date >= today - pd.Timedelta(days=1):
@@ -121,7 +121,7 @@ def update_ohlcv(pool):
         return existing
 
     new_df = pd.concat(new_rows, ignore_index=True)
-    new_df["date"] = pd.to_datetime(new_df["date"], format='mixed').dt.normalize()
+    new_df["date"] = pd.to_datetime(new_df["date"], format='ISO8601').dt.normalize()
 
     if not existing.empty:
         combined = pd.concat([existing, new_df], ignore_index=True)
@@ -152,11 +152,11 @@ def predict_single(predictor, ohlcv, code):
     if len(df) < 60:
         return None
     try:
-        last_date = pd.to_datetime(df["date"], format='mixed').iloc[-1]
+        last_date = pd.to_datetime(df["date"], format='ISO8601').iloc[-1]
         y_ts = pd.Series(pd.date_range(start=last_date + pd.Timedelta(days=1), periods=PRED_DAYS, freq="B"))
         result = predictor.predict(
             df=df[["open", "high", "low", "close"]],
-            x_timestamp=pd.to_datetime(df["date"], format='mixed'),
+            x_timestamp=pd.to_datetime(df["date"], format='ISO8601'),
             y_timestamp=y_ts,
             pred_len=PRED_DAYS, T=1.0, top_p=0.9, sample_count=1,
         )
@@ -199,7 +199,7 @@ def main():
         ohlcv = update_ohlcv(pool)
     else:
         ohlcv = pd.read_csv(OHLCV_FILE)
-        ohlcv["date"] = pd.to_datetime(ohlcv["date"], format='mixed')
+        ohlcv["date"] = pd.to_datetime(ohlcv["date"], format='ISO8601')
 
     # 3. 加载 Kronos
     print("🤖 加载 Kronos-small...")
