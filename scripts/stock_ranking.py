@@ -68,19 +68,26 @@ def update_ohlcv(pool):
             return existing
         print(f"📥 追加 {last_date.date()} → {today.date()} 数据...")
 
-    new_rows, codes = [], set(existing["code"].unique()) if not existing.empty else set()
+    new_rows, codes = [], set(existing["code"].astype(str).str.zfill(6).unique()) if not existing.empty else set()
     for i, s in enumerate(pool):
-        if s["code"] in codes:
-            # 已有历史：只拉最近5个交易日的数据
-            df = download_sina(s["code"])
+        code = str(s["code"]).zfill(6)
+        if code in codes:
+            # 已有历史：增量追加
+            df = download_sina(code)
             if df is not None and not existing.empty:
-                # 只保留新日期
-                existing_dates = set(existing[existing["code"]==s["code"]]["date"])
+                existing_dates = set(existing[existing["code"].astype(str).str.zfill(6) == code]["date"])
                 df = df[~df["date"].isin(existing_dates)]
             if df is not None and len(df) > 0:
                 new_rows.append(df)
+        else:
+            # 新股票：首次下载全量
+            if i % 500 == 0:  # 每天只检查一部分新股票，避免超时
+                df = download_sina(code)
+                if df is not None and len(df) >= 60:
+                    new_rows.append(df)
+                    print(f"   🆕 新纳入 {code}")
         if i % 200 == 0:
-            print(f"   [{i+1}/{len(pool)}] {len(new_rows)} 只有新数据")
+            print(f"   [{i+1}/{len(pool)}] {len(new_rows)} 批新数据")
         time.sleep(0.05)
 
     if not new_rows:
