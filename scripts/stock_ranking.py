@@ -25,10 +25,11 @@ BATCH_PRED = 20  # 每 N 只存一次断点
 
 # ── 股票池 ──────────────────────────────────────────
 def load_pool():
-    """加载预生成股票池（akshare 验证的有效股票）"""
-    pool = json.loads(STOCK_POOL_FILE.read_text())
-    valid = [s for s in pool if not s["code"].startswith(("688", "8"))]
-    return valid[:MAX_STOCKS]
+    """加载股票池（兼容新旧格式）"""
+    raw = json.loads(STOCK_POOL_FILE.read_text())
+    if isinstance(raw, dict) and "stocks" in raw:
+        return raw["stocks"][:MAX_STOCKS]
+    return raw[:MAX_STOCKS]
 
 
 def to_sina(code):
