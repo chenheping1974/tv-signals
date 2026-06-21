@@ -39,4 +39,4 @@ jobs:
           git config user.name "kronos-bot"
           git config user.email "bot@tv-signals.local"
           git add data/ranking.json data/ohlcv.csv.gz 2>/dev/null || true
-          git diff --staged --quiet || (git commit -m "选股更新 [$(date +%Y-%m-%d)]" && git push)
+          git diff --staged --quiet || (git commit -m "选股更新 [$(date +%Y-%m-%d)]" && git pull --rebase && git push)
