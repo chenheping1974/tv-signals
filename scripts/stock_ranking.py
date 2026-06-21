@@ -176,30 +176,14 @@ def predict_single(predictor, ohlcv, code):
 # ── 主函数 ──────────────────────────────────────────
 def main():
     t0 = time.time()
-    batch = int(sys.argv[1]) if len(sys.argv) > 1 else -1
-    if batch >= 0:
-        OUTPUT_FILE = DATA_DIR / f"ranking-{batch}.json"
-        PROGRESS_FILE = DATA_DIR / f"ranking_progress-{batch}.json"
-    else:
-        OUTPUT_FILE = RANKING_FILE
-        PROGRESS_FILE = DATA_DIR / "ranking_progress.json"
+    print(f"🚀 A股选股 {datetime.now():%Y-%m-%d %H:%M:%S}")
 
-    print(f"🚀 A股选股 batch={batch} {datetime.now():%Y-%m-%d %H:%M:%S}")
-
-    # 1. 加载股票池 + 分批
+    # 1. 加载股票池
     pool = load_pool()
-    if batch == 0:
-        pool = pool[:2200]
-    elif batch == 1:
-        pool = pool[2200:]
-    print(f"📊 本批: {len(pool)} 只")
+    print(f"📊 股票池: {len(pool)} 只")
 
-    # 2. OHLCV（仅 batch 0 更新，避免重复）
-    if batch <= 0:
-        ohlcv = update_ohlcv(pool)
-    else:
-        ohlcv = pd.read_csv(OHLCV_FILE)
-        ohlcv["date"] = pd.to_datetime(ohlcv["date"], format='ISO8601')
+    # 2. OHLCV 增量更新
+    ohlcv = update_ohlcv(pool)
 
     # 3. 加载 Kronos
     print("🤖 加载 Kronos-small...")
@@ -239,12 +223,11 @@ def main():
     # 6. 保存
     results.sort(key=lambda x: x["pct_change"], reverse=True)
     output = {"updated": datetime.now().isoformat(), "total": len(results), "ranking": results}
-    OUTPUT_FILE.write_text(json.dumps(output, ensure_ascii=False, indent=2))
-    if PROGRESS_FILE.exists():
-        PROGRESS_FILE.unlink()
-
+    RANKING_FILE.write_text(json.dumps(output, ensure_ascii=False, indent=2))
     elapsed = (time.time() - t0) / 60
-    print(f"✅ batch={batch}: {len(results)} 只, {elapsed:.0f} 分钟")
+    print(f"✅ {len(results)} 只排序完成, {elapsed:.0f} 分钟")
+    for r in results[:5]:
+        print(f"   {r['code']} {r.get('name','')}: {r['pct_change']:+.2f}%")
 
 if __name__ == "__main__":
     main()

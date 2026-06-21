@@ -6,98 +6,37 @@ on:
   workflow_dispatch:
 
 jobs:
-  # ── Batch 0: 前2200只 ──
-  batch-0:
+  ranking:
     runs-on: ubuntu-latest
     permissions:
       contents: write
     timeout-minutes: 360
+
     steps:
       - uses: actions/checkout@v4
         with: { ref: main }
       - uses: actions/setup-python@v5
         with: { python-version: '3.11' }
       - uses: actions/cache@v4
-        with: { path: ~/.cache/huggingface, key: hf-kronos-v2 }
+        with: { path: ~/.cache/huggingface, key: hf-kronos-v3 }
+
       - name: 安装依赖
         run: |
           pip install pandas numpy requests
           pip install torch --index-url https://download.pytorch.org/whl/cpu
           git clone --depth 1 https://github.com/shiyu-coder/Kronos /tmp/kronos_repo -q
           pip install -r /tmp/kronos_repo/requirements.txt
-      - name: 运行 Batch 0
+
+      - name: 批量预测
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: |
           export PYTHONPATH="/tmp/kronos_repo:$PYTHONPATH"
-          python scripts/stock_ranking.py 0
-      - uses: actions/upload-artifact@v4
-        with: { name: ranking-0, path: data/ranking-0.json }
-      - uses: actions/upload-artifact@v4
-        with: { name: ohlcv-update, path: data/ohlcv.csv.gz }
+          python scripts/stock_ranking.py
 
-  # ── Batch 1: 后2165只（与Batch 0并行）──
-  batch-1:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    timeout-minutes: 360
-    steps:
-      - uses: actions/checkout@v4
-        with: { ref: main }
-      - uses: actions/setup-python@v5
-        with: { python-version: '3.11' }
-      - uses: actions/cache@v4
-        with: { path: ~/.cache/huggingface, key: hf-kronos-v2 }
-      - name: 安装依赖
+      - name: 提交结果
         run: |
-          pip install pandas numpy requests
-          pip install torch --index-url https://download.pytorch.org/whl/cpu
-          git clone --depth 1 https://github.com/shiyu-coder/Kronos /tmp/kronos_repo -q
-          pip install -r /tmp/kronos_repo/requirements.txt
-      - name: 运行 Batch 1
-        env:
-          HF_TOKEN: ${{ secrets.HF_TOKEN }}
-        run: |
-          export PYTHONPATH="/tmp/kronos_repo:$PYTHONPATH"
-          python scripts/stock_ranking.py 1
-      - uses: actions/upload-artifact@v4
-        with: { name: ranking-1, path: data/ranking-1.json }
-
-  # ── 合并 ──
-  merge:
-    needs: [batch-0, batch-1]
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    steps:
-      - uses: actions/checkout@v4
-        with: { ref: main }
-      - uses: actions/download-artifact@v4
-        with: { name: ranking-0, path: /tmp/r0 }
-      - uses: actions/download-artifact@v4
-        with: { name: ranking-1, path: /tmp/r1 }
-      - uses: actions/download-artifact@v4
-        with: { name: ohlcv-update, path: /tmp/ohlcv }
-        continue-on-error: true
-      - name: 合并排序
-        run: |
-          python3 -c "
-          import json
-          r0 = json.load(open('/tmp/r0/ranking-0.json'))['ranking']
-          r1 = json.load(open('/tmp/r1/ranking-1.json'))['ranking']
-          merged = sorted(r0 + r1, key=lambda x: x['pct_change'], reverse=True)
-          from datetime import datetime
-          out = {'updated': datetime.now().isoformat(), 'total': len(merged), 'ranking': merged}
-          json.dump(out, open('data/ranking.json','w'), ensure_ascii=False, indent=2)
-          print(f'合并完成: {len(merged)} 只')
-          for r in merged[:5]:
-              print(f\"  {r['code']} {r.get('name','')}: {r['pct_change']:+.2f}%\")
-          "
-      - name: 提交
-        run: |
-          cp /tmp/ohlcv/data/ohlcv.csv.gz data/ohlcv.csv.gz 2>/dev/null || true
           git config user.name "kronos-bot"
           git config user.email "bot@tv-signals.local"
-          git add data/ranking.json data/ohlcv.csv.gz
-          git diff --staged --quiet || (git commit -m "选股+OHLCV更新 [$(date +%Y-%m-%d)]" && git push)
+          git add data/ranking.json data/ohlcv.csv.gz 2>/dev/null || true
+          git diff --staged --quiet || (git commit -m "选股更新 [$(date +%Y-%m-%d)]" && git push)
