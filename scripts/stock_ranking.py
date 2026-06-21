@@ -176,14 +176,30 @@ def predict_single(predictor, ohlcv, code):
 # ── 主函数 ──────────────────────────────────────────
 def main():
     t0 = time.time()
-    print(f"🚀 A股横截面选股 {datetime.now():%Y-%m-%d %H:%M:%S}")
+    batch = int(sys.argv[1]) if len(sys.argv) > 1 else -1
+    if batch >= 0:
+        OUTPUT_FILE = DATA_DIR / f"ranking-{batch}.json"
+        PROGRESS_FILE = DATA_DIR / f"ranking_progress-{batch}.json"
+    else:
+        OUTPUT_FILE = RANKING_FILE
+        PROGRESS_FILE = DATA_DIR / "ranking_progress.json"
 
-    # 1. 加载股票池
+    print(f"🚀 A股选股 batch={batch} {datetime.now():%Y-%m-%d %H:%M:%S}")
+
+    # 1. 加载股票池 + 分批
     pool = load_pool()
-    print(f"📊 股票池: {len(pool)} 只")
+    if batch == 0:
+        pool = pool[:2200]
+    elif batch == 1:
+        pool = pool[2200:]
+    print(f"📊 本批: {len(pool)} 只")
 
-    # 2. OHLCV 增量更新
-    ohlcv = update_ohlcv(pool)
+    # 2. OHLCV（仅 batch 0 更新，避免重复）
+    if batch <= 0:
+        ohlcv = update_ohlcv(pool)
+    else:
+        ohlcv = pd.read_csv(OHLCV_FILE)
+        ohlcv["date"] = pd.to_datetime(ohlcv["date"], format='mixed')
 
     # 3. 加载 Kronos
     print("🤖 加载 Kronos-small...")
@@ -194,13 +210,13 @@ def main():
         prog = json.loads(PROGRESS_FILE.read_text())
         results = prog.get("results", [])
         start_idx = prog.get("next_idx", 0)
-        print(f"📎 断点续跑: {len(results)} 只, 从 {start_idx} 继续")
+        print(f"📎 续跑: {len(results)} 条, 从 {start_idx}")
     else:
         results, start_idx = [], 0
 
     # 5. 逐只预测
     total = len(pool)
-    print(f"🔮 预测 {total} 只 ({total - start_idx} 剩余)...")
+    print(f"🔮 预测 {total} 只...")
     for i in range(start_idx, total):
         s = pool[i]
         code = s["code"]
@@ -220,17 +236,15 @@ def main():
             elapsed = (time.time() - t0) / 60
             print(f"   💾 [{i+1}/{total}] {len(results)} 条, {elapsed:.0f}min")
 
-    # 6. 排序保存
+    # 6. 保存
     results.sort(key=lambda x: x["pct_change"], reverse=True)
     output = {"updated": datetime.now().isoformat(), "total": len(results), "ranking": results}
-    RANKING_FILE.write_text(json.dumps(output, ensure_ascii=False, indent=2))
+    OUTPUT_FILE.write_text(json.dumps(output, ensure_ascii=False, indent=2))
     if PROGRESS_FILE.exists():
         PROGRESS_FILE.unlink()
 
     elapsed = (time.time() - t0) / 60
-    print(f"✅ {len(results)} 只排序完成, {elapsed:.0f} 分钟")
-    for r in results[:5]:
-        print(f"   {r['code']} {r.get('name','')}: {r['pct_change']:+.2f}%")
+    print(f"✅ batch={batch}: {len(results)} 只, {elapsed:.0f} 分钟")
 
 if __name__ == "__main__":
     main()
