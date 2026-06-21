@@ -70,18 +70,33 @@ def update_ohlcv(pool):
         print(f"📥 追加 {last_date.date()} → {today.date()} 数据...")
 
     new_rows, codes = [], set(existing["code"].astype(str).str.zfill(6).unique()) if not existing.empty else set()
+    # 先抽查前10只，判断今天是否有新数据
+    need_update = False
+    if not existing.empty:
+        for s in pool[:10]:
+            df = download_sina(s["code"])
+            if df is not None and len(df) > 0:
+                last_existing = existing[existing["code"].astype(str).str.zfill(6) == s["code"]]["date"].max()
+                new_dates = df[df["date"] > last_existing]
+                if len(new_dates) > 0:
+                    need_update = True
+                    break
+    if not need_update:
+        print(f"✅ 无需更新（今日无新数据）")
+        return existing
+
+    # 有新数据：全量更新
+    print(f"📥 发现新数据，全量更新...")
     for i, s in enumerate(pool):
         code = str(s["code"]).zfill(6)
         if code in codes:
-            # 已有历史：增量追加
             df = download_sina(code)
-            if df is not None and not existing.empty:
+            if df is not None:
                 existing_dates = set(existing[existing["code"].astype(str).str.zfill(6) == code]["date"])
                 df = df[~df["date"].isin(existing_dates)]
             if df is not None and len(df) > 0:
                 new_rows.append(df)
         else:
-            # 新股票：首次下载全量
             df = download_sina(code)
             if df is not None and len(df) >= 60:
                 new_rows.append(df)
