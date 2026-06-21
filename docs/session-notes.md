@@ -1,101 +1,89 @@
 # 项目沟通笔记
 
----
+## 系统总览
 
-## 2026-06-19 — 情报系统搭建
+两个子系统协同工作：
 
-### 项目目标
-构建面向大宗商品和中国A股的 AI 驱动 RSS 信息系统。核心标的：黄金、白银、原油、美铜、伦铝、豆粕、A股。
-
-### 关键决策
-| 决策 | 结论 |
-|------|------|
-| 输出方式 | 精选 RSS Feed（方案A）→ GitHub Pages |
-| 编排引擎 | Make → 放弃 → GitHub Actions |
-| AI 引擎 | Claude API → DeepSeek（中文强、便宜） |
-| 信源 | RSSHub → 放弃（403）→ 华尔街见闻 API 直连 |
-| 推送终端 | Feedly（3 Board：商品/A股/简报） |
-| 运行频率 | 每天 21:00 UTC+8 |
-| 成本 | $0/月 |
-
-### 放弃的方案
-- **Make**：免费版 1,000 ops/月不够，GUI 配置复杂
-- **RSSHub 公共实例**：GitHub Actions 机房 IP 被 Cloudflare 403 拦截
-- **RSSHub 自部署**：Railway/Render 部署失败
-- **金十数据 API**：502；**财联社 API**：未找到可用端点
-
-### 最终架构
-```
-华尔街见闻 API（commodity/global/a_stock/forex 4频道）
-    → GitHub Actions（每天 21:00）
-    → Python 脚本（采集→过滤→去重→DeepSeek分析→生成RSS）
-    → GitHub Pages
-    → Feedly
-```
-
-### 关键Bug修复
-- **A股 Feed 只有1条**：DeepSeek 每批 idx 从0编号，多批覆盖。改为顺序配对 `articles[i] ↔ analysis_results[i]`
-- **A股混入商品**：双把关（来源必须是 a_stock 频道 + AI 确认关联A股），A股 Feed 不合并历史
-- **评分阈值**：商品 ≥2★，A股 ≥1★
-- **Feedly 缓存**：GitHub Pages 更新后 Feedly 2-6 小时延迟，Unfollow+Follow 强制刷新
-
----
-
-## 2026-06-20 — Chronos-2 + TimesFM 预测模型
-
-### 讨论
-对比 Chronos-2 (Amazon, 120M) vs TimesFM 2.5 (Google, 200M)。选择 Chronos-2 —— 多变量 group attention 适合商品联动场景，Apache 2.0 免费，CPU 可跑。
-
-### 部署：Hugging Face Spaces Gradio 应用
-- 踩坑：Factory Rebuild 卡死 Node.js 安装（网络问题）；
-  pydantic 版本冲突；SSR 代理连不上；
-  Chronos-2 DataFrame 格式要求（timestamp/target/item_id 三列）；
-  时区问题（`pd.to_datetime(utc=True).tz_localize(None)`）；
-  频率推断（加 `freq='B'` 参数）；
-  pandas iloc 索引歧义；
-  Plotly 用 `gr.Plot` 不显示 → `gr.Plotly`
-- 最终成功：`1348122919qqcom-commodity-forecast.hf.space`
-
-### 架构
-```
-用户浏览器
-    → HF Spaces (Gradio, Free CPU)
-    → Yahoo Finance (价格数据)
-    → Chronos-2 (120M, 预测)
-    → DeepSeek API (综合判断)
-    → GitHub Pages RSS (情报)
-    → 返回：交互式图表 + AI判断 + 新闻
-```
-
-### 功能
-- 4个标签：综合看盘 / 商品预测（7品种） / A股预测（自选+任意代码） / 情报（RSS读取）
-- Plotly 交互式图表（滚轮缩放、拖拽、悬停）
-- 综合看盘：Chronos-2预测 + 关联新闻 + DeepSeek交叉判断
-- 配色：Ocean 深海科技风
-
-### SSH 配置
-- HF Spaces 本质是 Git 仓库：`git@hf.co:spaces/1348122919qqcom/commodity-forecast`
-- 添加 SSH Key 后直接 `git push`，无需手动上传
-
-### 用户偏好
-- 最优方案优先，拒绝低效试错
-- 部署类优先配 SSH/Git，不做手动上传
-- 先校验再推送
-
----
-
-## 两个系统总览
-
-| | tv-signals (情报) | chronos-forecast (预测) |
+| | tv-signals（情报） | chronos-forecast（预测） |
 |------|------|------|
-| 功能 | 新闻→AI分析→RSS | 价格→Chronos-2预测→图表 |
-| AI | DeepSeek | Chronos-2 + DeepSeek |
-| 部署 | GitHub Actions | HF Spaces |
+| 功能 | 新闻→AI 分析→RSS Feed | 价格→AI 预测→交互图表 |
+| AI 引擎 | DeepSeek | Chronos-2 + Kronos-small + DeepSeek |
+| 部署 | GitHub Actions | HuggingFace Spaces |
 | 输出 | Feedly | 网页 |
 | 频率 | 每天 21:00 | 随时打开 |
 | 费用 | $0 | $0 |
 
-## 待扩展
-- 两个系统整合：预测结果标注到 RSS Feed
-- TradingView MCP 交叉验证
-- 更多信源（CFTC、EIA、上期所）
+---
+
+## 2026-06-19 — 情报系统搭建
+
+### 关键决策
+- 编排引擎：Make → 放弃 → GitHub Actions
+- AI 引擎：Claude → DeepSeek（中文强、$0）
+- 信源：RSSHub → 放弃（403）→ 华尔街见闻 API 直连
+- 输出：GitHub Pages RSS → Feedly
+
+### 最终架构
+```
+华尔街见闻 API → GitHub Actions (21:00) → DeepSeek → RSS XML → GitHub Pages → Feedly
+```
+
+### 关键 Bug
+- A股 Feed 只 1 条：DeepSeek idx 多批覆盖 → 顺序配对修复
+- A股混入商品：双把关（来源频道 + AI 确认）
+- Feedly 缓存延迟 2-6h
+
+---
+
+## 2026-06-20 — Chronos-2 预测模型部署
+
+### HF Space 踩坑
+- pydantic 版本冲突、SSR 模式、端口环境变量
+- DataFrame 格式：timestamp/target/item_id
+- 网络：GitHub Actions US 机房被 rsshub.app Cloudflare 403
+
+### 成功部署
+- Chronos-2 商品预测 7 品种
+- Plotly 交互图表、Ocean 深色主题
+- DeepSeek 综合判断
+
+---
+
+## 2026-06-20~21 — Kronos-small A 股选股系统
+
+### 股票池
+- 数据源：akshare → 新浪财经 API → 腾讯财经 API
+- 筛选：四条件（ST 排除/科创板北交所/市值>80亿/成交额>1亿）→ 873 只
+- 后续扩展到 4361 只全市场
+
+### Kronos 批量预测
+- 模型：NeoQuasar/Kronos-small (24.7M, MIT)
+- API 要求：x_timestamp/y_timestamp 必须 Series，必须传 y_timestamp
+- 每只 ~3 秒，873 只 ~40 分钟，4361 只 ~3.5 小时
+- 断点续跑防失败
+
+### HF Space A 股标签页
+- 🏆 每日选股 Top 50（左 1-25，右 26-50，红色系渐变）
+- 任意股票输入：6 位代码或股票名（5528 条映射）
+- Kronos-small 实时预测 + DeepSeek 综合判断
+- 东方财富个股公告 API 接入
+- 双数据源：Yahoo Finance + 新浪财经备用
+
+### 数据流
+```
+本地 Mac（一次性）：
+  akshare 股票池 → 新浪财经 OHLCV → ohlcv.csv.gz (21MB) → git push
+
+GitHub Actions（每天 16:30）：
+  读 ohlcv.csv.gz → 增量追加当日 → Kronos 批量预测
+  → ranking.json → git push → GitHub Pages
+
+HF Space（随时）：
+  读 ranking.json → 榜单展示 + 个股实时预测
+```
+
+### 核心教训
+- 先验证数据源连通性，再设计流程，最后写代码
+- 先查文档再调用 API，不猜测参数格式
+- 部署优先配 SSH/Git
+- 简单错误积累导致大量重复工作（import 残留、变量名不匹配、pandas or 歧义）
