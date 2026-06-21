@@ -2,75 +2,59 @@
 
 ## 系统总览
 
-| 系统 | 功能 | 模型 | 数据源 | 触发 | 输出 |
-|------|------|------|--------|------|------|
-| 📰 情报 | 商品+A股新闻精选 | DeepSeek | 华尔街见闻 API | 每天 21:00 | Feedly RSS |
-| 🏆 选股 | 全市场横截面排序 | Kronos-small | 新浪财经 OHLCV | 每天 16:30 | ranking.json |
-| 📈 预测 | 商品+A股实时预测 | Chronos-2 + Kronos-sm | Yahoo/新浪/东方财富 | 随时 | HF Space |
-| 💰 成本 | $0/月 | | | | |
+| 系统 | 功能 | 模型 | 触发 | 输出 |
+|------|------|------|------|------|
+| 📰 情报 | 商品+A股新闻精选 | DeepSeek | 每天 21:00 | Feedly |
+| 🏆 选股 | A股横截面排序 | Kronos-small | 每天 16:30 | ranking.json |
+| 📈 预测 | 商品+A股实时预测 | Chronos-2 + Kronos-sm | 随时 | HF Space |
+| 💰 成本 | $0/月 | | | |
 
-## 完整架构
+## 情报系统
 
+华尔街见闻 API → GitHub Actions (21:00) → DeepSeek → RSS → GitHub Pages → Feedly
+
+## 选股系统
+
+### 股票池
+- 4条件：ST排除 / 科创板北交所 / 市值>80亿 / 成交额>1亿 → ~1000只
+- 每周一 Mac 本地 `python scripts/screen_pool.py` 重筛+下数据+推仓库
+- 日常自动跑忽略池子变动
+
+### 数据流
 ```
-情报系统：
-  华尔街见闻 API → GitHub Actions (21:00) → DeepSeek → RSS XML → GitHub Pages → Feedly
+Mac（每周）：screen_pool.py → 腾讯财经筛池 → 新浪财经 OHLCV → git push
 
-选股系统：
-  新浪财经 OHLCV → GitHub Actions (16:30, 两批并行) → Kronos-sm → ranking.json
-  → GitHub Pages → HF Space 榜单
+Actions（每天16:30）：读 OHLCV → 增量追加 → Kronos 预测 → ranking.json → git push
 
-预测平台 (HF Space)：
-  Chronos-2 (商品) + Kronos-sm (A股) + DeepSeek 综合判断
-  + 东方财富个股公告 + 新浪/雅虎双源 OHLCV
+Space（随时）：读 ranking.json → 榜单
 ```
 
----
-
-## 2026-06-19 — 情报系统搭建
-
-### 关键决策
-- 编排：Make → GitHub Actions
-- AI：Claude → DeepSeek
-- 信源：RSSHub(Cloudflare 403) → 华尔街见闻 API 直连
-- 输出：GitHub Pages RSS → Feedly
-
-### 关键修复
-- A股 idx 多批覆盖 → 顺序配对
-- A股混商品 → 双把关(频道+AI确认)
-- Feedly 缓存延迟 2-6h
-
----
-
-## 2026-06-20 — Chronos-2 预测平台 + Kronos 选股
-
-### HF Space 部署踩坑
-- pydantic 版本冲突、SSR 代理、端口环境变量
-- Gradio 6.x：gr.Plot 非 gr.Plotly
-- 模型加载懒加载避免启动超时
-- SSH 配置：git@hf.co 免手动上传
-
-### A股选股系统
-- 股票池：akshare → 新浪/腾讯 API 交叉验证 → 4365 只(93% 覆盖)
-- 缺失 334 只：上市不足 3 月，每日自动检测纳入
-- 数据格式：timestamp/target/item_id 三列，pd.to_datetime(format='mixed')
-- Kronos 必传：x_timestamp(Series) + y_timestamp(Series)
-
-### 并行优化
-- 4365 只单 Job ~7h 超 6h 限制 → 两批并行各 ~3.5h
-- batch-0 (前 2200) + batch-1 (后 2165) 并行 → merge 合并
+### 技术细节
+- Kronos-small：NeoQuasar/Kronos-small, 24.7M, MIT
+- 必传参数：x_timestamp(Series) + y_timestamp(Series)
+- 日期解析：ISO8601（快 5-6 倍）
 - 依赖：Kronos 官方 requirements.txt
+- 增量更新：先抽查10只有无新数据，无则跳，有则全量
 
-### Space A股标签功能
-- 🏆 Top 50 榜单：左 1-25，右 26-50，红色渐变
-- 任意输入：5528 条名→码映射，支持代码或名称
-- 实时预测：Kronos-sm + 东方财富个股公告 + DeepSeek 综合判断
-- 双数据源：Yahoo → 新浪备用
-- 刷新榜单自动更新下拉框
+## 预测平台 (HF Space)
+
+### 标签
+| 标签 | 功能 | 模型 |
+|------|------|------|
+| 🔮 综合 | 预测+AI判断+情报同屏 | Chronos-2+DeepSeek |
+| 🏭 商品 | 7品种预测 | Chronos-2 |
+| 🏦 A股 | 任意输入+Top50榜单 | Kronos-sm |
+| 📡 情报 | RSS精选 | — |
+
+### 数据源
+- 商品：Yahoo Finance
+- A股：Yahoo → 新浪备用
+- 公告：东方财富 API
+- 名码映射：5528条
 
 ## 核心教训
-1. 先验证数据源连通性 → 设计流程 → 写代码
-2. 先查 API 文档再调参数
-3. SSH/Git 优先，不手动上传
-4. 推送前本机校验
-5. 尽量避免 import 残留、变量名不匹配等低级错误
-6. 依赖用官方 requirements.txt，不手动猜包名
+1. 先验证数据源 → 设计流程 → 写代码
+2. 查完API文档再调
+3. SSH/Git优先，不手动上传
+4. 用官方requirements.txt，不猜包名
+5. 格式优化先测
