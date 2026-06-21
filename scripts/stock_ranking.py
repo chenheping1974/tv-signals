@@ -81,11 +81,11 @@ def update_ohlcv(pool):
                 new_rows.append(df)
         else:
             # 新股票：首次下载全量
-            if i % 500 == 0:  # 每天只检查一部分新股票，避免超时
-                df = download_sina(code)
-                if df is not None and len(df) >= 60:
-                    new_rows.append(df)
-                    print(f"   🆕 新纳入 {code}")
+            df = download_sina(code)
+            if df is not None and len(df) >= 60:
+                new_rows.append(df)
+                codes.add(code)
+                print(f"   🆕 新纳入 {code}")
         if i % 200 == 0:
             print(f"   [{i+1}/{len(pool)}] {len(new_rows)} 批新数据")
         time.sleep(0.05)
