@@ -59,8 +59,9 @@ def download_sina(code):
 # ── OHLCV 增量更新 ─────────────────────────────────
 def update_ohlcv(pool):
     """增量更新 OHLCV：读取已有数据，仅追加当日最新"""
-    existing = pd.read_csv(OHLCV_FILE, parse_dates=["date"]) if OHLCV_FILE.exists() else pd.DataFrame()
+    existing = pd.read_csv(OHLCV_FILE) if OHLCV_FILE.exists() else pd.DataFrame()
     if not existing.empty:
+        existing["date"] = pd.to_datetime(existing["date"], format='mixed')
         last_date = existing["date"].max()
         today = pd.Timestamp.now().normalize()
         if last_date >= today - pd.Timedelta(days=1):
