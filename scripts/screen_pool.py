@@ -50,4 +50,35 @@ pool.sort(key=lambda x: x.get("turnover", 0), reverse=True)
 data = {"last_screened": datetime.now().strftime("%Y-%m-%d"), "stocks": pool}
 with open(BASE / "data/stock_pool.json", "w") as f:
     json.dump(data, f, ensure_ascii=False, indent=2)
-print(f"✅ {len(pool)} 只，git push 即可")
+print(f"✅ 池子: {len(pool)} 只")
+
+# ── 下载 OHLCV ──
+import pandas as pd
+print(f"📥 下载 {len(pool)} 只 OHLCV...")
+rows = []
+for i, s in enumerate(pool):
+    code = s["code"]
+    sym = f"sh{code}" if code.startswith("6") else f"sz{code}"
+    try:
+        r = requests.get(f"https://money.finance.sina.com.cn/quotes_service/api/json_v2.php/CN_MarketData.getKLineData?symbol={sym}&scale=240&ma=no&datalen=500", timeout=15)
+        data = r.json()
+        if isinstance(data, list) and len(data) >= 100:
+            df = pd.DataFrame(data)
+            df = df.rename(columns={"day":"date","open":"open","high":"high","low":"low","close":"close"})
+            df["code"] = code; df["date"] = pd.to_datetime(df["date"])
+            for c in ["open","high","low","close"]:
+                df[c] = pd.to_numeric(df[c], errors="coerce")
+            rows.append(df[["date","code","open","high","low","close"]].dropna())
+    except: pass
+    if i % 200 == 0:
+        print(f"  [{i+1}/{len(pool)}] {len(rows)}只")
+
+all_data = pd.concat(rows, ignore_index=True)
+all_data.to_csv(BASE / "data/ohlcv.csv.gz", index=False, compression="gzip")
+# 对齐池子
+ohlcv_codes = set(all_data["code"].astype(str).str.zfill(6).unique())
+final_pool = [s for s in pool if s["code"] in ohlcv_codes]
+data["stocks"] = final_pool
+with open(BASE / "data/stock_pool.json", "w") as f:
+    json.dump(data, f, ensure_ascii=False, indent=2)
+print(f"✅ 池子{len(final_pool)}只, OHLCV{len(all_data)}行, 对齐完成 → git push")
