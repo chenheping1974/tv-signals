@@ -43,7 +43,7 @@ def download_sina(code):
     try:
         r = requests.get(url, timeout=15)
         data = json.loads(r.text)
-        if not isinstance(data, list) or len(data) < 100:
+        if not isinstance(data, list) or len(data) < 60:
             return None
         df = pd.DataFrame(data)
         df = df.rename(columns={"day": "date", "open": "open", "high": "high", "low": "low", "close": "close"})
@@ -126,7 +126,7 @@ def load_kronos():
 def predict_single(predictor, ohlcv, code):
     """预测单只股票 30 天涨跌幅"""
     df = ohlcv[ohlcv["code"].astype(str).str.zfill(6) == str(code).zfill(6)].sort_values("date").tail(512)
-    if len(df) < 100:
+    if len(df) < 60:
         return None
     try:
         last_date = pd.to_datetime(df["date"]).iloc[-1]
