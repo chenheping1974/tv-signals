@@ -125,7 +125,7 @@ def load_kronos():
 
 def predict_single(predictor, ohlcv, code):
     """预测单只股票 30 天涨跌幅"""
-    df = ohlcv[ohlcv["code"].astype(str) == str(code)].sort_values("date").tail(512)
+    df = ohlcv[ohlcv["code"].astype(str).str.zfill(6) == str(code).zfill(6)].sort_values("date").tail(512)
     if len(df) < 100:
         return None
     try:
