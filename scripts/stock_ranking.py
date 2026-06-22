@@ -67,7 +67,7 @@ def update_ohlcv(pool):
         today = pd.Timestamp.now().normalize()
         if last_date >= today - pd.Timedelta(days=1):
             print(f"✅ OHLCV 已最新 (截止 {last_date.date()})")
-            return existing
+            return existing, True
         print(f"📥 追加 {last_date.date()} → {today.date()} 数据...")
 
     new_rows, codes = [], set(existing["code"].astype(str).str.zfill(6).unique()) if not existing.empty else set()
@@ -84,7 +84,7 @@ def update_ohlcv(pool):
                     break
     if not need_update:
         print(f"✅ 无需更新（今日无新数据）")
-        return existing
+        return existing, True, False
 
     # 有新数据：全量更新
     print(f"📥 发现新数据，全量更新...")
@@ -108,7 +108,7 @@ def update_ohlcv(pool):
         time.sleep(0.05)
 
     if not new_rows:
-        return existing
+        return existing, True
 
     new_df = pd.concat(new_rows, ignore_index=True)
     combined = pd.concat([existing, new_df], ignore_index=True) if not existing.empty else new_df
@@ -119,7 +119,7 @@ def update_ohlcv(pool):
 
     if not new_rows:
         print("⚠️ 无新数据")
-        return existing
+        return existing, True
 
     new_df = pd.concat(new_rows, ignore_index=True)
     new_df["date"] = pd.to_datetime(new_df["date"], format='ISO8601').dt.normalize()
@@ -184,7 +184,12 @@ def main():
     print(f"📊 股票池: {len(pool)} 只")
 
     # 2. OHLCV 增量更新
-    ohlcv = update_ohlcv(pool)
+    ohlcv, has_new = update_ohlcv(pool)
+
+    # 如果没有新数据且已有排名，跳过
+    if not has_new and RANKING_FILE.exists():
+        print("✅ 无新数据 + 已有排名 → 跳过预测")
+        return
 
     # 3. 加载 Kronos
     print("🤖 加载 Kronos-small...")
