@@ -77,14 +77,17 @@ def main():
     pool = load_pool()
     print(f"📊 股票池: {len(pool)} 只")
 
-    # 今天已跑过就跳
+    ohlcv = load_ohlcv()
+    data_date = ohlcv["date"].max().date()
+
+    # OHLCV没更新就跳
     if RANKING_FILE.exists():
         old = json.loads(RANKING_FILE.read_text())
-        if old.get("updated", "")[:10] == datetime.now().strftime("%Y-%m-%d"):
-            print("✅ 今日已更新, 跳过")
+        rank_date = old.get("updated", "")[:10]
+        if str(data_date) <= rank_date:
+            print(f"✅ 数据未更新(OHLCV:{data_date} ≤ 排名:{rank_date}), 跳过")
             return
 
-    ohlcv = load_ohlcv()
     print("🤖 加载 Kronos-small...")
     predictor = load_kronos()
 
