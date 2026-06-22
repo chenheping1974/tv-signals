@@ -67,11 +67,11 @@ def update_ohlcv(pool):
         print("✅ 无需更新（今日无新数据）")
         return existing, False
 
-    # 增量追加前100只
-    print("📥 增量追加(前100只)...")
+    # 增量追加全部
+    print(f"📥 增量追加({len(pool)}只)...")
     codes = set(existing["code"].astype(str).str.zfill(6).unique())
     new_rows = []
-    for i, s in enumerate(pool[:100]):
+    for i, s in enumerate(pool):
         code = str(s["code"]).zfill(6)
         if code in codes:
             df = download_sina(code)
