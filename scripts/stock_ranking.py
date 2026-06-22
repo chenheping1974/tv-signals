@@ -6,7 +6,7 @@ from datetime import datetime, timedelta
 from pathlib import Path
 import pandas as pd
 import numpy as np
-import yfinance as yf
+import requests as req
 
 ROOT = Path(__file__).resolve().parent.parent
 DATA_DIR = ROOT / "data"
@@ -25,72 +25,12 @@ def load_pool():
         return raw["stocks"][:MAX_STOCKS]
     return raw[:MAX_STOCKS]
 
-# ── OHLCV 增量（yfinance批量） ──────────────────────
-def update_ohlcv(pool):
-    existing = pd.read_csv(OHLCV_FILE) if OHLCV_FILE.exists() else pd.DataFrame()
-    if not existing.empty:
-        existing["date"] = pd.to_datetime(existing["date"], format='ISO8601')
-        last_date = existing["date"].max()
-        today = pd.Timestamp.now().normalize()
-        if last_date >= today - pd.Timedelta(days=1):
-            print(f"✅ OHLCV已最新 (截止{last_date.date()})")
-            return existing, False
-
-    # 抽查前10只：单只下载避免SQLite锁
-    need_update = False
-    if not existing.empty:
-        for s in pool[:10]:
-            code = str(s["code"]).zfill(6)
-            sym = f"{code}.{'SS' if code.startswith('6') else 'SZ'}"
-            try:
-                tk = yf.Ticker(sym)
-                df = tk.history(period="5d")
-                if len(df) > 0:
-                    new_last = df.index.max()
-                    mask = existing["code"].astype(str).str.zfill(6) == code
-                    if mask.any() and new_last > existing[mask]["date"].max():
-                        need_update = True
-                        break
-            except: pass
-
-    if not need_update:
-        print("✅ 无需更新（今日无新数据）")
-        return existing, False
-
-    # 增量追加：单只下载避免锁
-    print(f"📥 增量追加({len(pool)}只)...")
-    new_rows, codes = [], set(existing["code"].astype(str).str.zfill(6).unique())
-    for i, s in enumerate(pool):
-        code = str(s["code"]).zfill(6)
-        if code in codes:
-            sym = f"{code}.{'SS' if code.startswith('6') else 'SZ'}"
-            try:
-                df = yf.Ticker(sym).history(period="5d")
-                if len(df) > 0:
-                    df = df.reset_index()
-                    df.columns = [c.lower() for c in df.columns]
-                    mask = existing["code"].astype(str).str.zfill(6) == code
-                    if mask.any():
-                        old_dates = set(existing[mask]["date"])
-                        df = df[~df["date"].isin(old_dates)]
-                    if len(df) > 0:
-                        for c in ["open","high","low","close"]:
-                            if c in df.columns: df[c] = pd.to_numeric(df[c], errors="coerce")
-                        df["code"] = code
-                        new_rows.append(df[["date","code","open","high","low","close"]].dropna())
-            except: pass
-        if i % 200 == 0:
-            print(f"   [{i+1}/{len(pool)}] {len(new_rows)}批")
-        time.sleep(0.1)
-
-    if not new_rows:
-        return existing, True
-    new_df = pd.concat(new_rows, ignore_index=True)
-    combined = pd.concat([existing, new_df], ignore_index=True)
-    combined = combined.drop_duplicates(subset=["date","code"]).sort_values(["code","date"])
-    combined.to_csv(OHLCV_FILE, index=False, compression="gzip")
-    print(f"✅ OHLCV: {combined['code'].nunique()}只, +{len(new_df)}行")
-    return combined, True
+# ── OHLCV 加载 ─────────────────────────────────────
+def load_ohlcv():
+    df = pd.read_csv(OHLCV_FILE)
+    df["date"] = pd.to_datetime(df["date"], format='ISO8601')
+    print(f"📊 OHLCV: {df['code'].nunique()}只, 截止{df['date'].max().date()}")
+    return df
 
 # ── Kronos 模型 ─────────────────────────────────────
 def load_kronos():
@@ -137,11 +77,7 @@ def main():
     pool = load_pool()
     print(f"📊 股票池: {len(pool)} 只")
 
-    ohlcv, has_new = update_ohlcv(pool)
-    if not has_new and RANKING_FILE.exists():
-        print("✅ 无新数据,跳过预测")
-        return
-
+    ohlcv = load_ohlcv()
     print("🤖 加载 Kronos-small...")
     predictor = load_kronos()
 
