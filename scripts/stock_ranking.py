@@ -54,7 +54,8 @@ def update_ohlcv(pool):
                     if mask.any() and new_last > existing[mask]["date"].max():
                         need_update = True
                         break
-        except: pass
+        except Exception as e:
+            print(f"   ⚠️ 抽查失败: {e}")
 
     if not need_update:
         print("✅ 无需更新（今日无新数据）")
