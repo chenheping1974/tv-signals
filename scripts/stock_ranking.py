@@ -36,65 +36,52 @@ def update_ohlcv(pool):
             print(f"✅ OHLCV已最新 (截止{last_date.date()})")
             return existing, False
 
-    # yfinance批量抽查：只取前10只查有无新数据
+    # 抽查前10只：单只下载避免SQLite锁
     need_update = False
     if not existing.empty:
-        tickers = []
         for s in pool[:10]:
             code = str(s["code"]).zfill(6)
-            tickers.append(f"{code}.{'SS' if code.startswith('6') else 'SZ'}")
-        try:
-            data = yf.download(tickers, period="5d", progress=False)
-            if isinstance(data, tuple): data = data[0]
-            for s, t in zip(pool[:10], tickers):
-                if t in data.columns:
-                    new_last = data[t].dropna().index.max()
-                    code_str = str(s["code"]).zfill(6)
-                    mask = existing["code"].astype(str).str.zfill(6) == code_str
+            sym = f"{code}.{'SS' if code.startswith('6') else 'SZ'}"
+            try:
+                tk = yf.Ticker(sym)
+                df = tk.history(period="5d")
+                if len(df) > 0:
+                    new_last = df.index.max()
+                    mask = existing["code"].astype(str).str.zfill(6) == code
                     if mask.any() and new_last > existing[mask]["date"].max():
                         need_update = True
                         break
-        except Exception as e:
-            print(f"   ⚠️ 抽查失败: {e}")
+            except: pass
 
     if not need_update:
         print("✅ 无需更新（今日无新数据）")
         return existing, False
 
-    # 批量增量：10只一组
-    print(f"📥 yfinance批量增量({len(pool)}只)...")
+    # 增量追加：单只下载避免锁
+    print(f"📥 增量追加({len(pool)}只)...")
     new_rows, codes = [], set(existing["code"].astype(str).str.zfill(6).unique())
-    for i in range(0, len(pool), 10):
-        batch = pool[i:i+10]
-        tickers = []
-        for s in batch:
-            code = str(s["code"]).zfill(6)
-            tickers.append(f"{code}.{'SS' if code.startswith('6') else 'SZ'}")
-        try:
-            data = yf.download(tickers, period="5d", progress=False)
-            if isinstance(data, tuple): data = data[0]
-            for s, t in zip(batch, tickers):
-                if t not in data.columns: continue
-                df = data[t].dropna()
-                if df.empty: continue
-                df = df.reset_index()
-                df.columns = [c.lower() for c in df.columns]
-                df = df.rename(columns={"date":"date"})
-                code = str(s["code"]).zfill(6)
-                if code in codes:
+    for i, s in enumerate(pool):
+        code = str(s["code"]).zfill(6)
+        if code in codes:
+            sym = f"{code}.{'SS' if code.startswith('6') else 'SZ'}"
+            try:
+                df = yf.Ticker(sym).history(period="5d")
+                if len(df) > 0:
+                    df = df.reset_index()
+                    df.columns = [c.lower() for c in df.columns]
                     mask = existing["code"].astype(str).str.zfill(6) == code
                     if mask.any():
                         old_dates = set(existing[mask]["date"])
                         df = df[~df["date"].isin(old_dates)]
-                if len(df) > 0:
-                    df["code"] = code
-                    for c in ["open","high","low","close"]:
-                        if c in df.columns: df[c] = pd.to_numeric(df[c], errors="coerce")
-                    new_rows.append(df[["date","code","open","high","low","close"]].dropna())
-        except: pass
+                    if len(df) > 0:
+                        for c in ["open","high","low","close"]:
+                            if c in df.columns: df[c] = pd.to_numeric(df[c], errors="coerce")
+                        df["code"] = code
+                        new_rows.append(df[["date","code","open","high","low","close"]].dropna())
+            except: pass
         if i % 200 == 0:
-            print(f"   [{min(i+10,len(pool))}/{len(pool)}] {len(new_rows)}批")
-        time.sleep(0.5)
+            print(f"   [{i+1}/{len(pool)}] {len(new_rows)}批")
+        time.sleep(0.1)
 
     if not new_rows:
         return existing, True
