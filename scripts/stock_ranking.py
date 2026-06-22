@@ -36,17 +36,17 @@ def update_ohlcv(pool):
             print(f"✅ OHLCV已最新 (截止{last_date.date()})")
             return existing, False
 
-    # yfinance批量抽查：只取前50只查有无新数据
+    # yfinance批量抽查：只取前10只查有无新数据
     need_update = False
     if not existing.empty:
         tickers = []
-        for s in pool[:50]:
+        for s in pool[:10]:
             code = str(s["code"]).zfill(6)
             tickers.append(f"{code}.{'SS' if code.startswith('6') else 'SZ'}")
         try:
             data = yf.download(tickers, period="5d", progress=False)
             if isinstance(data, tuple): data = data[0]
-            for s, t in zip(pool[:50], tickers):
+            for s, t in zip(pool[:10], tickers):
                 if t in data.columns:
                     new_last = data[t].dropna().index.max()
                     code_str = str(s["code"]).zfill(6)
@@ -60,11 +60,11 @@ def update_ohlcv(pool):
         print("✅ 无需更新（今日无新数据）")
         return existing, False
 
-    # 批量增量：50只一组
+    # 批量增量：10只一组
     print(f"📥 yfinance批量增量({len(pool)}只)...")
     new_rows, codes = [], set(existing["code"].astype(str).str.zfill(6).unique())
-    for i in range(0, len(pool), 50):
-        batch = pool[i:i+50]
+    for i in range(0, len(pool), 10):
+        batch = pool[i:i+10]
         tickers = []
         for s in batch:
             code = str(s["code"]).zfill(6)
@@ -92,7 +92,7 @@ def update_ohlcv(pool):
                     new_rows.append(df[["date","code","open","high","low","close"]].dropna())
         except: pass
         if i % 200 == 0:
-            print(f"   [{min(i+50,len(pool))}/{len(pool)}] {len(new_rows)}批")
+            print(f"   [{min(i+10,len(pool))}/{len(pool)}] {len(new_rows)}批")
         time.sleep(0.5)
 
     if not new_rows:
