@@ -6,7 +6,7 @@ from datetime import datetime, timedelta
 from pathlib import Path
 import pandas as pd
 import numpy as np
-import requests as req
+import yfinance as yf
 
 ROOT = Path(__file__).resolve().parent.parent
 DATA_DIR = ROOT / "data"
@@ -25,21 +25,7 @@ def load_pool():
         return raw["stocks"][:MAX_STOCKS]
     return raw[:MAX_STOCKS]
 
-# ── 新浪数据 ────────────────────────────────────────
-def download_sina(code):
-    sym = f"sh{code}" if code.startswith("6") else f"sz{code}"
-    r = req.get(f"https://money.finance.sina.com.cn/quotes_service/api/json_v2.php/CN_MarketData.getKLineData?symbol={sym}&scale=240&ma=no&datalen=500", timeout=10)
-    data = r.json()
-    if not isinstance(data, list) or len(data) < 60:
-        return None
-    df = pd.DataFrame(data)
-    df = df.rename(columns={"day":"date","open":"open","high":"high","low":"low","close":"close"})
-    df["code"] = code; df["date"] = pd.to_datetime(df["date"])
-    for c in ["open","high","low","close"]:
-        df[c] = pd.to_numeric(df[c], errors="coerce")
-    return df[["date","code","open","high","low","close"]].dropna()
-
-# ── OHLCV 增量 ─────────────────────────────────────
+# ── OHLCV 增量（yfinance批量） ──────────────────────
 def update_ohlcv(pool):
     existing = pd.read_csv(OHLCV_FILE) if OHLCV_FILE.exists() else pd.DataFrame()
     if not existing.empty:
@@ -50,41 +36,64 @@ def update_ohlcv(pool):
             print(f"✅ OHLCV已最新 (截止{last_date.date()})")
             return existing, False
 
-    # 抽查10只
+    # yfinance批量抽查：只取前50只查有无新数据
     need_update = False
     if not existing.empty:
-        for s in pool[:10]:
-            df = download_sina(s["code"])
-            if df is not None and len(df) > 0:
-                code_str = str(s["code"]).zfill(6)
-                mask = existing["code"].astype(str).str.zfill(6) == code_str
-                if mask.any():
-                    last = existing[mask]["date"].max()
-                    if (df["date"].max() > last):
+        tickers = []
+        for s in pool[:50]:
+            code = str(s["code"]).zfill(6)
+            tickers.append(f"{code}.{'SS' if code.startswith('6') else 'SZ'}")
+        try:
+            data = yf.download(tickers, period="5d", progress=False)
+            if isinstance(data, tuple): data = data[0]
+            for s, t in zip(pool[:50], tickers):
+                if t in data.columns:
+                    new_last = data[t].dropna().index.max()
+                    code_str = str(s["code"]).zfill(6)
+                    mask = existing["code"].astype(str).str.zfill(6) == code_str
+                    if mask.any() and new_last > existing[mask]["date"].max():
                         need_update = True
                         break
+        except: pass
+
     if not need_update:
         print("✅ 无需更新（今日无新数据）")
         return existing, False
 
-    # 增量追加全部
-    print(f"📥 增量追加({len(pool)}只)...")
-    codes = set(existing["code"].astype(str).str.zfill(6).unique())
-    new_rows = []
-    for i, s in enumerate(pool):
-        code = str(s["code"]).zfill(6)
-        if code in codes:
-            df = download_sina(code)
-            if df is not None:
-                mask = existing["code"].astype(str).str.zfill(6) == code
-                if mask.any():
-                    old_dates = set(existing[mask]["date"])
-                    df = df[~df["date"].isin(old_dates)]
+    # 批量增量：50只一组
+    print(f"📥 yfinance批量增量({len(pool)}只)...")
+    new_rows, codes = [], set(existing["code"].astype(str).str.zfill(6).unique())
+    for i in range(0, len(pool), 50):
+        batch = pool[i:i+50]
+        tickers = []
+        for s in batch:
+            code = str(s["code"]).zfill(6)
+            tickers.append(f"{code}.{'SS' if code.startswith('6') else 'SZ'}")
+        try:
+            data = yf.download(tickers, period="5d", progress=False)
+            if isinstance(data, tuple): data = data[0]
+            for s, t in zip(batch, tickers):
+                if t not in data.columns: continue
+                df = data[t].dropna()
+                if df.empty: continue
+                df = df.reset_index()
+                df.columns = [c.lower() for c in df.columns]
+                df = df.rename(columns={"date":"date"})
+                code = str(s["code"]).zfill(6)
+                if code in codes:
+                    mask = existing["code"].astype(str).str.zfill(6) == code
+                    if mask.any():
+                        old_dates = set(existing[mask]["date"])
+                        df = df[~df["date"].isin(old_dates)]
                 if len(df) > 0:
-                    new_rows.append(df)
-        if i % 50 == 0:
-            print(f"   [{i+1}/100] {len(new_rows)}批")
-        time.sleep(0.05)
+                    df["code"] = code
+                    for c in ["open","high","low","close"]:
+                        if c in df.columns: df[c] = pd.to_numeric(df[c], errors="coerce")
+                    new_rows.append(df[["date","code","open","high","low","close"]].dropna())
+        except: pass
+        if i % 200 == 0:
+            print(f"   [{min(i+50,len(pool))}/{len(pool)}] {len(new_rows)}批")
+        time.sleep(0.5)
 
     if not new_rows:
         return existing, True
