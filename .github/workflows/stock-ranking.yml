@@ -2,7 +2,7 @@ name: A股横截面选股
 
 on:
   schedule:
-    - cron: '30 8 * * 1-5'
+    - cron: '30 8 * * 1,2,3,4,5'
   workflow_dispatch:
 
 jobs:
