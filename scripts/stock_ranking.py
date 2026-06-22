@@ -78,14 +78,49 @@ def main():
     print(f"📊 股票池: {len(pool)} 只")
 
     ohlcv = load_ohlcv()
-    data_date = ohlcv["date"].max().date()
+    data_date = ohlcv["date"].max()
+    today = pd.Timestamp.now().normalize()
 
-    # OHLCV没更新就跳
+    # 数据不是最新 → 新浪增量
+    if data_date < today - pd.Timedelta(days=1):
+        print(f"📥 新浪增量 ({data_date.date()} → {today.date()})...")
+        codes = set(ohlcv["code"].astype(str).str.zfill(6).unique())
+        new_rows, cnt = [], 0
+        for s in pool:
+            code = str(s["code"]).zfill(6)
+            if code not in codes: continue
+            sym = f"sh{code}" if code.startswith("6") else f"sz{code}"
+            try:
+                r = req.get(f"https://money.finance.sina.com.cn/quotes_service/api/json_v2.php/CN_MarketData.getKLineData?symbol={sym}&scale=240&ma=no&datalen=10", timeout=10)
+                data = r.json()
+                if isinstance(data, list) and len(data) > 0:
+                    df = pd.DataFrame(data)
+                    df = df.rename(columns={"day":"date","open":"open","high":"high","low":"low","close":"close"})
+                    df["code"] = code; df["date"] = pd.to_datetime(df["date"])
+                    for c in ["open","high","low","close"]:
+                        df[c] = pd.to_numeric(df[c], errors="coerce")
+                    df = df[df["date"] > data_date]
+                    if len(df) > 0:
+                        new_rows.append(df[["date","code","open","high","low","close"]].dropna())
+            except: pass
+            cnt += 1
+            if cnt % 200 == 0:
+                print(f"   [{cnt}/{len(pool)}] {len(new_rows)}只")
+        if new_rows:
+            new_df = pd.concat(new_rows, ignore_index=True)
+            ohlcv = pd.concat([ohlcv, new_df], ignore_index=True)
+            ohlcv = ohlcv.drop_duplicates(subset=["date","code"]).sort_values(["code","date"])
+            ohlcv.to_csv(OHLCV_FILE, index=False, compression="gzip")
+            data_date = ohlcv["date"].max()
+            print(f"✅ OHLCV更新: +{len(new_df)}行, 截止{data_date.date()}")
+        else:
+            print("⚠️ 无新数据")
+
+    # 排名日期≥数据日期就跳
     if RANKING_FILE.exists():
         old = json.loads(RANKING_FILE.read_text())
-        rank_date = old.get("updated", "")[:10]
-        if str(data_date) <= rank_date:
-            print(f"✅ 数据未更新(OHLCV:{data_date} ≤ 排名:{rank_date}), 跳过")
+        if old.get("updated", "")[:10] >= str(data_date.date()):
+            print(f"✅ 排名已最新, 跳过")
             return
 
     print("🤖 加载 Kronos-small...")
