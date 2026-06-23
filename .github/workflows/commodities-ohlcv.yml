@@ -1,0 +1,38 @@
+name: 大宗商品OHLCV更新
+
+on:
+  schedule:
+    # 北京时间每天08:00 = UTC 00:00（商品收盘后）
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: main }
+
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+
+      - name: 安装依赖
+        run: pip install pandas requests
+
+      - name: 更新商品OHLCV
+        run: python scripts/update_commodities.py
+
+      - name: 提交
+        run: |
+          git config user.name "commodity-bot"
+          git config user.email "bot@tv-signals.local"
+          git add data/commodities_ohlcv.csv.gz
+          git diff --staged --quiet || (git commit -m "商品OHLCV更新 [$(date +%Y-%m-%d)]" && git pull --rebase && git push)
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: { name: commodities-ohlcv-backup, path: data/commodities_ohlcv.csv.gz }
