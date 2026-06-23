@@ -66,3 +66,93 @@ Space(商品)：Chronos-2 + 排名缓存 + DeepSeek
 4. Cron显式写，避免范围格式解析失败
 5. yfinance在Actions多问题，新浪稳定
 6. 增量只拉少量数据（datalen=10），不全量重下
+
+## 2026-06-22 数据源审计 & 商品数据方案
+
+### 问题发现
+
+排查大宗商品数据链路，发现以下问题：
+
+| 功能 | 当前数据源 | 实测结果 |
+|------|-----------|----------|
+| 大宗商品预测（Chronos） | yfinance `period="10y"` | 6品种全部限流失败 |
+| A股单支预测（Kronos） | yfinance → fallback 新浪 | yf先挂2.7s再走新浪0.3s |
+| A股排行榜 ranking.json | 新浪财经（Actions） | ✅ 稳定 |
+
+### 数据源实测
+
+**yfinance（本地）：**
+- GC=F, SI=F, CL=F, HG=F, AH=F, ZM=F 全部 `YFRateLimitError`
+- A股 601899.SS 同样限流
+- 结论：6个请求就触发封禁，不可靠
+
+**新浪全球期货 API：**
+```
+GET stock2.finance.sina.com.cn/futures/api/jsonp.php/
+    ?symbol=GC&_=2026_6_22
+    /GlobalFuturesService.getGlobalFuturesDailyKLine
+```
+
+| 商品 | 代码 | 数据量 | 起始 |
+|------|------|--------|------|
+| 黄金 | GC | 2,589 | 2016-06 |
+| 白银 | SI | 2,589 | 2016-06 |
+| 原油 | CL | 7,687 | 1996-06 |
+| 美铜 | HG | 2,590 | 2016-06 |
+| 伦铝 | AHD | 2,537 | 2016-06 |
+| 豆粕 | SM | 2,542 | 2016-06 |
+
+- 10次快速连续请求全部200，无限流
+- OHLC齐全，成交量除伦铝外为0（不影响价格预测）
+- AKShare底层同源，社区验证多年
+
+**两个新浪 API 的区别：**
+
+| | 全球期货 API | A 股 API |
+|------|-------------|---------|
+| 域名 | `stock2.finance.sina.com.cn` | `money.finance.sina.com.cn` |
+| 路径 | `/futures/api/jsonp.php/` | `/quotes_service/api/json_v2.php/` |
+| 服务 | `GlobalFuturesService.getGlobalFuturesDailyKLine` | `CN_MarketData.getKLineData` |
+| 返回格式 | **JSONP**（需去包装） | **纯 JSON** |
+| 参数 | `symbol=GC` | `symbol=sh601899&scale=240&datalen=400` |
+| 数据量控制 | 无分页参数，返回全量 | `datalen=N` 可控 |
+
+⚠️ 不是同一个 API，调用方式和解析逻辑都不同，不能直接复用 A 股现有代码。
+
+**新浪 A 股 API（已在用）：**
+- 端点：`money.finance.sina.com.cn/quotes_service/api/json_v2.php/CN_MarketData.getKLineData`
+- datalen=400: 0.3s，稳定
+- 排行榜 `stock_ranking.py` 早已纯新浪
+
+### 商品数据更新机制现状
+
+```
+用户点击"预测商品"
+  → 检查 data_{symbol}.csv 缓存
+    → ≤8h: 直接用
+    → >8h 或无: yfinance 增量/全量拉 → 存缓存
+  → 喂 Chronos-2
+```
+
+问题：
+1. 完全被动触发，无人点就不更新
+2. 缓存路径相对，Space重启全丢 → 重下10年 → 触发限流
+3. 排行榜串行6品种，任一个挂就缺结果
+4. yfinance 为唯一数据源，实测全部限流
+
+### 推荐方案（待明天确认）
+
+1. **商品数据换源**：yfinance → 新浪全球期货 API（和A股同体系）
+2. **Actions 定时更新**：每天拉6品种增量 → push `commodities_ohlcv.csv.gz`
+3. **Space 读缓存**：从 GitHub raw 下载到 `/home/user/`，防重启丢失
+4. **A股单支预测去 yf**：砍掉 yfinance 分支，纯新浪
+
+### A股单支预测数据链路
+
+```
+用户点预测 → try_yfinance(period="1y") → 失败(2.7s)
+           → fallback try_sina(datalen=400) → 成功(0.3s)
+           → 取后512根日线 → Kronos预测
+```
+
+不存缓存，每次实时拉。yf分支纯浪费3秒。
