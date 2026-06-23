@@ -156,3 +156,39 @@ GET stock2.finance.sina.com.cn/futures/api/jsonp.php/
 ```
 
 不存缓存，每次实时拉。yf分支纯浪费3秒。
+
+## 2026-06-23 数据源全链路修复
+
+### 已修复项
+
+| # | 问题 | 修复 | 涉及文件 |
+|---|------|------|----------|
+| 1 | 选股OHLCV更新条件off-by-one | `data_date < today` | `stock_ranking.py:85` |
+| 2 | 商品数据源yfinance限流 | 新浪全球期货API | `update_commodities.py` (新增) |
+| 3 | 商品无定时更新 | Actions每天08:00北京 | `.github/workflows/commodities-ohlcv.yml` |
+| 4 | 商品预测直接调yf | Space读共享csv.gz，冷启动从GitHub下载 | `app.py:predict()` |
+| 5 | A股单支预测yf浪费3s | 纯新浪，移除yfinance分支 | `app.py:predict_kronos_stock()` |
+
+### 当前数据源全貌
+
+| 功能 | 数据源 | 更新方式 |
+|------|--------|----------|
+| A股排行榜OHLCV | 新浪财经 | Actions 16:30 增量 |
+| 商品预测OHLCV | 新浪全球期货 | Actions 08:00 全量 |
+| A股单支预测 | 新浪财经 | 用户点击实时拉 |
+| 商品/A股情报 | 华尔街见闻 | Actions 21:00 |
+
+### 商品数据链路（新）
+
+```
+Actions(每天08:00北京)
+  → 新浪全球期货API(6品种全量日线)
+  → commodities_ohlcv.csv.gz
+  → git push
+
+Space冷启动
+  → GitHub raw下载 → /home/user/commodities_ohlcv.csv.gz
+
+Space预测
+  → 读/home/user/缓存 → 按symbol筛选 → Chronos-2
+```
