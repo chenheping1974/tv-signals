@@ -24,9 +24,7 @@ jobs:
         run: pip install pandas requests
 
       - name: 更新商品OHLCV
-        run: |
-          export PYTHONUNBUFFERED=1
-          python scripts/update_commodities.py
+        run: python scripts/update_commodities.py
 
       - name: 提交
         run: |

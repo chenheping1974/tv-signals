@@ -32,7 +32,6 @@ jobs:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: |
           export PYTHONPATH="/tmp/kronos_repo:$PYTHONPATH"
-          export PYTHONUNBUFFERED=1
           python scripts/stock_ranking.py
 
       - uses: actions/upload-artifact@v4
