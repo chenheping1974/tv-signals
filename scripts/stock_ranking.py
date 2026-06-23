@@ -82,7 +82,7 @@ def main():
     today = pd.Timestamp.now().normalize()
 
     # 数据不是最新 → 新浪增量
-    if data_date < today - pd.Timedelta(days=1):
+    if data_date < today:
         print(f"📥 新浪增量 ({data_date.date()} → {today.date()})...")
         codes = set(ohlcv["code"].astype(str).str.zfill(6).unique())
         new_rows, cnt = [], 0
