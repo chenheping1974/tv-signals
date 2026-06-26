@@ -55,7 +55,8 @@ jobs:
 
       - name: 安装依赖
         run: |
-          pip install pandas requests torch --index-url https://download.pytorch.org/whl/cpu
+          pip install pandas requests
+          pip install torch --index-url https://download.pytorch.org/whl/cpu
           pip install chronos-forecasting supabase
 
       - name: 预测排名
