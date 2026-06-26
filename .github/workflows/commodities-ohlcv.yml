@@ -1,12 +1,13 @@
-name: 大宗商品OHLCV更新
+name: 大宗商品数据+预测
 
 on:
   schedule:
-    # 北京时间每天08:00 = UTC 00:00（商品收盘后）
+    # 北京时间每天08:00 = UTC 00:00
     - cron: '0 0 * * *'
   workflow_dispatch:
 
 jobs:
+  # ── 第一步：拉K线 ──────────────────────
   update:
     runs-on: ubuntu-latest
     permissions:
@@ -36,3 +37,34 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with: { name: commodities-ohlcv-backup, path: data/commodities_ohlcv.csv.gz }
+
+  # ── 第二步：预测排名（等数据跑完）─────
+  ranking:
+    needs: update
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    timeout-minutes: 60
+
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: main }
+
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+
+      - name: 安装依赖
+        run: |
+          pip install pandas requests torch --index-url https://download.pytorch.org/whl/cpu
+          pip install chronos-forecasting
+
+      - name: 预测排名
+        run: python scripts/commodity_ranking.py
+
+      - name: 提交排名
+        run: |
+          git config user.name "commodity-bot"
+          git config user.email "bot@tv-signals.local"
+          git pull --rebase
+          git add data/commodity_ranking.json
+          git diff --staged --quiet || (git commit -m "商品排名更新 [$(date +%Y-%m-%d)]" && git push)
