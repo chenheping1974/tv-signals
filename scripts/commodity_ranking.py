@@ -105,6 +105,38 @@ def build_ranking(results):
     return rankings
 
 
+def push_to_supabase(results):
+    """写入Supabase，每行 = 一个品种/周期"""
+    import os
+    from supabase import create_client
+
+    url = os.environ.get("SUPABASE_URL")
+    key = os.environ.get("SUPABASE_KEY")
+    if not url or not key:
+        print("⚠️ 未配置SUPABASE, 跳过")
+        return
+
+    supabase = create_client(url, key)
+    now = datetime.now().isoformat()
+    rows = []
+    for r in results:
+        for label in HORIZONS:
+            pred = r.get(f"pred_{label}", {})
+            rows.append({
+                "updated": now,
+                "horizon": label,
+                "symbol": r["symbol"],
+                "name": r["name"],
+                "current": r["current"],
+                "target": pred.get("target"),
+                "pct": pred.get("pct"),
+                "low": pred.get("low"),
+                "high": pred.get("high"),
+            })
+
+    supabase.table("commodity_rankings").insert(rows).execute()
+    print(f"✅ Supabase: {len(rows)}行")
+
 def main():
     t0 = time.time()
     print(f"🤖 商品排名预测 {datetime.now():%Y-%m-%d %H:%M:%S}")
@@ -125,6 +157,10 @@ def main():
     }
 
     RANKING_FILE.write_text(json.dumps(output, ensure_ascii=False, indent=2))
+
+    # 写入Supabase
+    push_to_supabase(results)
+
     elapsed = (time.time() - t0) / 60
     print(f"✅ 完成: {len(results)}品种, {elapsed:.1f}分钟")
     for label in ["7d", "14d", "30d"]:

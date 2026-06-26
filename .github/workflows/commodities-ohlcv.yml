@@ -56,9 +56,12 @@ jobs:
       - name: 安装依赖
         run: |
           pip install pandas requests torch --index-url https://download.pytorch.org/whl/cpu
-          pip install chronos-forecasting
+          pip install chronos-forecasting supabase
 
       - name: 预测排名
+        env:
+          SUPABASE_URL: "https://apfdgetfqxgbplariowa.supabase.co"
+          SUPABASE_KEY: "sb_publishable_rb8wBIRHHXMOYSjDs8-LIQ_7jTR2B5o"
         run: python scripts/commodity_ranking.py
 
       - name: 提交排名
