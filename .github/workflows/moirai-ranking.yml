@@ -1,0 +1,43 @@
+name: Moirai-2商品排名
+
+on:
+  schedule:
+    # 北京时间11:00 = UTC 03:00（商品K线08:00已更新）
+    - cron: '0 3 * * *'
+  workflow_dispatch:
+
+jobs:
+  ranking:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    timeout-minutes: 30
+
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: main }
+
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+
+      - uses: actions/cache@v4
+        with: { path: ~/.cache/huggingface, key: hf-moirai-v1 }
+
+      - name: 安装依赖
+        run: |
+          pip install pandas numpy requests
+          pip install torch --index-url https://download.pytorch.org/whl/cpu
+          pip install uni2ts
+
+      - name: Moirai-2 预测排名
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: python scripts/moirai_ranking.py
+
+      - name: 提交结果
+        run: |
+          git config user.name "moirai-bot"
+          git config user.email "bot@tv-signals.local"
+          git pull --rebase
+          git add data/moirai_ranking.json
+          git diff --staged --quiet || (git commit -m "Moirai排名更新 [$(date +%Y-%m-%d)]" && git push)
