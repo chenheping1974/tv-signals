@@ -28,27 +28,15 @@ if last_date >= today:
     print("✅ 已是最新")
     exit(0)
 
-# 断点续传: 记录已下载到的位置
-RESUME_FILE = BASE / "data/.ohlcv_full_resume"
-resume_idx = 0
-if RESUME_FILE.exists():
-    try:
-        resume_idx = int(RESUME_FILE.read_text().strip())
-        print(f"📌 断点续传: 从第{resume_idx+1}只开始", flush=True)
-    except:
-        pass
-
 existing_codes = set(existing["code"].astype(str).str.zfill(6).unique()) if len(existing) > 0 else set()
 new_rows = []
 t0 = time.time()
-SAVE_EVERY = 500
 
-for i in range(resume_idx, len(ALL_CODES)):
-    code = ALL_CODES[i]
+for i, code in enumerate(ALL_CODES):
     sym = f"sh{code}" if code.startswith("6") else f"sz{code}"
     try:
         dl = 10 if code in existing_codes else 5000
-        r = req.get(f"https://money.finance.sina.com.cn/quotes_service/api/json_v2.php/CN_MarketData.getKLineData?symbol={sym}&scale=240&ma=no&datalen={dl}", timeout=15)
+        r = req.get(f"https://money.finance.sina.com.cn/quotes_service/api/json_v2.php/CN_MarketData.getKLineData?symbol={sym}&scale=240&ma=no&datalen={dl}", timeout=10)
         data = r.json()
         if not isinstance(data, list) or len(data) == 0:
             continue
@@ -63,40 +51,17 @@ for i in range(resume_idx, len(ALL_CODES)):
             new_rows.append(df[["date", "code", "open", "high", "low", "close"]].dropna())
     except Exception:
         pass
+    if (i + 1) % 100 == 0:
+        print(f"   [{i+1}/{len(ALL_CODES)}] {len(new_rows)}条, {(time.time()-t0)/60:.0f}min", flush=True)
 
-    # 定期存盘（仅存进度，最后统一合并）
-    if (i + 1) % SAVE_EVERY == 0:
-        RESUME_FILE.parent.mkdir(exist_ok=True)
-        RESUME_FILE.write_text(str(i + 1))
-        # 存临时增量到pickle，最后合并
-        import pickle
-        tmp = BASE / "data/.ohlcv_tmp.pkl"
-        with open(tmp, "wb") as f:
-            pickle.dump(new_rows, f)
-        print(f"   [{i+1}/{len(ALL_CODES)}] {len(new_rows)}条增量, {(time.time()-t0)/60:.0f}min", flush=True)
-
-# 清理断点
-if RESUME_FILE.exists():
-    RESUME_FILE.unlink()
-
-# 最终合并
-if new_rows:
-    batch = pd.concat(new_rows, ignore_index=True)
-    combined = pd.concat([existing, batch], ignore_index=True) if len(existing) > 0 else batch
-    combined = combined.drop_duplicates(subset=["date", "code"]).sort_values(["code", "date"])
-    # 每只股票只保留最后600根日线(TimesFM只用512)
-    combined = combined.groupby("code", group_keys=False).tail(600)
-    OHLCV_FILE.parent.mkdir(exist_ok=True)
-    combined.to_csv(OHLCV_FILE, index=False, compression="gzip")
-
-tmp = BASE / "data/.ohlcv_tmp.pkl"
-if tmp.exists():
-    tmp.unlink()
-
-if not OHLCV_FILE.exists():
-    print("❌ 无数据", flush=True)
+if not new_rows:
+    print("⚠️ 无新数据", flush=True)
     exit(1)
 
-df_final = pd.read_csv(OHLCV_FILE)
-df_final["date"] = pd.to_datetime(df_final["date"])
-print(f"✅ {df_final['code'].nunique()}只, {len(df_final)}行, 截止{df_final['date'].max().date()}, {(time.time()-t0)/60:.0f}分钟", flush=True)
+batch = pd.concat(new_rows, ignore_index=True)
+combined = pd.concat([existing, batch], ignore_index=True) if len(existing) > 0 else batch
+combined = combined.drop_duplicates(subset=["date", "code"]).sort_values(["code", "date"])
+combined = combined.groupby("code", group_keys=False).tail(600)
+OHLCV_FILE.parent.mkdir(exist_ok=True)
+combined.to_csv(OHLCV_FILE, index=False, compression="gzip")
+print(f"✅ {combined['code'].nunique()}只, {len(combined)}行, 截止{combined['date'].max().date()}, {(time.time()-t0)/60:.0f}分钟", flush=True)
