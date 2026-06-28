@@ -84,6 +84,8 @@ if new_rows:
     batch = pd.concat(new_rows, ignore_index=True)
     combined = pd.concat([existing, batch], ignore_index=True) if len(existing) > 0 else batch
     combined = combined.drop_duplicates(subset=["date", "code"]).sort_values(["code", "date"])
+    # 每只股票只保留最后600根日线(TimesFM只用512)
+    combined = combined.groupby("code", group_keys=False).tail(600)
     OHLCV_FILE.parent.mkdir(exist_ok=True)
     combined.to_csv(OHLCV_FILE, index=False, compression="gzip")
 
