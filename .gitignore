@@ -1,3 +1,4 @@
 .DS_Store
 *.log
 data/processed_urls.json
+.ohlcv_full_resume
