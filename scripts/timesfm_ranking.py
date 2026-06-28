@@ -18,6 +18,8 @@ BATCH_SIZE = 200
 
 
 def load_model():
+    import torch
+    torch.set_float32_matmul_precision("high")
     import timesfm as tfm
     print("⏳ 加载 TimesFM 2.5 (~400MB)...")
     model = tfm.TimesFM_2p5_200M_torch.from_pretrained(
