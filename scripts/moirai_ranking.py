@@ -75,7 +75,8 @@ def main():
         try:
             # Moirai-2 输入: (batch=1, time, dim=1)
             past = torch.tensor(close).view(1, -1, 1)
-            forecast = model(past_target=past)
+            pad_mask = torch.zeros_like(past)
+            forecast = model(past_observed_target=past, past_is_pad=pad_mask)
             # forecast: (1, PRED_STEPS, num_samples)
             if isinstance(forecast, torch.Tensor):
                 samples = forecast[0]  # (PRED_STEPS, num_samples)
