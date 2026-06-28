@@ -12,11 +12,43 @@ on:
         default: false
 
 jobs:
-  ranking:
+  # ── 全量K线增量 ─────────────────
+  update_full:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-    timeout-minutes: 180
+    timeout-minutes: 60
+
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: main }
+
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+
+      - name: 安装依赖
+        run: pip install pandas numpy requests
+
+      - name: 全量K线增量更新
+        run: python scripts/update_ohlcv_full.py
+
+      - name: 提交K线
+        run: |
+          git config user.name "timesfm-bot"
+          git config user.email "bot@tv-signals.local"
+          git add data/ohlcv_full.csv.gz
+          git diff --staged --quiet && exit 0
+          git commit -m "全量OHLCV更新 [$(date +%Y-%m-%d)]"
+          git pull --rebase
+          git push
+
+  # ── 精选999只预测 ─────────────────
+  pool_ranking:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    timeout-minutes: 60
+    needs: update_full
 
     steps:
       - uses: actions/checkout@v4
@@ -26,25 +58,66 @@ jobs:
         with: { python-version: '3.11' }
 
       - uses: actions/cache@v4
-        with: { path: ~/.cache/huggingface, key: hf-timesfm-v1 }
+        with: { path: ~/.cache/huggingface, key: hf-timesfm-v2 }
 
       - name: 安装依赖
         run: |
           pip install pandas numpy requests
           pip install torch --index-url https://download.pytorch.org/whl/cpu
-          pip install timesfm[torch]
+          pip install transformers accelerate
 
-      - name: TimesFM 批量预测
+      - name: TimesFM 精选999只预测
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: python scripts/timesfm_ranking.py
 
-      - name: 提交结果
+      - name: 提交精选排名
         run: |
           git config user.name "timesfm-bot"
           git config user.email "bot@tv-signals.local"
+          git pull --rebase
           git add data/timesfm_ranking.json
           git diff --staged --quiet && exit 0
-          git commit -m "TimesFM排名更新 [$(date +%Y-%m-%d)]"
+          git commit -m "TimesFM精选排名更新 [$(date +%Y-%m-%d)]"
+          git pull --rebase
+          git push
+
+  # ── 全量预测 ─────────────────────
+  full_ranking:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    timeout-minutes: 120
+    needs: update_full
+
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: main }
+
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+
+      - uses: actions/cache@v4
+        with: { path: ~/.cache/huggingface, key: hf-timesfm-v2 }
+
+      - name: 安装依赖
+        run: |
+          pip install pandas numpy requests
+          pip install torch --index-url https://download.pytorch.org/whl/cpu
+          pip install transformers accelerate
+
+      - name: TimesFM 全量预测
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: python scripts/timesfm_full_ranking.py
+
+      - name: 提交全量排名
+        run: |
+          git config user.name "timesfm-bot"
+          git config user.email "bot@tv-signals.local"
+          git pull --rebase
+          git add data/timesfm_full_ranking.json
+          git diff --staged --quiet && exit 0
+          git commit -m "TimesFM全量排名更新 [$(date +%Y-%m-%d)]"
           git pull --rebase
           git push

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""A股 TimesFM 2.5 预测排名 → timesfm_ranking.json"""
+"""TimesFM 2.5 全量A股预测 → timesfm_full_ranking.json"""
 import json, time
 from datetime import datetime
 from pathlib import Path
@@ -8,9 +8,9 @@ import numpy as np
 import pandas as pd
 
 ROOT = Path(__file__).resolve().parent.parent
-OHLCV_FILE = ROOT / "data/ohlcv.csv.gz"
-POOL_FILE = ROOT / "data/stock_pool.json"
-RANKING_FILE = ROOT / "data/timesfm_ranking.json"
+OHLCV_FILE = ROOT / "data/ohlcv_full.csv.gz"
+RANKING_FILE = ROOT / "data/timesfm_full_ranking.json"
+NAME_MAP_FILE = ROOT / "data/name_map.json"
 
 HORIZONS = {"7d": 5, "14d": 10, "30d": 22}
 PRED_STEPS = 30
@@ -29,11 +29,10 @@ def load_model():
 
 def main():
     t0 = time.time()
-    print(f"🤖 TimesFM A股排名 {datetime.now():%Y-%m-%d %H:%M:%S}")
+    print(f"🤖 TimesFM全量排名 {datetime.now():%Y-%m-%d %H:%M:%S}")
 
-    pool = json.loads(POOL_FILE.read_text())
-    stocks = pool if isinstance(pool, list) else pool.get("stocks", pool)
-    pool_codes = {str(s["code"]).zfill(6): s["name"] for s in stocks}
+    nm = json.loads(NAME_MAP_FILE.read_text())
+    name_of = {k: v for k, v in nm.items() if k.isdigit() and len(k) == 6}
 
     df = pd.read_csv(OHLCV_FILE)
     df["date"] = pd.to_datetime(df["date"])
@@ -45,8 +44,6 @@ def main():
     series, codes = [], []
     for code, grp in df.groupby("code"):
         code_str = str(code).zfill(6)
-        if code_str not in pool_codes:
-            continue
         close = grp["close"].tail(512).values.astype(np.float32)
         if len(close) < 60:
             continue
@@ -55,7 +52,7 @@ def main():
 
     print(f"📊 有效: {len(series)}只")
 
-    all_results = []
+    results = []
     for b in range(0, len(series), BATCH_SIZE):
         be = min(b + BATCH_SIZE, len(series))
         print(f"   [{b+1}-{be}/{len(series)}] ...", end=" ", flush=True)
@@ -78,7 +75,7 @@ def main():
             q = qfull[i, :PRED_STEPS]
             entry = {
                 "symbol": codes[b+i],
-                "name": pool_codes.get(codes[b+i], codes[b+i]),
+                "name": name_of.get(codes[b+i], codes[b+i]),
                 "current": round(current, 2),
             }
             for label, step in HORIZONS.items():
@@ -88,7 +85,7 @@ def main():
                 entry[f"pred_{label}"] = {"target": round(tgt, 2), "pct": round(pct, 2)}
                 entry[f"pred_{label}"]["low"] = round(float(q[idx, 0]), 2)
                 entry[f"pred_{label}"]["high"] = round(float(q[idx, 8]), 2)
-            all_results.append(entry)
+            results.append(entry)
 
         print(f"{time.time()-bt:.0f}s")
 
@@ -96,28 +93,29 @@ def main():
     for label in HORIZONS:
         key = f"pred_{label}"
         rankings[label] = sorted(
-            [r for r in all_results if key in r],
+            [r for r in results if key in r],
             key=lambda x: x[key]["pct"], reverse=True,
         )
 
     output = {
         "updated": datetime.now().isoformat(),
         "data_date": str(df["date"].max().date()),
+        "total_stocks": len(results),
         "rankings": {h: [
             {"symbol": r["symbol"], "name": r["name"],
              "current": r["current"], **r[f"pred_{h}"]}
             for r in rankings[h][:50]
         ] for h in HORIZONS},
-        "details": all_results,
+        "details": results,
     }
 
     RANKING_FILE.write_text(json.dumps(output, ensure_ascii=False, indent=2))
     elapsed = (time.time() - t0) / 60
-    print(f"✅ 完成: {len(all_results)}只, {elapsed:.1f}分钟")
+    print(f"✅ 完成: {len(results)}只, {elapsed:.1f}分钟")
     for label in ["7d", "14d", "30d"]:
         top = rankings[label][:3]
         print(f"   {label} Top3: " + " | ".join(
-            f"{r['name']} {r[f'pred_{label}']['pct']:+.1f}%" for r in top))
+            f"{r['name']} {r['pct']:+.1f}%" for r in top))
 
 
 if __name__ == "__main__":
