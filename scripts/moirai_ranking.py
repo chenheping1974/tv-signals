@@ -26,13 +26,13 @@ PRED_STEPS = 30
 
 
 def load_model():
-    from uni2ts.model.moirai import Moirai2Forecast, Moirai2Module
+    from uni2ts.model.moirai2 import Moirai2Forecast, Moirai2Module
     print("⏳ 加载 Moirai-2 Small (~100MB)...")
     module = Moirai2Module.from_pretrained("Salesforce/moirai-2.0-R-small")
     model = Moirai2Forecast(
         module=module,
         prediction_length=PRED_STEPS,
-        context_length=512,
+        context_length=1680,
         target_dim=1,
         feat_dynamic_real_dim=0,
         past_feat_dynamic_real_dim=0,
@@ -66,7 +66,10 @@ def main():
             print(f"❌ 数据不足")
             continue
 
-        close = sub["close"].tail(512).values.astype(np.float32)
+        close = sub["close"].tail(2000).values.astype(np.float32)
+        if len(close) < 100:
+            print(f"❌ 数据不足 ({len(close)}行)")
+            continue
         current = float(close[-1])
 
         try:
