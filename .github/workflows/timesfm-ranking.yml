@@ -1,6 +1,8 @@
 name: TimesFM A股排名
 
 on:
+  push:
+    paths: ['.trigger/timesfm']
   schedule:
     - cron: '0 14 * * 1,2,3,4,5'
   workflow_dispatch:
