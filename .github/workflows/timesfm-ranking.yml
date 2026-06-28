@@ -1,8 +1,9 @@
 name: TimesFM A股排名
 
 on:
+  push:
+    paths: ['.trigger/timesfm']
   schedule:
-    # 北京时间22:00 = UTC 14:00（A股选股16:30已跑完）
     - cron: '0 14 * * 1,2,3,4,5'
   workflow_dispatch:
     inputs:

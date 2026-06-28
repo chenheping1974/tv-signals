@@ -1,8 +1,9 @@
 name: Moirai-2商品排名
 
 on:
+  push:
+    paths: ['.trigger/moirai']
   schedule:
-    # 北京时间11:00 = UTC 03:00（商品K线08:00已更新）
     - cron: '0 3 * * *'
   workflow_dispatch:
     inputs:
