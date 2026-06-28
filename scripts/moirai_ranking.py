@@ -6,7 +6,6 @@ from pathlib import Path
 
 import numpy as np
 import pandas as pd
-import torch
 
 ROOT = Path(__file__).resolve().parent.parent
 OHLCV_FILE = ROOT / "data/commodities_ohlcv.csv.gz"
@@ -23,11 +22,14 @@ COMMODITIES = {
 
 HORIZONS = {"7d": 5, "14d": 10, "30d": 22}
 PRED_STEPS = 30
+CTX_LEN = 512  # 数据窗口, 模型会取1680内但用不了那么多
 
 
-def load_model():
+def load_predictor():
+    """官方API: create_predictor"""
     from uni2ts.model.moirai2 import Moirai2Forecast, Moirai2Module
-    print("⏳ 加载 Moirai-2 Small (~100MB)...")
+
+    print("⏳ 加载 Moirai-2 Small...")
     module = Moirai2Module.from_pretrained("Salesforce/moirai-2.0-R-small")
     model = Moirai2Forecast(
         module=module,
@@ -37,8 +39,21 @@ def load_model():
         feat_dynamic_real_dim=0,
         past_feat_dynamic_real_dim=0,
     )
+    predictor = model.create_predictor(batch_size=1)
     print("✅ Moirai-2 就绪")
-    return model
+    return predictor
+
+
+def gluonts_dataset(close_prices):
+    """构造单变量GluonTS数据集"""
+    from gluonts.dataset.common import ListDataset
+    # GluonTS期望: [{"target": array, "start": timestamp}, ...]
+    entry = {
+        "target": close_prices,
+        "start": pd.Timestamp("2016-01-01"),
+        "freq": "B",
+    }
+    return ListDataset([entry], freq="B")
 
 
 def main():
@@ -51,10 +66,9 @@ def main():
 
     df = pd.read_csv(OHLCV_FILE)
     df["date"] = pd.to_datetime(df["date"])
-    df = df.sort_values(["symbol", "date"])
     print(f"📊 数据截止: {df['date'].max().date()}")
 
-    model = load_model()
+    predictor = load_predictor()
     results = []
 
     for sym, name in COMMODITIES.items():
@@ -62,29 +76,28 @@ def main():
         print(f"   {sym} ({name})...", end=" ", flush=True)
 
         sub = df[df["symbol"] == sym]
-        if sub.empty or len(sub) < 50:
+        if sub.empty or len(sub) < 100:
             print(f"❌ 数据不足")
             continue
 
-        close = sub["close"].tail(2000).values.astype(np.float32)
-        if len(close) < 100:
-            print(f"❌ 数据不足 ({len(close)}行)")
-            continue
+        close = sub["close"].tail(CTX_LEN + 100).values.astype(np.float64)
         current = float(close[-1])
 
         try:
-            # Moirai-2 输入: (batch=1, time, dim=1)
-            past = torch.tensor(close).view(1, -1, 1)
-            pad_mask = torch.zeros(1, past.size(1), dtype=torch.bool)
-            forecast = model(past_target=past, past_observed_target=past, past_is_pad=pad_mask)
-            # forecast: (1, PRED_STEPS, num_samples)
-            if isinstance(forecast, torch.Tensor):
-                samples = forecast[0]  # (PRED_STEPS, num_samples)
-                median = samples.median(dim=-1).values.numpy()
-                low = samples.kthvalue(max(1, samples.size(-1) // 10), dim=-1).values.numpy()
-                high = samples.kthvalue(max(1, samples.size(-1) * 9 // 10), dim=-1).values.numpy()
+            ds = gluonts_dataset(close)
+            forecasts = list(predictor.predict(ds))
+            if not forecasts:
+                print("❌ 无预测")
+                continue
+            fc = forecasts[0]
+            # 取中位数样本
+            if hasattr(fc, 'samples'):
+                samples = fc.samples  # (num_samples, horizon)
+                median = np.median(samples, axis=0)
+                low = np.percentile(samples, 10, axis=0)
+                high = np.percentile(samples, 90, axis=0)
             else:
-                median = forecast[0].numpy().flatten()
+                median = fc.mean if hasattr(fc, 'mean') else np.array(fc.quantile(0.5))
                 low = high = median
         except Exception as e:
             print(f"❌ {e}")
@@ -105,7 +118,6 @@ def main():
         print(f"当前{current:.2f} 7d:{entry['pred_7d']['pct']:+.1f}% 14d:{entry['pred_14d']['pct']:+.1f}% 30d:{entry['pred_30d']['pct']:+.1f}% ({time.time()-bt:.0f}s)")
         results.append(entry)
 
-    # 排名
     rankings = {}
     for label in HORIZONS:
         key = f"pred_{label}"

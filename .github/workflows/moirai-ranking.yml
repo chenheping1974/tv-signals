@@ -34,7 +34,7 @@ jobs:
         run: |
           pip install pandas numpy requests
           pip install torch --index-url https://download.pytorch.org/whl/cpu
-          pip install uni2ts
+          pip install uni2ts gluonts
 
       - name: Moirai-2 预测排名
         env:
@@ -45,6 +45,8 @@ jobs:
         run: |
           git config user.name "moirai-bot"
           git config user.email "bot@tv-signals.local"
-          git pull --rebase
           git add data/moirai_ranking.json
-          git diff --staged --quiet || (git commit -m "Moirai排名更新 [$(date +%Y-%m-%d)]" && git push)
+          git diff --staged --quiet && exit 0
+          git commit -m "Moirai排名更新 [$(date +%Y-%m-%d)]"
+          git pull --rebase
+          git push
