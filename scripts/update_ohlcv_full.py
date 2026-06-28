@@ -13,7 +13,7 @@ NAME_MAP_FILE = BASE / "data/name_map.json"
 
 NM = json.loads(NAME_MAP_FILE.read_text())
 ALL_CODES = sorted(set(k for k in NM if k.isdigit() and len(k) == 6))
-print(f"📊 全量股票池: {len(ALL_CODES)}只")
+print(f"📊 全量股票池: {len(ALL_CODES)}只", flush=True)
 
 existing = pd.DataFrame()
 if OHLCV_FILE.exists():
@@ -35,9 +35,8 @@ t0 = time.time()
 for i, code in enumerate(ALL_CODES):
     sym = f"sh{code}" if code.startswith("6") else f"sz{code}"
     try:
-        # 已有数据 → 增量, 新股票 → 全量
         dl = 10 if code in existing_codes else 5000
-        r = req.get(f"https://money.finance.sina.com.cn/quotes_service/api/json_v2.php/CN_MarketData.getKLineData?symbol={sym}&scale=240&ma=no&datalen={dl}", timeout=10)
+        r = req.get(f"https://money.finance.sina.com.cn/quotes_service/api/json_v2.php/CN_MarketData.getKLineData?symbol={sym}&scale=240&ma=no&datalen={dl}", timeout=15)
         data = r.json()
         if not isinstance(data, list) or len(data) == 0:
             continue
@@ -50,10 +49,10 @@ for i, code in enumerate(ALL_CODES):
         df = df[df["date"] > last_date]
         if len(df) > 0:
             new_rows.append(df[["date", "code", "open", "high", "low", "close"]].dropna())
-    except:
+    except Exception:
         pass
-    if (i + 1) % 500 == 0:
-        print(f"   [{i+1}/{len(ALL_CODES)}] {len(new_rows)}只有新数据, {(time.time()-t0)/60:.0f}min")
+    if (i + 1) % 100 == 0 or i == 0:
+        print(f"   [{i+1}/{len(ALL_CODES)}] {len(new_rows)}只有新数据, {(time.time()-t0)/60:.0f}min", flush=True)
 
 if not new_rows:
     print("⚠️ 无新数据")
