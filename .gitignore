@@ -2,3 +2,4 @@
 *.log
 data/processed_urls.json
 .ohlcv_full_resume
+.ohlcv_tmp.pkl

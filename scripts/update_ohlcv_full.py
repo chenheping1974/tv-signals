@@ -64,34 +64,36 @@ for i in range(resume_idx, len(ALL_CODES)):
     except Exception:
         pass
 
-    # 定期存盘
+    # 定期存盘（仅存进度，最后统一合并）
     if (i + 1) % SAVE_EVERY == 0:
         RESUME_FILE.parent.mkdir(exist_ok=True)
         RESUME_FILE.write_text(str(i + 1))
-        if new_rows:
-            batch = pd.concat(new_rows, ignore_index=True)
-            combined = pd.concat([existing, batch], ignore_index=True) if len(existing) > 0 else batch
-            combined = combined.drop_duplicates(subset=["date", "code"]).sort_values(["code", "date"])
-            combined.to_csv(OHLCV_FILE, index=False, compression="gzip")
-        print(f"   [{i+1}/{len(ALL_CODES)}] 已存{len(combined)}行, {(time.time()-t0)/60:.0f}min", flush=True)
+        # 存临时增量到pickle，最后合并
+        import pickle
+        tmp = BASE / "data/.ohlcv_tmp.pkl"
+        with open(tmp, "wb") as f:
+            pickle.dump(new_rows, f)
+        print(f"   [{i+1}/{len(ALL_CODES)}] {len(new_rows)}条增量, {(time.time()-t0)/60:.0f}min", flush=True)
 
-# 清理断点文件
+# 清理断点
 if RESUME_FILE.exists():
     RESUME_FILE.unlink()
 
-if not OHLCV_FILE.exists():
-    print("❌ 无数据")
-    exit(1)
-
-# 最后增量统一存
+# 最终合并
 if new_rows:
     batch = pd.concat(new_rows, ignore_index=True)
-    df_existing = pd.read_csv(OHLCV_FILE) if OHLCV_FILE.exists() else pd.DataFrame()
-    if len(df_existing) > 0:
-        df_existing["date"] = pd.to_datetime(df_existing["date"])
-    combined = pd.concat([df_existing, batch], ignore_index=True) if len(df_existing) > 0 else batch
+    combined = pd.concat([existing, batch], ignore_index=True) if len(existing) > 0 else batch
     combined = combined.drop_duplicates(subset=["date", "code"]).sort_values(["code", "date"])
+    OHLCV_FILE.parent.mkdir(exist_ok=True)
     combined.to_csv(OHLCV_FILE, index=False, compression="gzip")
+
+tmp = BASE / "data/.ohlcv_tmp.pkl"
+if tmp.exists():
+    tmp.unlink()
+
+if not OHLCV_FILE.exists():
+    print("❌ 无数据", flush=True)
+    exit(1)
 
 df_final = pd.read_csv(OHLCV_FILE)
 df_final["date"] = pd.to_datetime(df_final["date"])
