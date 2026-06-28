@@ -5,6 +5,12 @@ on:
     # 北京时间11:00 = UTC 03:00（商品K线08:00已更新）
     - cron: '0 3 * * *'
   workflow_dispatch:
+    inputs:
+      force:
+        description: '强制运行'
+        required: false
+        type: boolean
+        default: false
 
 jobs:
   ranking:
