@@ -1,8 +1,6 @@
 name: Moirai-2商品排名
 
 on:
-  push:
-    paths: ['.trigger/moirai']
   schedule:
     - cron: '0 3 * * *'
   workflow_dispatch:
