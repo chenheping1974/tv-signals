@@ -5,62 +5,72 @@
 
 ---
 
-## 三个子系统
+## 五个子系统
 
-| | 📰 情报系统 | 🏆 选股系统 | 🛢 商品数据 |
-|------|------|------|------|
-| 触发 | 每天 21:00 | 每天 16:30 | 每天 08:00 |
-| 信源 | 华尔街见闻 API | 新浪财经 OHLCV | 新浪全球期货 API |
-| AI | DeepSeek | Kronos-small (24.7M) | — |
-| 输出 | Feedly RSS | ranking.json → HF Space 榜单 | commodities_ohlcv.csv.gz |
-| 标的 | 商品 + A股 | 999 只 A股 | 黄金/白银/原油/铜/铝/豆粕 |
+| | 📰 情报 | 🏆 Kronos选股 | 🛢 商品K线 | 🧠 Moirai排名 | 🚀 TimesFM排名 |
+|------|------|------|------|------|------|
+| 触发 | 21:00 | 16:30 工作日 | 08:00 | 11:00 | 22:00 工作日 |
+| 信源 | 华尔街见闻 | 新浪A股 | 新浪全球期货 | 商品K线 | A股OHLCV |
+| AI | DeepSeek | Kronos-small | — | Moirai-2 | TimesFM 2.5 |
+| 输出 | RSS | ranking.json | csv.gz | moirai_ranking.json | timesfm_ranking.json |
 
 ---
 
 ## 整体架构
 
 ```
-华尔街见闻 API ──→ GitHub Actions ──→ DeepSeek ──→ RSS XML ──→ Feedly
-新浪财经 API   ──→ GitHub Actions ──→ Kronos-sm ──→ ranking.json ──→ HF Space
-新浪全球期货    ──→ GitHub Actions ──→ commodities_ohlcv.csv.gz ──→ HF Space
+情报:   华尔街见闻 → Actions → DeepSeek → RSS → Feedly + Space
+选股:   新浪A股 → Actions → Kronos → ranking.json → Space
+商品K线: 新浪全球期货 → Actions → csv.gz + Chronos排名 → Space + Supabase
+Moirai: 商品K线 → Actions → Moirai-2 → moirai_ranking.json → Space
+TimesFM: A股OHLCV → Actions → TimesFM 2.5 → timesfm_ranking.json → Space
 ```
+
+## HF Space
+
+| Space | 标签 | 模型 |
+|-------|------|------|
+| [commodity-forecast](https://1348122919qqcom-commodity-forecast.hf.space) | Chronos商品 + Kronos A股 | Chronos-2 + Kronos-small |
+| [timesfm-moirai](https://1348122919qqcom-timesfm-moirai.hf.space) | Moirai商品 + TimesFM A股 | Moirai-2 + TimesFM 2.5 |
 
 ## 目录
 
 ```
 tv-signals/
-├── feeds/                      RSS 输出
+├── feeds/                         RSS 输出
 ├── scripts/
-│   ├── fetch_feeds.py          情报采集+AI 分析
-│   ├── stock_ranking.py       选股批量预测
-│   ├── update_ohlcv.py         本地OHLCV增量（A股）
-│   └── update_commodities.py   商品OHLCV全量（新浪全球期货）
+│   ├── fetch_feeds.py             情报采集+AI分析
+│   ├── stock_ranking.py           Kronos选股
+│   ├── screen_pool.py             股票池筛选
+│   ├── update_ohlcv.py            本地A股OHLCV增量
+│   ├── update_commodities.py      商品OHLCV(新浪)
+│   ├── commodity_ranking.py       Chronos-2商品排名
+│   ├── moirai_ranking.py          Moirai-2商品排名
+│   └── timesfm_ranking.py         TimesFM A股排名
 ├── data/
-│   ├── stock_pool.json         股票池 (999 只)
-│   ├── ohlcv.csv.gz            A股OHLCV
-│   ├── commodities_ohlcv.csv.gz 商品OHLCV (6品种,日线)
-│   └── ranking.json            每日排序结果
+│   ├── stock_pool.json            股票池 (999只)
+│   ├── ohlcv.csv.gz               A股OHLCV
+│   ├── commodities_ohlcv.csv.gz    商品OHLCV (6品种)
+│   ├── ranking.json               Kronos排名
+│   ├── commodity_ranking.json     Chronos排名
+│   ├── moirai_ranking.json        Moirai排名
+│   └── timesfm_ranking.json       TimesFM排名
 ├── .github/workflows/
-│   ├── daily-signals.yml       情报 (21:00 北京)
-│   ├── stock-ranking.yml       选股 (16:30 北京)
-│   └── commodities-ohlcv.yml   商品数据 (08:00 北京)
+│   ├── daily-signals.yml          情报 (21:00)
+│   ├── stock-ranking.yml          Kronos选股 (16:30)
+│   ├── commodities-ohlcv.yml      商品K线+Chronos (08:00)
+│   ├── moirai-ranking.yml         Moirai排名 (11:00)
+│   └── timesfm-ranking.yml        TimesFM排名 (22:00)
 └── docs/
 ```
 
 ## 成本
 
-| 组件 | 月费 |
-|------|------|
-| GitHub Actions | $0（公开仓库无限） |
-| GitHub Pages | $0 |
-| DeepSeek API | ~$0.05 |
-| 华尔街见闻 API | $0 |
-| 新浪财经 API | $0 |
-| 新浪全球期货 API | $0 |
-
-**$0/月**
+**$0/月** — GitHub Actions + Pages（公开仓库无限）/ DeepSeek ~$0.05 / 新浪/华尔街见闻 $0
 
 ## 相关链接
 
-- 预测平台：https://1348122919qqcom-commodity-forecast.hf.space
-- Feedly：订阅 feeds/commodities.xml + a-stocks.xml
+- Chronos+Kronos: https://1348122919qqcom-commodity-forecast.hf.space
+- TimesFM+Moirai: https://1348122919qqcom-timesfm-moirai.hf.space
+- Feedly: feeds/commodities.xml + a-stocks.xml
+- Supabase: apfdgetfqxgbplariowa.supabase.co
