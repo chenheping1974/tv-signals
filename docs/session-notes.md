@@ -2,54 +2,74 @@
 
 ## 系统总览
 
-### 五个子系统
+### 五个子系统 + 两个 Space
 
-| 系统 | 功能 | 模型 | 触发 (北京时间) | 数据源 |
-|------|------|------|------|--------|
-| 📰 情报 | 商品+A股新闻 | DeepSeek | Actions 21:00 | 华尔街见闻 API |
-| 🛢 商品K线+Chronos | 6品种K线+排名 | Chronos-2 | Actions 08:00 | 新浪全球期货 |
-| 🧠 Moirai-2 | 商品排名+单支 | Moirai-2 Small | Actions 11:00 | 商品K线 |
-| 🏆 Kronos选股 | A股排名 | Kronos-small | Actions 16:30 工作日 | 新浪A股 |
-| 🚀 TimesFM 2.5 | A股排名+单支 | TimesFM 2.5 200M | Actions 22:00 工作日 | A股OHLCV |
+| 系统 | 功能 | 模型 | 工作流 | 触发 | 数据源 |
+|------|------|------|--------|------|--------|
+| 🛢 商品K线+Chronos | 6品种K线+排名 | Chronos-2 | commodities-ohlcv | 08:00 每天 | 新浪全球期货 |
+| 🧠 Moirai-2 | 商品排名+单支 | Moirai-2 Small | moirai-ranking | 11:00 每天 | 商品K线 |
+| 🏆 Kronos选股 | A股排名 | Kronos-small | stock-ranking | 16:30 工作日 | 新浪A股 |
+| 📰 情报 | 商品+A股新闻 | DeepSeek | daily-signals | 21:00 每天 | 华尔街见闻 |
+| 🚀 TimesFM | A股全量+精选排名 | TimesFM 2.5 | timesfm-ranking | 22:00 工作日 | 新浪A股 |
+
+| Space | 标签 | 模型 |
+|-------|------|------|
+| [commodity-forecast](https://1348122919qqcom-commodity-forecast.hf.space) | 商品预测 / A股预测 / 情报 | Chronos-2 + Kronos-small |
+| [timesfm-moirai](https://1348122919qqcom-timesfm-moirai.hf.space) | Moirai商品 / TimesFM A股 | Moirai-2 + TimesFM 2.5 |
 
 成本: $0/月
+
+---
+
+## 五个工作流
+
+### 1. commodities-ohlcv.yml — 商品K线 + Chronos排名
+- **触发**: UTC 00:00 = 北京时间 08:00，每天
+- **jobs**: update(拉K线) → ranking(Chronos-2预测)
+- **输出**: `commodities_ohlcv.csv.gz` / `commodity_ranking.json` + Supabase
+
+### 2. moirai-ranking.yml — Moirai-2商品排名
+- **触发**: UTC 03:00 = 北京时间 11:00，每天
+- **job**: 读K线 → Moirai-2 → `moirai_ranking.json`
+- **周期**: 7d / 14d / 30d / 60d / 90d
+
+### 3. stock-ranking.yml — Kronos A股选股
+- **触发**: UTC 08:30 = 北京时间 16:30，工作日
+- **job**: 新浪增量 → Kronos-small 999只 → `ranking.json`
+
+### 4. daily-signals.yml — 情报采集
+- **触发**: UTC 13:00 = 北京时间 21:00，每天
+- **job**: 华尔街见闻4频道 → DeepSeek → RSS XML
+
+### 5. timesfm-ranking.yml — TimesFM A股全量+精选
+- **触发**: UTC 14:00 = 北京时间 22:00，工作日
+- **jobs**: update_full(K线) → full_ranking(全量预测) → filter_999(筛精选)
+- **输出**: `timesfm_full_ranking.json` / `timesfm_ranking.json`
+- **周期**: 30d / 60d / 128d
+- **K线**: 5528只全量, tail(600)控制100MB内, 连续200只无新数据自动跳过
 
 ---
 
 ## 数据链路
 
 ```
-情报:   华尔街见闻 → Actions(21:00) → DeepSeek → RSS → Feedly + 两个Space
-K线:    新浪全球期货 → Actions(08:00) → csv.gz → Chronos排名 → JSON + Supabase
-Moirai: 商品K线 → Actions(11:00) → Moirai-2 → moirai_ranking.json
-Kronos: 新浪A股 → Actions(16:30) → Kronos-sm → ranking.json
-TimesFM: A股OHLCV → Actions(22:00) → TimesFM 2.5 → timesfm_ranking.json
+K线:     新浪全球期货 → Actions 08:00 → csv.gz → Chronos排名 → JSON + Supabase
+Moirai:  商品K线 → Actions 11:00 → Moirai-2 → moirai_ranking.json
+Kronos:  新浪A股 → Actions 16:30 → Kronos-sm → ranking.json
+情报:    华尔街见闻 → Actions 21:00 → DeepSeek → RSS → Feedly + Space
+TimesFM: 新浪A股全量 → Actions 22:00 → TimesFM 2.5 → 全量+精选双JSON
 ```
 
 ---
 
-## 两个 HF Space
+## 预测周期
 
-| Space | 标签 | 模型 | 状态 |
-|-------|------|------|------|
-| `commodity-forecast` | Chronos商品 + Kronos A股 | Chronos-2 + Kronos-sm | ✅ 稳定 |
-| `timesfm-moirai` | Moirai商品 + TimesFM A股 | Moirai-2 + TimesFM 2.5 | ✅ 运行中 |
-
-### Space 地址
-- Chronos+Kronos: https://1348122919qqcom-commodity-forecast.hf.space
-- TimesFM+Moirai: https://1348122919qqcom-timesfm-moirai.hf.space
-
----
-
-## Actions 时间线
-
-| 时间 (北京) | 工作流 | 频率 |
-|------------|--------|------|
-| 08:00 | 商品K线 + Chronos排名 | 每天 |
-| 11:00 | Moirai-2 排名 | 每天 |
-| 16:30 | Kronos 选股 | 工作日 |
-| 21:00 | 情报采集 | 每天 |
-| 22:00 | TimesFM 排名 | 工作日 |
+| 模型 | 周期 | 步数 |
+|------|------|------|
+| Chronos-2 | 7d / 14d / 30d | 5 / 10 / 22 |
+| Moirai-2 | 7d / 14d / 30d / 60d / 90d | 5 / 10 / 22 / 44 / 66 |
+| Kronos-small | 30d | 22 |
+| TimesFM 2.5 | 30d / 60d / 128d | 22 / 44 / 128 |
 
 ---
 
@@ -61,80 +81,27 @@ GET stock2.finance.sina.com.cn/futures/api/jsonp.php/
     ?symbol=GC&source=web
     /GlobalFuturesService.getGlobalFuturesDailyKLine
 ```
-
-| 商品 | 新浪码 | 存储码 | 起始 |
-|------|--------|--------|------|
-| 黄金 | GC | GC=F | 2016-06 |
-| 白银 | SI | SI=F | 2016-06 |
-| 原油 | CL | CL=F | 1996-06 |
-| 美铜 | HG | HG=F | 2016-06 |
-| 伦铝 | AHD | AH=F | 2016-06 |
-| 豆粕 | SM | ZM=F | 2016-06 |
-
-- JSONP格式(需去壳), 无限流
-- OHLC正常, 成交量除伦铝外为0
+6品种, JSONP格式, 无限流
 
 ### 新浪A股 API
 ```
 GET money.finance.sina.com.cn/quotes_service/api/json_v2.php/
     CN_MarketData.getKLineData?symbol=sh601899&datalen=400
 ```
-- 纯JSON, datalen=N可控
-- A股OHLCV约505根/股 (2024-04 ~ 2026-06)
+纯JSON, datalen可控
 
 ---
 
-## TimesFM 2.5 (Google)
+## 模型经验
 
-### 模型信息
-- 200M参数, Apache 2.0许可
-- 最大上下文16K, 预测最多1024步
-- 批量推理效率极高: 999只仅4.4分钟
+### TimesFM 2.5
+- Space: transformers版本 (兼容性好)
+- Actions: timesfm PyPI包 (compile()后快5倍)
+- 批量: 200只/批, 38-50秒/批
 
-### Space 使用 transformers 原生接口 ✅
-```python
-from transformers import TimesFm2_5ModelForPrediction
-model = TimesFm2_5ModelForPrediction.from_pretrained(
-    "google/timesfm-2.5-200m-transformers", device_map="auto"
-)
-outputs = model(past_values=[input_tensor], return_dict=True)
-```
-
-### 踩坑记录
-- ❌ timesfm PyPI包在Space Python 3.11上全NaN
-- ✅ 改用transformers原生接口解决
-- ✅ accelerate依赖必须装
-
----
-
-## Moirai-2 (Salesforce)
-
-### 模型信息
-- Small/Base/Large三档, CC-BY-NC-4.0许可
-- 多变量预测(any-variate attention)
-- 上下文默认1680
-
-### 官方API ✅
-```python
-from uni2ts.model.moirai2 import Moirai2Forecast, Moirai2Module
-model = Moirai2Forecast(module=Moirai2Module.from_pretrained(...), ...)
-predictor = model.create_predictor(batch_size=1)
-forecasts = predictor.predict(gluonts_dataset)
-```
-
-### 踩坑记录
-- ❌ `from uni2ts.model.moirai` → v1旧版
-- ✅ `from uni2ts.model.moirai2` → v2新版
-- ❌ `model.forward()` → 内部方法, 参数不稳定
-- ✅ `model.create_predictor()` → 官方公开API
-
----
-
-## Supabase
-
-- URL: `https://apfdgetfqxgbplariowa.supabase.co`
-- 表: `commodity_rankings` (Chronos排名)
-- 字段: updated, horizon, symbol, name, current, target, pct, low, high
+### Moirai-2
+- 官方API: `from uni2ts.model.moirai2` + `create_predictor()` + GluonTS
+- ❌ 不可 `forward()`
 
 ---
 
@@ -142,44 +109,52 @@ forecasts = predictor.predict(gluonts_dataset)
 
 ```
 tv-signals/
-├── feeds/
+├── feeds/                          RSS输出
 ├── scripts/
-│   ├── fetch_feeds.py            情报采集
-│   ├── stock_ranking.py          Kronos选股
-│   ├── screen_pool.py            股票池
-│   ├── update_ohlcv.py           本地A股OHLCV
-│   ├── update_commodities.py     商品OHLCV(新浪)
-│   ├── commodity_ranking.py      Chronos排名
-│   ├── moirai_ranking.py         Moirai排名
-│   └── timesfm_ranking.py        TimesFM排名
+│   ├── fetch_feeds.py              DeepSeek情报
+│   ├── stock_ranking.py            Kronos选股
+│   ├── screen_pool.py              股票池
+│   ├── update_ohlcv.py             本地A股增量
+│   ├── update_commodities.py       商品K线(新浪全球期货)
+│   ├── update_ohlcv_full.py        全量A股K线(5528只)
+│   ├── commodity_ranking.py        Chronos排名
+│   ├── moirai_ranking.py           Moirai排名
+│   ├── timesfm_ranking.py          (保留未用)
+│   └── timesfm_full_ranking.py     TimesFM全量排名
 ├── data/
-│   ├── stock_pool.json           (999只)
-│   ├── ohlcv.csv.gz              A股OHLCV
-│   ├── commodities_ohlcv.csv.gz  商品OHLCV(6品种)
-│   ├── ranking.json              Kronos排名
-│   ├── commodity_ranking.json    Chronos排名
-│   ├── moirai_ranking.json       Moirai排名
-│   └── timesfm_ranking.json      TimesFM排名
+│   ├── stock_pool.json             (999只)
+│   ├── name_map.json               (5528股名码)
+│   ├── ohlcv.csv.gz                A股Kronos用
+│   ├── ohlcv_full.csv.gz           全量A股
+│   ├── commodities_ohlcv.csv.gz    商品K线
+│   ├── ranking.json                Kronos排名
+│   ├── commodity_ranking.json      Chronos排名
+│   ├── moirai_ranking.json         Moirai排名
+│   ├── timesfm_ranking.json        精选排名
+│   └── timesfm_full_ranking.json   全量排名
 ├── .github/workflows/
-│   ├── daily-signals.yml         情报(21:00)
-│   ├── stock-ranking.yml         Kronos(16:30)
-│   ├── commodities-ohlcv.yml     商品K线+Chronos(08:00)
-│   ├── moirai-ranking.yml        Moirai(11:00)
-│   └── timesfm-ranking.yml       TimesFM(22:00)
+│   ├── commodities-ohlcv.yml       08:00 每天
+│   ├── moirai-ranking.yml          11:00 每天
+│   ├── stock-ranking.yml           16:30 工作日
+│   ├── daily-signals.yml           21:00 每天
+│   └── timesfm-ranking.yml         22:00 工作日
 └── docs/
 
-chronos-app/                      → HF Space: commodity-forecast
-timesfm-moirai/                   → HF Space: timesfm-moirai
+chronos-app/                        → HF Space: commodity-forecast
+timesfm-moirai/                     → HF Space: timesfm-moirai
 ```
 
 ---
 
 ## 核心教训
 
-1. 新模型必须查官方文档验证API, 不能凭记忆写
-2. Moirai-2: 模块名是`moirai2`不是`moirai`, 用`create_predictor()`不是`forward()`
-3. TimesFM: transformers原生接口比PyPI包更稳
-4. Python 3.10→3.11影响模型兼容性
-5. 两个Space隔离部署, 互不影响
-6. yfinance全链路不可靠, 已全面替换为新浪
-7. 沟通文档保持最新
+1. 推送前必须征得用户同意
+2. timesfm包在Actions快、transformers在Space稳，各用各的
+3. 新模型必须查官方文档验证API
+4. git add 先于 git pull
+5. Actions runner数据不持久
+6. 两个Space隔离，互不影响
+7. yfinance全链路不可靠，已全面替换新浪
+8. 全量K线 tail(600) 控制100MB
+9. 连续200只无新数据=休市跳过
+10. 沟通文档保持最新
