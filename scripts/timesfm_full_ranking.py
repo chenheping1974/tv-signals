@@ -69,6 +69,8 @@ def main():
 
         for i in range(len(series[b:be])):
             current = float(series[b+i][-1])
+            if current < 1.0:
+                continue  # 跳过退市/仙股
             pred = point[i]
             q = quantile[i] if quantile is not None else None
             entry = {
