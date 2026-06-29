@@ -63,8 +63,8 @@ for i, code in enumerate(ALL_CODES):
         print(f"   [{i+1}/{len(ALL_CODES)}] {len(new_rows)}条, {(time.time()-t0)/60:.0f}min", flush=True)
 
 if not new_rows:
-    print("⚠️ 无新数据", flush=True)
-    exit(1)
+    print("⚠️ 无新数据 (可能休市)", flush=True)
+    exit(0)
 
 batch = pd.concat(new_rows, ignore_index=True)
 combined = pd.concat([existing, batch], ignore_index=True) if len(existing) > 0 else batch
