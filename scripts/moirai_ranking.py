@@ -20,8 +20,8 @@ COMMODITIES = {
     "ZM=F": "豆粕",
 }
 
-HORIZONS = {"7d": 5, "14d": 10, "30d": 22}
-PRED_STEPS = 30
+HORIZONS = {"7d": 5, "14d": 10, "30d": 22, "60d": 44, "90d": 66}
+PRED_STEPS = 100
 CTX_LEN = 512  # 数据窗口, 模型会取1680内但用不了那么多
 
 

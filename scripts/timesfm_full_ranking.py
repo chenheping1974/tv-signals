@@ -12,16 +12,17 @@ OHLCV_FILE = ROOT / "data/ohlcv_full.csv.gz"
 RANKING_FILE = ROOT / "data/timesfm_full_ranking.json"
 NAME_MAP_FILE = ROOT / "data/name_map.json"
 
-HORIZONS = {"7d": 5, "14d": 10, "30d": 22}
-PRED_STEPS = 30
+HORIZONS = {"30d": 22, "60d": 44, "128d": 128}
+PRED_STEPS = 128
 BATCH_SIZE = 200
 
 
 def load_model():
-    from transformers import TimesFm2_5ModelForPrediction
-    print("⏳ 加载 TimesFM 2.5 (transformers)...")
+    from transformers import TimesFm2_5ModelForPrediction, TimesFm2_5Config
+    print("⏳ 加载 TimesFM 2.5 (transformers, horizon=30)...")
+    config = TimesFm2_5Config(horizon_length=PRED_STEPS)
     model = TimesFm2_5ModelForPrediction.from_pretrained(
-        "google/timesfm-2.5-200m-transformers", device_map="auto",
+        "google/timesfm-2.5-200m-transformers", config=config, device_map="auto",
     )
     print("✅ TimesFM 2.5 就绪")
     return model

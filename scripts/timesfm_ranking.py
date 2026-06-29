@@ -12,8 +12,8 @@ OHLCV_FILE = ROOT / "data/ohlcv.csv.gz"
 POOL_FILE = ROOT / "data/stock_pool.json"
 RANKING_FILE = ROOT / "data/timesfm_ranking.json"
 
-HORIZONS = {"7d": 5, "14d": 10, "30d": 22}
-PRED_STEPS = 30
+HORIZONS = {"30d": 22, "60d": 44, "128d": 128}
+PRED_STEPS = 128
 BATCH_SIZE = 200
 
 

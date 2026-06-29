@@ -75,7 +75,6 @@ jobs:
         run: |
           git config user.name "timesfm-bot"
           git config user.email "bot@tv-signals.local"
-          git pull --rebase
           git add data/timesfm_ranking.json
           git diff --staged --quiet && exit 0
           git commit -m "TimesFM精选排名更新 [$(date +%Y-%m-%d)]"
@@ -115,7 +114,6 @@ jobs:
         run: |
           git config user.name "timesfm-bot"
           git config user.email "bot@tv-signals.local"
-          git pull --rebase
           git add data/timesfm_full_ranking.json
           git diff --staged --quiet && exit 0
           git commit -m "TimesFM全量排名更新 [$(date +%Y-%m-%d)]"
