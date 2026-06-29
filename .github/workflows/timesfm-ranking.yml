@@ -64,7 +64,7 @@ jobs:
         run: |
           pip install pandas numpy requests
           pip install torch --index-url https://download.pytorch.org/whl/cpu
-          pip install transformers accelerate
+          pip install timesfm[torch]
 
       - name: TimesFM 全量预测
         env:

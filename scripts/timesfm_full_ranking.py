@@ -18,12 +18,15 @@ BATCH_SIZE = 200
 
 
 def load_model():
-    from transformers import TimesFm2_5ModelForPrediction, TimesFm2_5Config
-    print("⏳ 加载 TimesFM 2.5 (transformers, horizon=30)...")
-    config = TimesFm2_5Config(horizon_length=PRED_STEPS)
-    model = TimesFm2_5ModelForPrediction.from_pretrained(
-        "google/timesfm-2.5-200m-transformers", config=config, device_map="auto",
-    )
+    import torch
+    torch.set_float32_matmul_precision("high")
+    import timesfm as tfm
+    print("⏳ 加载 TimesFM 2.5 (timesfm包)...")
+    model = tfm.TimesFM_2p5_200M_torch.from_pretrained("google/timesfm-2.5-200m-pytorch")
+    model.compile(tfm.ForecastConfig(
+        max_context=512, max_horizon=PRED_STEPS,
+        normalize_inputs=True, use_continuous_quantile_head=True,
+    ))
     print("✅ TimesFM 2.5 就绪")
     return model
 
@@ -59,21 +62,15 @@ def main():
         print(f"   [{b+1}-{be}/{len(series)}] ...", end=" ", flush=True)
         bt = time.time()
         try:
-            import torch
-            model_device = model.device
-            inputs = [torch.tensor(s, dtype=torch.float32, device=model_device) for s in series[b:be]]
-            with torch.no_grad():
-                outputs = model(past_values=inputs, return_dict=True)
-            point = outputs.mean_predictions.cpu().numpy()
-            qfull = outputs.full_predictions.cpu().numpy()
+            point, quantile = model.forecast(horizon=PRED_STEPS, inputs=series[b:be])
         except Exception as e:
             print(f"❌ {e}")
             continue
 
         for i in range(len(series[b:be])):
             current = float(series[b+i][-1])
-            pred = point[i, :PRED_STEPS]
-            q = qfull[i, :PRED_STEPS]
+            pred = point[i]
+            q = quantile[i] if quantile is not None else None
             entry = {
                 "symbol": codes[b+i],
                 "name": name_of.get(codes[b+i], codes[b+i]),
@@ -84,8 +81,9 @@ def main():
                 tgt = float(pred[idx])
                 pct = (tgt - current) / current * 100
                 entry[f"pred_{label}"] = {"target": round(tgt, 2), "pct": round(pct, 2)}
-                entry[f"pred_{label}"]["low"] = round(float(q[idx, 0]), 2)
-                entry[f"pred_{label}"]["high"] = round(float(q[idx, 8]), 2)
+                if q is not None:
+                    entry[f"pred_{label}"]["low"] = round(float(q[idx, 1]), 2)
+                    entry[f"pred_{label}"]["high"] = round(float(q[idx, 8]), 2)
             results.append(entry)
 
         print(f"{time.time()-bt:.0f}s")
@@ -113,7 +111,7 @@ def main():
     RANKING_FILE.write_text(json.dumps(output, ensure_ascii=False, indent=2))
     elapsed = (time.time() - t0) / 60
     print(f"✅ 完成: {len(results)}只, {elapsed:.1f}分钟")
-    for label in ["7d", "14d", "30d"]:
+    for label in ["30d", "60d", "128d"]:
         top = rankings[label][:3]
         print(f"   {label} Top3: " + " | ".join(
             f"{r['name']} {r['pct']:+.1f}%" for r in top))
