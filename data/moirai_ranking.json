@@ -1,285 +1,285 @@
 {
-  "updated": "2026-06-29T03:06:55.923302",
-  "data_date": "2026-06-26",
+  "updated": "2026-06-29T07:22:30.061791",
+  "data_date": "2026-06-29",
   "rankings": {
     "7d": [
       {
         "symbol": "SI=F",
         "name": "现货白银",
-        "current": 59.59,
-        "target": 61.15,
-        "pct": 2.62,
-        "low": 61.15,
-        "high": 61.15
-      },
-      {
-        "symbol": "AH=F",
-        "name": "LME铝",
-        "current": 3198.0,
-        "target": 3223.17,
-        "pct": 0.79,
-        "low": 3223.17,
-        "high": 3223.17
+        "current": 59.06,
+        "target": 59.81,
+        "pct": 1.27,
+        "low": 59.81,
+        "high": 59.81
       },
       {
         "symbol": "HG=F",
         "name": "COMEX铜",
-        "current": 628.55,
-        "target": 631.73,
-        "pct": 0.51,
-        "low": 631.73,
-        "high": 631.73
+        "current": 628.2,
+        "target": 632.48,
+        "pct": 0.68,
+        "low": 632.48,
+        "high": 632.48
       },
       {
-        "symbol": "GC=F",
-        "name": "现货黄金",
-        "current": 4102.4,
-        "target": 4113.67,
-        "pct": 0.27,
-        "low": 4113.67,
-        "high": 4113.67
+        "symbol": "AH=F",
+        "name": "LME铝",
+        "current": 3181.0,
+        "target": 3202.77,
+        "pct": 0.68,
+        "low": 3202.77,
+        "high": 3202.77
       },
       {
         "symbol": "ZM=F",
         "name": "豆粕",
-        "current": 316.4,
-        "target": 317.02,
-        "pct": 0.2,
-        "low": 317.02,
-        "high": 317.02
+        "current": 315.0,
+        "target": 315.94,
+        "pct": 0.3,
+        "low": 315.94,
+        "high": 315.94
+      },
+      {
+        "symbol": "GC=F",
+        "name": "现货黄金",
+        "current": 4083.1,
+        "target": 4091.62,
+        "pct": 0.21,
+        "low": 4091.62,
+        "high": 4091.62
       },
       {
         "symbol": "CL=F",
         "name": "国际原油",
-        "current": 70.24,
-        "target": 69.9,
-        "pct": -0.48,
-        "low": 69.9,
-        "high": 69.9
+        "current": 70.05,
+        "target": 69.5,
+        "pct": -0.79,
+        "low": 69.5,
+        "high": 69.5
       }
     ],
     "14d": [
       {
         "symbol": "SI=F",
         "name": "现货白银",
-        "current": 59.59,
-        "target": 61.02,
-        "pct": 2.4,
-        "low": 61.02,
-        "high": 61.02
+        "current": 59.06,
+        "target": 59.68,
+        "pct": 1.05,
+        "low": 59.68,
+        "high": 59.68
       },
       {
         "symbol": "AH=F",
         "name": "LME铝",
-        "current": 3198.0,
-        "target": 3225.76,
-        "pct": 0.87,
-        "low": 3225.76,
-        "high": 3225.76
+        "current": 3181.0,
+        "target": 3206.92,
+        "pct": 0.81,
+        "low": 3206.92,
+        "high": 3206.92
       },
       {
         "symbol": "ZM=F",
         "name": "豆粕",
-        "current": 316.4,
-        "target": 317.1,
-        "pct": 0.22,
-        "low": 317.1,
-        "high": 317.1
+        "current": 315.0,
+        "target": 316.32,
+        "pct": 0.42,
+        "low": 316.32,
+        "high": 316.32
       },
       {
         "symbol": "HG=F",
         "name": "COMEX铜",
-        "current": 628.55,
-        "target": 629.82,
-        "pct": 0.2,
-        "low": 629.82,
-        "high": 629.82
+        "current": 628.2,
+        "target": 630.5,
+        "pct": 0.37,
+        "low": 630.5,
+        "high": 630.5
       },
       {
         "symbol": "GC=F",
         "name": "现货黄金",
-        "current": 4102.4,
-        "target": 4090.33,
-        "pct": -0.29,
-        "low": 4090.33,
-        "high": 4090.33
+        "current": 4083.1,
+        "target": 4067.7,
+        "pct": -0.38,
+        "low": 4067.7,
+        "high": 4067.7
       },
       {
         "symbol": "CL=F",
         "name": "国际原油",
-        "current": 70.24,
-        "target": 69.43,
-        "pct": -1.16,
-        "low": 69.43,
-        "high": 69.43
+        "current": 70.05,
+        "target": 68.97,
+        "pct": -1.54,
+        "low": 68.97,
+        "high": 68.97
       }
     ],
     "30d": [
       {
         "symbol": "AH=F",
         "name": "LME铝",
-        "current": 3198.0,
-        "target": 3254.61,
-        "pct": 1.77,
-        "low": 3254.61,
-        "high": 3254.61
-      },
-      {
-        "symbol": "SI=F",
-        "name": "现货白银",
-        "current": 59.59,
-        "target": 60.58,
-        "pct": 1.67,
-        "low": 60.58,
-        "high": 60.58
+        "current": 3181.0,
+        "target": 3235.34,
+        "pct": 1.71,
+        "low": 3235.34,
+        "high": 3235.34
       },
       {
         "symbol": "ZM=F",
         "name": "豆粕",
-        "current": 316.4,
-        "target": 317.66,
-        "pct": 0.4,
-        "low": 317.66,
-        "high": 317.66
+        "current": 315.0,
+        "target": 316.98,
+        "pct": 0.63,
+        "low": 316.98,
+        "high": 316.98
+      },
+      {
+        "symbol": "SI=F",
+        "name": "现货白银",
+        "current": 59.06,
+        "target": 59.27,
+        "pct": 0.36,
+        "low": 59.27,
+        "high": 59.27
       },
       {
         "symbol": "HG=F",
         "name": "COMEX铜",
-        "current": 628.55,
-        "target": 626.08,
-        "pct": -0.39,
-        "low": 626.08,
-        "high": 626.08
+        "current": 628.2,
+        "target": 626.54,
+        "pct": -0.26,
+        "low": 626.54,
+        "high": 626.54
       },
       {
         "symbol": "GC=F",
         "name": "现货黄金",
-        "current": 4102.4,
-        "target": 4047.83,
-        "pct": -1.33,
-        "low": 4047.83,
-        "high": 4047.83
+        "current": 4083.1,
+        "target": 4030.5,
+        "pct": -1.29,
+        "low": 4030.5,
+        "high": 4030.5
       },
       {
         "symbol": "CL=F",
         "name": "国际原油",
-        "current": 70.24,
-        "target": 69.12,
-        "pct": -1.6,
-        "low": 69.12,
-        "high": 69.12
+        "current": 70.05,
+        "target": 68.51,
+        "pct": -2.2,
+        "low": 68.51,
+        "high": 68.51
       }
     ],
     "60d": [
       {
         "symbol": "AH=F",
         "name": "LME铝",
-        "current": 3198.0,
-        "target": 3289.88,
-        "pct": 2.87,
-        "low": 3289.88,
-        "high": 3289.88
+        "current": 3181.0,
+        "target": 3277.67,
+        "pct": 3.04,
+        "low": 3277.67,
+        "high": 3277.67
       },
       {
         "symbol": "ZM=F",
         "name": "豆粕",
-        "current": 316.4,
-        "target": 318.48,
-        "pct": 0.66,
-        "low": 318.48,
-        "high": 318.48
-      },
-      {
-        "symbol": "SI=F",
-        "name": "现货白银",
-        "current": 59.59,
-        "target": 59.2,
-        "pct": -0.66,
-        "low": 59.2,
-        "high": 59.2
+        "current": 315.0,
+        "target": 318.32,
+        "pct": 1.05,
+        "low": 318.32,
+        "high": 318.32
       },
       {
         "symbol": "HG=F",
         "name": "COMEX铜",
-        "current": 628.55,
-        "target": 617.17,
-        "pct": -1.81,
-        "low": 617.17,
-        "high": 617.17
-      },
-      {
-        "symbol": "CL=F",
-        "name": "国际原油",
-        "current": 70.24,
-        "target": 68.75,
+        "current": 628.2,
+        "target": 614.88,
         "pct": -2.12,
-        "low": 68.75,
-        "high": 68.75
+        "low": 614.88,
+        "high": 614.88
       },
       {
         "symbol": "GC=F",
         "name": "现货黄金",
-        "current": 4102.4,
-        "target": 3989.11,
-        "pct": -2.76,
-        "low": 3989.11,
-        "high": 3989.11
+        "current": 4083.1,
+        "target": 3994.37,
+        "pct": -2.17,
+        "low": 3994.37,
+        "high": 3994.37
+      },
+      {
+        "symbol": "SI=F",
+        "name": "现货白银",
+        "current": 59.06,
+        "target": 57.73,
+        "pct": -2.25,
+        "low": 57.73,
+        "high": 57.73
+      },
+      {
+        "symbol": "CL=F",
+        "name": "国际原油",
+        "current": 70.05,
+        "target": 68.08,
+        "pct": -2.81,
+        "low": 68.08,
+        "high": 68.08
       }
     ],
     "90d": [
       {
         "symbol": "AH=F",
         "name": "LME铝",
-        "current": 3198.0,
-        "target": 3289.5,
-        "pct": 2.86,
-        "low": 3289.5,
-        "high": 3289.5
+        "current": 3181.0,
+        "target": 3287.37,
+        "pct": 3.34,
+        "low": 3287.37,
+        "high": 3287.37
       },
       {
         "symbol": "ZM=F",
         "name": "豆粕",
-        "current": 316.4,
-        "target": 317.54,
-        "pct": 0.36,
-        "low": 317.54,
-        "high": 317.54
-      },
-      {
-        "symbol": "CL=F",
-        "name": "国际原油",
-        "current": 70.24,
-        "target": 68.56,
-        "pct": -2.4,
-        "low": 68.56,
-        "high": 68.56
-      },
-      {
-        "symbol": "HG=F",
-        "name": "COMEX铜",
-        "current": 628.55,
-        "target": 609.05,
-        "pct": -3.1,
-        "low": 609.05,
-        "high": 609.05
-      },
-      {
-        "symbol": "SI=F",
-        "name": "现货白银",
-        "current": 59.59,
-        "target": 57.13,
-        "pct": -4.13,
-        "low": 57.13,
-        "high": 57.13
+        "current": 315.0,
+        "target": 318.28,
+        "pct": 1.04,
+        "low": 318.28,
+        "high": 318.28
       },
       {
         "symbol": "GC=F",
         "name": "现货黄金",
-        "current": 4102.4,
-        "target": 3928.73,
-        "pct": -4.23,
-        "low": 3928.73,
-        "high": 3928.73
+        "current": 4083.1,
+        "target": 3976.55,
+        "pct": -2.61,
+        "low": 3976.55,
+        "high": 3976.55
+      },
+      {
+        "symbol": "CL=F",
+        "name": "国际原油",
+        "current": 70.05,
+        "target": 67.77,
+        "pct": -3.26,
+        "low": 67.77,
+        "high": 67.77
+      },
+      {
+        "symbol": "HG=F",
+        "name": "COMEX铜",
+        "current": 628.2,
+        "target": 601.68,
+        "pct": -4.22,
+        "low": 601.68,
+        "high": 601.68
+      },
+      {
+        "symbol": "SI=F",
+        "name": "现货白银",
+        "current": 59.06,
+        "target": 55.8,
+        "pct": -5.52,
+        "low": 55.8,
+        "high": 55.8
       }
     ]
   },
@@ -287,211 +287,211 @@
     {
       "symbol": "GC=F",
       "name": "现货黄金",
-      "current": 4102.4,
+      "current": 4083.1,
       "pred_7d": {
-        "target": 4113.67,
-        "pct": 0.27,
-        "low": 4113.67,
-        "high": 4113.67
+        "target": 4091.62,
+        "pct": 0.21,
+        "low": 4091.62,
+        "high": 4091.62
       },
       "pred_14d": {
-        "target": 4090.33,
-        "pct": -0.29,
-        "low": 4090.33,
-        "high": 4090.33
+        "target": 4067.7,
+        "pct": -0.38,
+        "low": 4067.7,
+        "high": 4067.7
       },
       "pred_30d": {
-        "target": 4047.83,
-        "pct": -1.33,
-        "low": 4047.83,
-        "high": 4047.83
+        "target": 4030.5,
+        "pct": -1.29,
+        "low": 4030.5,
+        "high": 4030.5
       },
       "pred_60d": {
-        "target": 3989.11,
-        "pct": -2.76,
-        "low": 3989.11,
-        "high": 3989.11
+        "target": 3994.37,
+        "pct": -2.17,
+        "low": 3994.37,
+        "high": 3994.37
       },
       "pred_90d": {
-        "target": 3928.73,
-        "pct": -4.23,
-        "low": 3928.73,
-        "high": 3928.73
+        "target": 3976.55,
+        "pct": -2.61,
+        "low": 3976.55,
+        "high": 3976.55
       }
     },
     {
       "symbol": "SI=F",
       "name": "现货白银",
-      "current": 59.59,
+      "current": 59.06,
       "pred_7d": {
-        "target": 61.15,
-        "pct": 2.62,
-        "low": 61.15,
-        "high": 61.15
+        "target": 59.81,
+        "pct": 1.27,
+        "low": 59.81,
+        "high": 59.81
       },
       "pred_14d": {
-        "target": 61.02,
-        "pct": 2.4,
-        "low": 61.02,
-        "high": 61.02
+        "target": 59.68,
+        "pct": 1.05,
+        "low": 59.68,
+        "high": 59.68
       },
       "pred_30d": {
-        "target": 60.58,
-        "pct": 1.67,
-        "low": 60.58,
-        "high": 60.58
+        "target": 59.27,
+        "pct": 0.36,
+        "low": 59.27,
+        "high": 59.27
       },
       "pred_60d": {
-        "target": 59.2,
-        "pct": -0.66,
-        "low": 59.2,
-        "high": 59.2
+        "target": 57.73,
+        "pct": -2.25,
+        "low": 57.73,
+        "high": 57.73
       },
       "pred_90d": {
-        "target": 57.13,
-        "pct": -4.13,
-        "low": 57.13,
-        "high": 57.13
+        "target": 55.8,
+        "pct": -5.52,
+        "low": 55.8,
+        "high": 55.8
       }
     },
     {
       "symbol": "CL=F",
       "name": "国际原油",
-      "current": 70.24,
+      "current": 70.05,
       "pred_7d": {
-        "target": 69.9,
-        "pct": -0.48,
-        "low": 69.9,
-        "high": 69.9
+        "target": 69.5,
+        "pct": -0.79,
+        "low": 69.5,
+        "high": 69.5
       },
       "pred_14d": {
-        "target": 69.43,
-        "pct": -1.16,
-        "low": 69.43,
-        "high": 69.43
+        "target": 68.97,
+        "pct": -1.54,
+        "low": 68.97,
+        "high": 68.97
       },
       "pred_30d": {
-        "target": 69.12,
-        "pct": -1.6,
-        "low": 69.12,
-        "high": 69.12
+        "target": 68.51,
+        "pct": -2.2,
+        "low": 68.51,
+        "high": 68.51
       },
       "pred_60d": {
-        "target": 68.75,
-        "pct": -2.12,
-        "low": 68.75,
-        "high": 68.75
+        "target": 68.08,
+        "pct": -2.81,
+        "low": 68.08,
+        "high": 68.08
       },
       "pred_90d": {
-        "target": 68.56,
-        "pct": -2.4,
-        "low": 68.56,
-        "high": 68.56
+        "target": 67.77,
+        "pct": -3.26,
+        "low": 67.77,
+        "high": 67.77
       }
     },
     {
       "symbol": "HG=F",
       "name": "COMEX铜",
-      "current": 628.55,
+      "current": 628.2,
       "pred_7d": {
-        "target": 631.73,
-        "pct": 0.51,
-        "low": 631.73,
-        "high": 631.73
+        "target": 632.48,
+        "pct": 0.68,
+        "low": 632.48,
+        "high": 632.48
       },
       "pred_14d": {
-        "target": 629.82,
-        "pct": 0.2,
-        "low": 629.82,
-        "high": 629.82
+        "target": 630.5,
+        "pct": 0.37,
+        "low": 630.5,
+        "high": 630.5
       },
       "pred_30d": {
-        "target": 626.08,
-        "pct": -0.39,
-        "low": 626.08,
-        "high": 626.08
+        "target": 626.54,
+        "pct": -0.26,
+        "low": 626.54,
+        "high": 626.54
       },
       "pred_60d": {
-        "target": 617.17,
-        "pct": -1.81,
-        "low": 617.17,
-        "high": 617.17
+        "target": 614.88,
+        "pct": -2.12,
+        "low": 614.88,
+        "high": 614.88
       },
       "pred_90d": {
-        "target": 609.05,
-        "pct": -3.1,
-        "low": 609.05,
-        "high": 609.05
+        "target": 601.68,
+        "pct": -4.22,
+        "low": 601.68,
+        "high": 601.68
       }
     },
     {
       "symbol": "AH=F",
       "name": "LME铝",
-      "current": 3198.0,
+      "current": 3181.0,
       "pred_7d": {
-        "target": 3223.17,
-        "pct": 0.79,
-        "low": 3223.17,
-        "high": 3223.17
+        "target": 3202.77,
+        "pct": 0.68,
+        "low": 3202.77,
+        "high": 3202.77
       },
       "pred_14d": {
-        "target": 3225.76,
-        "pct": 0.87,
-        "low": 3225.76,
-        "high": 3225.76
+        "target": 3206.92,
+        "pct": 0.81,
+        "low": 3206.92,
+        "high": 3206.92
       },
       "pred_30d": {
-        "target": 3254.61,
-        "pct": 1.77,
-        "low": 3254.61,
-        "high": 3254.61
+        "target": 3235.34,
+        "pct": 1.71,
+        "low": 3235.34,
+        "high": 3235.34
       },
       "pred_60d": {
-        "target": 3289.88,
-        "pct": 2.87,
-        "low": 3289.88,
-        "high": 3289.88
+        "target": 3277.67,
+        "pct": 3.04,
+        "low": 3277.67,
+        "high": 3277.67
       },
       "pred_90d": {
-        "target": 3289.5,
-        "pct": 2.86,
-        "low": 3289.5,
-        "high": 3289.5
+        "target": 3287.37,
+        "pct": 3.34,
+        "low": 3287.37,
+        "high": 3287.37
       }
     },
     {
       "symbol": "ZM=F",
       "name": "豆粕",
-      "current": 316.4,
+      "current": 315.0,
       "pred_7d": {
-        "target": 317.02,
-        "pct": 0.2,
-        "low": 317.02,
-        "high": 317.02
+        "target": 315.94,
+        "pct": 0.3,
+        "low": 315.94,
+        "high": 315.94
       },
       "pred_14d": {
-        "target": 317.1,
-        "pct": 0.22,
-        "low": 317.1,
-        "high": 317.1
+        "target": 316.32,
+        "pct": 0.42,
+        "low": 316.32,
+        "high": 316.32
       },
       "pred_30d": {
-        "target": 317.66,
-        "pct": 0.4,
-        "low": 317.66,
-        "high": 317.66
+        "target": 316.98,
+        "pct": 0.63,
+        "low": 316.98,
+        "high": 316.98
       },
       "pred_60d": {
-        "target": 318.48,
-        "pct": 0.66,
-        "low": 318.48,
-        "high": 318.48
+        "target": 318.32,
+        "pct": 1.05,
+        "low": 318.32,
+        "high": 318.32
       },
       "pred_90d": {
-        "target": 317.54,
-        "pct": 0.36,
-        "low": 317.54,
-        "high": 317.54
+        "target": 318.28,
+        "pct": 1.04,
+        "low": 318.28,
+        "high": 318.28
       }
     }
   ]
