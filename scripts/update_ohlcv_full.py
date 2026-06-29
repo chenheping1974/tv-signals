@@ -32,6 +32,7 @@ existing_codes = set(existing["code"].astype(str).str.zfill(6).unique()) if len(
 new_rows = []
 t0 = time.time()
 
+consecutive_empty = 0
 for i, code in enumerate(ALL_CODES):
     sym = f"sh{code}" if code.startswith("6") else f"sz{code}"
     try:
@@ -49,8 +50,15 @@ for i, code in enumerate(ALL_CODES):
         df = df[df["date"] > last_date]
         if len(df) > 0:
             new_rows.append(df[["date", "code", "open", "high", "low", "close"]].dropna())
+            consecutive_empty = 0
+        else:
+            consecutive_empty += 1
     except Exception:
-        pass
+        consecutive_empty += 1
+    # 连续200只无新数据 → 休市, 跳过
+    if consecutive_empty >= 200:
+        print(f"   [{i+1}/{len(ALL_CODES)}] 连续{consecutive_empty}只无新数据, 休市跳过", flush=True)
+        break
     if (i + 1) % 100 == 0:
         print(f"   [{i+1}/{len(ALL_CODES)}] {len(new_rows)}条, {(time.time()-t0)/60:.0f}min", flush=True)
 
