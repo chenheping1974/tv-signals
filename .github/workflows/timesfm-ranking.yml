@@ -42,45 +42,6 @@ jobs:
           git pull --rebase
           git push
 
-  # ── 精选999只预测 ─────────────────
-  pool_ranking:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    timeout-minutes: 60
-    needs: update_full
-
-    steps:
-      - uses: actions/checkout@v4
-        with: { ref: main }
-
-      - uses: actions/setup-python@v5
-        with: { python-version: '3.11' }
-
-      - uses: actions/cache@v4
-        with: { path: ~/.cache/huggingface, key: hf-timesfm-v2 }
-
-      - name: 安装依赖
-        run: |
-          pip install pandas numpy requests
-          pip install torch --index-url https://download.pytorch.org/whl/cpu
-          pip install transformers accelerate
-
-      - name: TimesFM 精选999只预测
-        env:
-          HF_TOKEN: ${{ secrets.HF_TOKEN }}
-        run: python scripts/timesfm_ranking.py
-
-      - name: 提交精选排名
-        run: |
-          git config user.name "timesfm-bot"
-          git config user.email "bot@tv-signals.local"
-          git add data/timesfm_ranking.json
-          git diff --staged --quiet && exit 0
-          git commit -m "TimesFM精选排名更新 [$(date +%Y-%m-%d)]"
-          git pull --rebase
-          git push
-
   # ── 全量预测 ─────────────────────
   full_ranking:
     runs-on: ubuntu-latest
@@ -119,3 +80,59 @@ jobs:
           git commit -m "TimesFM全量排名更新 [$(date +%Y-%m-%d)]"
           git pull --rebase
           git push
+
+  # ── 从全量筛999精选 ─────────────
+  filter_999:
+    needs: full_ranking
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    timeout-minutes: 5
+
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: main }
+
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+
+      - name: 从全量筛选999只
+        run: |
+          import json
+          full = json.load(open("data/timesfm_full_ranking.json"))
+          pool = json.load(open("data/stock_pool.json"))
+          if isinstance(pool, dict) and "stocks" in pool:
+              pool = pool["stocks"]
+          codes = set(str(s["code"]).zfill(6) for s in pool)
+          details = [d for d in full["details"] if d["symbol"] in codes]
+          rankings = {}
+          for h in ["30d", "60d", "128d"]:
+              key = f"pred_{h}"
+              rankings[h] = sorted(
+                  [d for d in details if key in d],
+                  key=lambda x: x[key]["pct"], reverse=True,
+              )[:50]
+          out = {
+              "updated": full["updated"],
+              "data_date": full["data_date"],
+              "rankings": {h: [
+                  {"symbol": r["symbol"], "name": r["name"],
+                   "current": r["current"], **r[f"pred_{h}"]}
+                  for r in rankings[h]
+              ] for h in rankings},
+              "details": details,
+          }
+          json.dump(out, open("data/timesfm_ranking.json", "w"), ensure_ascii=False, indent=2)
+          print(f"✅ 筛选: {len(details)}只")
+        shell: python
+
+      - name: 提交精选排名
+        run: |
+          git config user.name "timesfm-bot"
+          git config user.email "bot@tv-signals.local"
+          git add data/timesfm_ranking.json
+          git diff --staged --quiet && exit 0
+          git commit -m "TimesFM精选排名更新 [$(date +%Y-%m-%d)]"
+          git pull --rebase
+          git push
+
