@@ -113,8 +113,9 @@ def main():
     print(f"✅ 完成: {len(results)}只, {elapsed:.1f}分钟")
     for label in ["30d", "60d", "128d"]:
         top = rankings[label][:3]
+        key = f"pred_{label}"
         print(f"   {label} Top3: " + " | ".join(
-            f"{r['name']} {r['pct']:+.1f}%" for r in top))
+            f"{r['name']} {r[key]['pct']:+.1f}%" for r in top))
 
 
 if __name__ == "__main__":
