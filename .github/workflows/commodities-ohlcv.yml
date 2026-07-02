@@ -69,6 +69,8 @@ jobs:
         run: |
           git config user.name "commodity-bot"
           git config user.email "bot@tv-signals.local"
-          git pull --rebase
           git add data/commodity_ranking.json
-          git diff --staged --quiet || (git commit -m "商品排名更新 [$(date +%Y-%m-%d)]" && git push)
+          git diff --staged --quiet && exit 0
+          git commit -m "商品排名更新 [$(date +%Y-%m-%d)]"
+          git pull --rebase
+          git push
