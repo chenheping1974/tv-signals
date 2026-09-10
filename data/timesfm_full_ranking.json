@@ -1,6 +1,6 @@
 {
-  "updated": "2026-09-09T19:02:21.826767",
-  "data_date": "2026-09-09",
+  "updated": "2026-09-10T17:58:18.670840",
+  "data_date": "2026-09-10",
   "total_stocks": 5193,
   "rankings": {
     "30d": [
@@ -155,7 +155,7 @@
         "target": 212.37,
         "pct": 11.19,
         "low": 155.79,
-        "high": 262.87
+        "high": 262.88
       },
       {
         "symbol": "301538",
@@ -796,16 +796,7 @@
         "target": 54.27,
         "pct": 14.98,
         "low": 43.33,
-        "high": 64.08
-      },
-      {
-        "symbol": "000408",
-        "name": "藏格矿业",
-        "current": 78.56,
-        "target": 90.3,
-        "pct": 14.95,
-        "low": 75.26,
-        "high": 99.71
+        "high": 64.09
       },
       {
         "symbol": "688100",
@@ -905,6 +896,15 @@
         "pct": 13.35,
         "low": 13.26,
         "high": 20.23
+      },
+      {
+        "symbol": "000010",
+        "name": "*ST美丽",
+        "current": 1.71,
+        "target": 1.94,
+        "pct": 13.31,
+        "low": 1.43,
+        "high": 2.48
       }
     ],
     "128d": [
@@ -1314,6 +1314,15 @@
         "high": 23.16
       },
       {
+        "symbol": "301413",
+        "name": "安培龙",
+        "current": 57.71,
+        "target": 76.38,
+        "pct": 32.36,
+        "low": 39.22,
+        "high": 121.09
+      },
+      {
         "symbol": "600180",
         "name": "*ST瑞茂",
         "current": 1.54,
@@ -1321,15 +1330,6 @@
         "pct": 32.36,
         "low": 0.79,
         "high": 3.13
-      },
-      {
-        "symbol": "301413",
-        "name": "安培龙",
-        "current": 57.71,
-        "target": 76.38,
-        "pct": 32.35,
-        "low": 39.22,
-        "high": 121.09
       },
       {
         "symbol": "688321",
@@ -1364,231 +1364,231 @@
     {
       "symbol": "000001",
       "name": "平安银行",
-      "current": 11.7,
+      "current": 11.85,
       "pred_30d": {
-        "target": 11.58,
-        "pct": -1.01,
-        "low": 10.89,
-        "high": 12.06
+        "target": 11.75,
+        "pct": -0.85,
+        "low": 11.03,
+        "high": 12.25
       },
       "pred_60d": {
-        "target": 11.49,
-        "pct": -1.8,
-        "low": 10.6,
-        "high": 12.12
+        "target": 11.62,
+        "pct": -1.96,
+        "low": 10.7,
+        "high": 12.26
       },
       "pred_128d": {
-        "target": 11.34,
-        "pct": -3.04,
-        "low": 10.2,
-        "high": 12.23
+        "target": 11.43,
+        "pct": -3.54,
+        "low": 10.27,
+        "high": 12.37
       }
     },
     {
       "symbol": "000002",
       "name": "万  科Ａ",
-      "current": 3.19,
+      "current": 3.16,
       "pred_30d": {
-        "target": 3.14,
-        "pct": -1.68,
-        "low": 2.76,
-        "high": 3.39
+        "target": 3.09,
+        "pct": -2.3,
+        "low": 2.72,
+        "high": 3.33
       },
       "pred_60d": {
-        "target": 3.19,
-        "pct": 0.07,
-        "low": 2.64,
-        "high": 3.64
+        "target": 3.07,
+        "pct": -2.71,
+        "low": 2.55,
+        "high": 3.49
       },
       "pred_128d": {
-        "target": 3.44,
-        "pct": 7.83,
-        "low": 2.49,
-        "high": 4.32
+        "target": 3.09,
+        "pct": -2.28,
+        "low": 2.14,
+        "high": 4.03
       }
     },
     {
       "symbol": "000006",
       "name": "深振业Ａ",
-      "current": 7.19,
+      "current": 7.07,
       "pred_30d": {
-        "target": 7.14,
-        "pct": -0.73,
-        "low": 6.07,
-        "high": 8.11
+        "target": 7.09,
+        "pct": 0.22,
+        "low": 6.06,
+        "high": 8.04
       },
       "pred_60d": {
-        "target": 7.17,
-        "pct": -0.34,
-        "low": 5.56,
+        "target": 7.2,
+        "pct": 1.77,
+        "low": 5.6,
         "high": 8.68
       },
       "pred_128d": {
-        "target": 8.54,
-        "pct": 18.78,
-        "low": 5.58,
-        "high": 11.74
+        "target": 8.77,
+        "pct": 24.08,
+        "low": 5.85,
+        "high": 11.71
       }
     },
     {
       "symbol": "000007",
       "name": "全新好",
-      "current": 11.77,
+      "current": 10.97,
       "pred_30d": {
-        "target": 11.45,
-        "pct": -2.72,
-        "low": 8.96,
-        "high": 13.34
+        "target": 11.06,
+        "pct": 0.84,
+        "low": 8.85,
+        "high": 12.69
       },
       "pred_60d": {
-        "target": 11.0,
-        "pct": -6.55,
-        "low": 7.61,
-        "high": 13.78
+        "target": 10.61,
+        "pct": -3.24,
+        "low": 7.7,
+        "high": 12.91
       },
       "pred_128d": {
-        "target": 8.94,
-        "pct": -24.07,
-        "low": 5.36,
-        "high": 13.22
+        "target": 8.03,
+        "pct": -26.76,
+        "low": 5.35,
+        "high": 11.07
       }
     },
     {
       "symbol": "000008",
       "name": "神州高铁",
-      "current": 2.5,
+      "current": 2.49,
       "pred_30d": {
-        "target": 2.48,
-        "pct": -0.93,
-        "low": 2.3,
+        "target": 2.47,
+        "pct": -0.74,
+        "low": 2.29,
         "high": 2.61
       },
       "pred_60d": {
         "target": 2.46,
-        "pct": -1.53,
-        "low": 2.21,
+        "pct": -1.24,
+        "low": 2.2,
         "high": 2.65
       },
       "pred_128d": {
-        "target": 2.44,
-        "pct": -2.35,
-        "low": 2.07,
-        "high": 2.77
+        "target": 2.45,
+        "pct": -1.52,
+        "low": 2.06,
+        "high": 2.79
       }
     },
     {
       "symbol": "000009",
       "name": "中国宝安",
-      "current": 7.11,
+      "current": 7.01,
       "pred_30d": {
-        "target": 6.96,
-        "pct": -2.11,
-        "low": 6.23,
-        "high": 7.67
+        "target": 6.88,
+        "pct": -1.84,
+        "low": 6.18,
+        "high": 7.55
       },
       "pred_60d": {
-        "target": 7.46,
-        "pct": 4.91,
-        "low": 6.0,
-        "high": 8.84
+        "target": 7.37,
+        "pct": 5.09,
+        "low": 6.06,
+        "high": 8.63
       },
       "pred_128d": {
-        "target": 9.2,
-        "pct": 29.45,
-        "low": 6.24,
-        "high": 11.15
+        "target": 8.71,
+        "pct": 24.31,
+        "low": 6.33,
+        "high": 10.43
       }
     },
     {
       "symbol": "000010",
       "name": "*ST美丽",
-      "current": 1.69,
+      "current": 1.71,
       "pred_30d": {
-        "target": 1.76,
-        "pct": 4.36,
-        "low": 1.47,
-        "high": 2.08
+        "target": 1.8,
+        "pct": 5.48,
+        "low": 1.5,
+        "high": 2.14
       },
       "pred_60d": {
-        "target": 1.89,
-        "pct": 11.9,
-        "low": 1.39,
-        "high": 2.44
+        "target": 1.94,
+        "pct": 13.31,
+        "low": 1.43,
+        "high": 2.48
       },
       "pred_128d": {
-        "target": 2.12,
-        "pct": 25.63,
-        "low": 1.4,
-        "high": 3.01
+        "target": 2.16,
+        "pct": 26.6,
+        "low": 1.44,
+        "high": 3.03
       }
     },
     {
       "symbol": "000011",
       "name": "深物业A",
-      "current": 9.18,
+      "current": 9.11,
       "pred_30d": {
-        "target": 8.71,
-        "pct": -5.09,
-        "low": 7.59,
-        "high": 9.59
+        "target": 8.81,
+        "pct": -3.25,
+        "low": 7.68,
+        "high": 9.7
       },
       "pred_60d": {
-        "target": 8.69,
-        "pct": -5.3,
-        "low": 7.23,
-        "high": 9.9
+        "target": 8.76,
+        "pct": -3.82,
+        "low": 7.24,
+        "high": 9.99
       },
       "pred_128d": {
-        "target": 8.82,
-        "pct": -3.95,
-        "low": 6.68,
-        "high": 10.58
+        "target": 8.61,
+        "pct": -5.48,
+        "low": 6.53,
+        "high": 10.4
       }
     },
     {
       "symbol": "000012",
       "name": "南  玻Ａ",
-      "current": 3.77,
+      "current": 3.78,
       "pred_30d": {
-        "target": 3.86,
-        "pct": 2.29,
-        "low": 3.61,
-        "high": 4.17
+        "target": 3.87,
+        "pct": 2.27,
+        "low": 3.63,
+        "high": 4.19
       },
       "pred_60d": {
         "target": 3.9,
-        "pct": 3.53,
-        "low": 3.57,
-        "high": 4.36
+        "pct": 3.28,
+        "low": 3.59,
+        "high": 4.38
       },
       "pred_128d": {
-        "target": 4.0,
-        "pct": 6.2,
-        "low": 3.56,
-        "high": 4.66
+        "target": 3.98,
+        "pct": 5.4,
+        "low": 3.58,
+        "high": 4.63
       }
     },
     {
       "symbol": "000014",
       "name": "沙河股份",
-      "current": 10.86,
+      "current": 10.58,
       "pred_30d": {
-        "target": 10.71,
-        "pct": -1.35,
-        "low": 9.18,
-        "high": 11.95
+        "target": 10.18,
+        "pct": -3.77,
+        "low": 8.72,
+        "high": 11.38
       },
       "pred_60d": {
-        "target": 10.41,
-        "pct": -4.17,
-        "low": 8.29,
-        "high": 12.14
+        "target": 9.76,
+        "pct": -7.76,
+        "low": 7.81,
+        "high": 11.41
       },
       "pred_128d": {
-        "target": 13.06,
-        "pct": 20.3,
-        "low": 9.34,
-        "high": 16.22
+        "target": 12.27,
+        "pct": 15.94,
+        "low": 9.04,
+        "high": 15.12
       }
     },
     {
@@ -1617,507 +1617,507 @@
     {
       "symbol": "000017",
       "name": "深中华A",
-      "current": 9.26,
+      "current": 8.33,
       "pred_30d": {
-        "target": 6.54,
-        "pct": -29.37,
-        "low": 5.03,
-        "high": 7.89
+        "target": 6.08,
+        "pct": -27.06,
+        "low": 4.81,
+        "high": 7.17
       },
       "pred_60d": {
-        "target": 5.88,
-        "pct": -36.47,
-        "low": 4.9,
-        "high": 7.18
+        "target": 5.69,
+        "pct": -31.67,
+        "low": 4.83,
+        "high": 6.67
       },
       "pred_128d": {
-        "target": 6.09,
-        "pct": -34.24,
-        "low": 4.92,
-        "high": 7.53
+        "target": 5.77,
+        "pct": -30.78,
+        "low": 4.65,
+        "high": 7.03
       }
     },
     {
       "symbol": "000019",
       "name": "深粮控股",
-      "current": 8.46,
+      "current": 7.68,
       "pred_30d": {
-        "target": 7.11,
-        "pct": -15.94,
-        "low": 6.16,
-        "high": 7.91
+        "target": 6.99,
+        "pct": -8.96,
+        "low": 6.14,
+        "high": 7.64
       },
       "pred_60d": {
-        "target": 6.92,
-        "pct": -18.26,
-        "low": 5.92,
-        "high": 7.74
+        "target": 6.84,
+        "pct": -10.93,
+        "low": 5.94,
+        "high": 7.54
       },
       "pred_128d": {
-        "target": 7.04,
-        "pct": -16.73,
-        "low": 5.87,
-        "high": 7.95
+        "target": 6.97,
+        "pct": -9.31,
+        "low": 5.9,
+        "high": 7.77
       }
     },
     {
       "symbol": "000020",
       "name": "深华发Ａ",
-      "current": 14.9,
+      "current": 13.41,
       "pred_30d": {
-        "target": 13.14,
-        "pct": -11.85,
-        "low": 10.95,
-        "high": 14.99
+        "target": 12.52,
+        "pct": -6.6,
+        "low": 10.63,
+        "high": 13.91
       },
       "pred_60d": {
-        "target": 12.82,
-        "pct": -13.95,
-        "low": 10.18,
-        "high": 15.0
+        "target": 12.52,
+        "pct": -6.66,
+        "low": 9.92,
+        "high": 14.31
       },
       "pred_128d": {
-        "target": 13.84,
-        "pct": -7.13,
-        "low": 10.08,
-        "high": 16.64
+        "target": 13.75,
+        "pct": 2.56,
+        "low": 9.95,
+        "high": 16.1
       }
     },
     {
       "symbol": "000021",
       "name": "深科技",
-      "current": 34.99,
+      "current": 36.5,
       "pred_30d": {
-        "target": 34.31,
-        "pct": -1.95,
-        "low": 28.25,
-        "high": 39.58
+        "target": 36.1,
+        "pct": -1.09,
+        "low": 28.98,
+        "high": 42.67
       },
       "pred_60d": {
-        "target": 33.57,
-        "pct": -4.07,
-        "low": 25.26,
-        "high": 41.89
+        "target": 35.13,
+        "pct": -3.74,
+        "low": 25.95,
+        "high": 44.84
       },
       "pred_128d": {
-        "target": 31.19,
-        "pct": -10.85,
-        "low": 21.29,
-        "high": 47.25
+        "target": 32.86,
+        "pct": -9.96,
+        "low": 22.04,
+        "high": 50.68
       }
     },
     {
       "symbol": "000025",
       "name": "特  力Ａ",
-      "current": 15.63,
+      "current": 15.04,
       "pred_30d": {
-        "target": 15.74,
-        "pct": 0.74,
-        "low": 14.27,
-        "high": 16.8
+        "target": 15.33,
+        "pct": 1.91,
+        "low": 13.86,
+        "high": 16.39
       },
       "pred_60d": {
-        "target": 15.75,
-        "pct": 0.76,
-        "low": 13.83,
-        "high": 17.16
+        "target": 15.31,
+        "pct": 1.8,
+        "low": 13.45,
+        "high": 16.71
       },
       "pred_128d": {
-        "target": 15.76,
-        "pct": 0.85,
-        "low": 13.18,
-        "high": 17.81
+        "target": 15.37,
+        "pct": 2.2,
+        "low": 12.88,
+        "high": 17.47
       }
     },
     {
       "symbol": "000026",
       "name": "飞亚达",
-      "current": 19.38,
+      "current": 19.15,
       "pred_30d": {
-        "target": 18.39,
-        "pct": -5.1,
-        "low": 15.36,
-        "high": 20.51
+        "target": 17.9,
+        "pct": -6.52,
+        "low": 15.03,
+        "high": 19.93
       },
       "pred_60d": {
-        "target": 18.18,
-        "pct": -6.19,
-        "low": 14.57,
-        "high": 21.03
+        "target": 17.75,
+        "pct": -7.32,
+        "low": 14.21,
+        "high": 20.56
       },
       "pred_128d": {
-        "target": 16.81,
-        "pct": -13.26,
-        "low": 12.35,
-        "high": 22.76
+        "target": 16.14,
+        "pct": -15.73,
+        "low": 11.72,
+        "high": 21.94
       }
     },
     {
       "symbol": "000027",
       "name": "深圳能源",
-      "current": 6.41,
+      "current": 6.44,
       "pred_30d": {
-        "target": 6.52,
-        "pct": 1.66,
+        "target": 6.49,
+        "pct": 0.76,
         "low": 6.12,
-        "high": 6.83
+        "high": 6.79
       },
       "pred_60d": {
-        "target": 6.51,
-        "pct": 1.55,
+        "target": 6.47,
+        "pct": 0.39,
         "low": 5.99,
-        "high": 6.93
+        "high": 6.88
       },
       "pred_128d": {
-        "target": 6.58,
-        "pct": 2.62,
-        "low": 5.88,
-        "high": 7.13
+        "target": 6.5,
+        "pct": 0.86,
+        "low": 5.87,
+        "high": 7.03
       }
     },
     {
       "symbol": "000028",
       "name": "国药一致",
-      "current": 20.3,
+      "current": 20.16,
       "pred_30d": {
-        "target": 20.33,
-        "pct": 0.13,
-        "low": 19.26,
-        "high": 21.17
+        "target": 20.24,
+        "pct": 0.4,
+        "low": 19.2,
+        "high": 21.18
       },
       "pred_60d": {
-        "target": 20.42,
-        "pct": 0.58,
-        "low": 18.82,
-        "high": 21.82
+        "target": 20.35,
+        "pct": 0.96,
+        "low": 18.74,
+        "high": 21.87
       },
       "pred_128d": {
-        "target": 20.82,
-        "pct": 2.58,
-        "low": 18.17,
-        "high": 23.52
+        "target": 20.78,
+        "pct": 3.07,
+        "low": 18.0,
+        "high": 23.64
       }
     },
     {
       "symbol": "000029",
       "name": "深深房Ａ",
-      "current": 22.8,
+      "current": 22.67,
       "pred_30d": {
-        "target": 20.97,
-        "pct": -8.01,
-        "low": 17.76,
-        "high": 23.49
+        "target": 21.43,
+        "pct": -5.48,
+        "low": 18.15,
+        "high": 23.95
       },
       "pred_60d": {
-        "target": 20.1,
-        "pct": -11.83,
-        "low": 15.81,
-        "high": 23.55
+        "target": 20.97,
+        "pct": -7.48,
+        "low": 16.77,
+        "high": 24.31
       },
       "pred_128d": {
-        "target": 28.23,
-        "pct": 23.8,
-        "low": 20.49,
-        "high": 35.89
+        "target": 29.51,
+        "pct": 30.16,
+        "low": 20.97,
+        "high": 37.82
       }
     },
     {
       "symbol": "000030",
       "name": "富奥股份",
-      "current": 4.07,
+      "current": 4.03,
       "pred_30d": {
-        "target": 4.05,
-        "pct": -0.37,
-        "low": 3.76,
-        "high": 4.31
+        "target": 4.01,
+        "pct": -0.6,
+        "low": 3.73,
+        "high": 4.24
       },
       "pred_60d": {
-        "target": 4.09,
-        "pct": 0.46,
-        "low": 3.63,
-        "high": 4.55
+        "target": 4.04,
+        "pct": 0.15,
+        "low": 3.61,
+        "high": 4.45
       },
       "pred_128d": {
-        "target": 4.26,
-        "pct": 4.59,
+        "target": 4.12,
+        "pct": 2.29,
         "low": 3.37,
-        "high": 5.13
+        "high": 4.95
       }
     },
     {
       "symbol": "000031",
       "name": "大悦城",
-      "current": 2.28,
+      "current": 2.27,
       "pred_30d": {
         "target": 2.34,
-        "pct": 2.52,
+        "pct": 3.2,
         "low": 2.16,
-        "high": 2.54
+        "high": 2.55
       },
       "pred_60d": {
-        "target": 2.39,
-        "pct": 4.73,
-        "low": 2.08,
-        "high": 2.73
+        "target": 2.4,
+        "pct": 5.55,
+        "low": 2.09,
+        "high": 2.72
       },
       "pred_128d": {
-        "target": 2.94,
-        "pct": 28.88,
-        "low": 2.31,
-        "high": 3.48
+        "target": 2.89,
+        "pct": 27.19,
+        "low": 2.33,
+        "high": 3.36
       }
     },
     {
       "symbol": "000032",
       "name": "深桑达Ａ",
-      "current": 14.01,
+      "current": 13.88,
       "pred_30d": {
-        "target": 13.99,
-        "pct": -0.15,
-        "low": 12.25,
-        "high": 15.6
+        "target": 13.84,
+        "pct": -0.29,
+        "low": 12.33,
+        "high": 15.42
       },
       "pred_60d": {
-        "target": 14.32,
-        "pct": 2.18,
-        "low": 11.83,
-        "high": 16.74
+        "target": 14.16,
+        "pct": 2.01,
+        "low": 11.87,
+        "high": 16.59
       },
       "pred_128d": {
-        "target": 14.16,
-        "pct": 1.07,
-        "low": 10.84,
-        "high": 17.21
+        "target": 13.93,
+        "pct": 0.38,
+        "low": 10.83,
+        "high": 17.03
       }
     },
     {
       "symbol": "000034",
       "name": "神州数码",
-      "current": 23.17,
+      "current": 22.83,
       "pred_30d": {
-        "target": 23.43,
-        "pct": 1.11,
-        "low": 21.75,
-        "high": 25.01
+        "target": 23.2,
+        "pct": 1.61,
+        "low": 21.51,
+        "high": 24.79
       },
       "pred_60d": {
-        "target": 23.5,
-        "pct": 1.43,
-        "low": 21.38,
-        "high": 25.93
+        "target": 23.26,
+        "pct": 1.9,
+        "low": 21.17,
+        "high": 25.65
       },
       "pred_128d": {
-        "target": 23.57,
-        "pct": 1.75,
-        "low": 19.95,
-        "high": 29.17
+        "target": 23.24,
+        "pct": 1.81,
+        "low": 19.66,
+        "high": 28.54
       }
     },
     {
       "symbol": "000035",
       "name": "中国天楹",
-      "current": 5.05,
+      "current": 5.04,
       "pred_30d": {
-        "target": 4.83,
-        "pct": -4.43,
-        "low": 4.31,
-        "high": 5.28
+        "target": 4.87,
+        "pct": -3.34,
+        "low": 4.35,
+        "high": 5.32
       },
       "pred_60d": {
-        "target": 4.76,
-        "pct": -5.74,
+        "target": 4.79,
+        "pct": -4.95,
         "low": 4.23,
-        "high": 5.37
+        "high": 5.42
       },
       "pred_128d": {
-        "target": 5.02,
-        "pct": -0.67,
-        "low": 4.27,
-        "high": 6.04
+        "target": 4.88,
+        "pct": -3.16,
+        "low": 4.25,
+        "high": 5.85
       }
     },
     {
       "symbol": "000036",
       "name": "华联控股",
-      "current": 3.97,
+      "current": 3.92,
       "pred_30d": {
-        "target": 3.93,
-        "pct": -0.96,
-        "low": 3.54,
-        "high": 4.29
+        "target": 3.88,
+        "pct": -1.02,
+        "low": 3.49,
+        "high": 4.24
       },
       "pred_60d": {
-        "target": 3.91,
-        "pct": -1.58,
-        "low": 3.33,
-        "high": 4.46
+        "target": 3.86,
+        "pct": -1.5,
+        "low": 3.28,
+        "high": 4.41
       },
       "pred_128d": {
-        "target": 4.14,
-        "pct": 4.36,
-        "low": 3.2,
-        "high": 5.15
+        "target": 4.12,
+        "pct": 5.18,
+        "low": 3.18,
+        "high": 5.11
       }
     },
     {
       "symbol": "000037",
       "name": "深南电A",
-      "current": 9.47,
+      "current": 9.62,
       "pred_30d": {
-        "target": 9.36,
-        "pct": -1.11,
-        "low": 8.41,
-        "high": 10.06
+        "target": 9.33,
+        "pct": -2.98,
+        "low": 8.36,
+        "high": 10.03
       },
       "pred_60d": {
-        "target": 9.12,
-        "pct": -3.69,
-        "low": 8.02,
-        "high": 9.94
+        "target": 9.2,
+        "pct": -4.35,
+        "low": 8.07,
+        "high": 10.02
       },
       "pred_128d": {
-        "target": 9.57,
-        "pct": 1.01,
-        "low": 8.36,
-        "high": 10.47
+        "target": 9.5,
+        "pct": -1.21,
+        "low": 8.23,
+        "high": 10.41
       }
     },
     {
       "symbol": "000039",
       "name": "中集集团",
-      "current": 9.6,
+      "current": 9.5,
       "pred_30d": {
-        "target": 9.36,
-        "pct": -2.48,
-        "low": 7.99,
-        "high": 10.58
+        "target": 9.16,
+        "pct": -3.61,
+        "low": 7.85,
+        "high": 10.3
       },
       "pred_60d": {
-        "target": 9.04,
-        "pct": -5.83,
-        "low": 7.61,
-        "high": 10.65
+        "target": 8.83,
+        "pct": -7.04,
+        "low": 7.47,
+        "high": 10.33
       },
       "pred_128d": {
-        "target": 8.74,
-        "pct": -8.97,
-        "low": 7.4,
-        "high": 10.93
+        "target": 8.6,
+        "pct": -9.52,
+        "low": 7.36,
+        "high": 10.63
       }
     },
     {
       "symbol": "000042",
       "name": "中洲控股",
-      "current": 8.54,
+      "current": 8.38,
       "pred_30d": {
-        "target": 8.63,
-        "pct": 1.0,
-        "low": 7.54,
-        "high": 9.28
+        "target": 8.59,
+        "pct": 2.51,
+        "low": 7.47,
+        "high": 9.3
       },
       "pred_60d": {
-        "target": 8.87,
-        "pct": 3.86,
-        "low": 7.35,
-        "high": 9.72
+        "target": 8.89,
+        "pct": 6.08,
+        "low": 7.36,
+        "high": 9.77
       },
       "pred_128d": {
-        "target": 9.48,
-        "pct": 10.98,
-        "low": 7.19,
-        "high": 10.63
+        "target": 9.59,
+        "pct": 14.43,
+        "low": 7.35,
+        "high": 10.72
       }
     },
     {
       "symbol": "000045",
       "name": "深纺织Ａ",
-      "current": 10.99,
+      "current": 10.91,
       "pred_30d": {
-        "target": 10.84,
-        "pct": -1.38,
-        "low": 9.58,
-        "high": 11.73
+        "target": 10.83,
+        "pct": -0.7,
+        "low": 9.57,
+        "high": 11.7
       },
       "pred_60d": {
-        "target": 10.71,
-        "pct": -2.51,
-        "low": 8.96,
-        "high": 11.98
+        "target": 10.8,
+        "pct": -1.01,
+        "low": 9.02,
+        "high": 12.03
       },
       "pred_128d": {
-        "target": 11.29,
-        "pct": 2.71,
-        "low": 8.59,
-        "high": 13.31
+        "target": 11.2,
+        "pct": 2.64,
+        "low": 8.55,
+        "high": 13.11
       }
     },
     {
       "symbol": "000048",
       "name": "京基智农",
-      "current": 21.09,
+      "current": 23.2,
       "pred_30d": {
-        "target": 18.43,
-        "pct": -12.59,
-        "low": 14.39,
-        "high": 21.23
+        "target": 19.5,
+        "pct": -15.94,
+        "low": 14.9,
+        "high": 22.69
       },
       "pred_60d": {
-        "target": 18.16,
-        "pct": -13.88,
-        "low": 13.86,
-        "high": 21.39
+        "target": 18.79,
+        "pct": -19.01,
+        "low": 14.2,
+        "high": 22.33
       },
       "pred_128d": {
-        "target": 16.94,
-        "pct": -19.7,
-        "low": 13.28,
-        "high": 20.81
+        "target": 17.19,
+        "pct": -25.89,
+        "low": 13.45,
+        "high": 21.38
       }
     },
     {
       "symbol": "000049",
       "name": "德赛电池",
-      "current": 22.79,
+      "current": 22.58,
       "pred_30d": {
-        "target": 22.99,
-        "pct": 0.89,
-        "low": 21.58,
-        "high": 23.99
+        "target": 23.06,
+        "pct": 2.14,
+        "low": 21.6,
+        "high": 24.05
       },
       "pred_60d": {
-        "target": 23.72,
-        "pct": 4.08,
-        "low": 21.59,
-        "high": 25.26
+        "target": 24.17,
+        "pct": 7.05,
+        "low": 21.95,
+        "high": 25.71
       },
       "pred_128d": {
-        "target": 25.83,
-        "pct": 13.34,
-        "low": 22.54,
-        "high": 28.04
+        "target": 26.12,
+        "pct": 15.66,
+        "low": 23.0,
+        "high": 28.13
       }
     },
     {
       "symbol": "000050",
       "name": "深天马Ａ",
-      "current": 6.51,
+      "current": 6.45,
       "pred_30d": {
-        "target": 6.72,
-        "pct": 3.2,
-        "low": 6.1,
-        "high": 7.45
+        "target": 6.66,
+        "pct": 3.29,
+        "low": 6.11,
+        "high": 7.35
       },
       "pred_60d": {
-        "target": 6.96,
-        "pct": 6.85,
-        "low": 5.96,
-        "high": 8.08
+        "target": 6.94,
+        "pct": 7.56,
+        "low": 5.98,
+        "high": 8.04
       },
       "pred_128d": {
-        "target": 7.45,
-        "pct": 14.43,
-        "low": 6.04,
-        "high": 8.9
+        "target": 7.5,
+        "pct": 16.31,
+        "low": 6.1,
+        "high": 8.96
       }
     },
     {
@@ -2125,344 +2125,344 @@
       "name": "方大集团",
       "current": 3.61,
       "pred_30d": {
-        "target": 3.63,
-        "pct": 0.6,
-        "low": 3.34,
-        "high": 3.83
+        "target": 3.62,
+        "pct": 0.34,
+        "low": 3.33,
+        "high": 3.81
       },
       "pred_60d": {
-        "target": 3.63,
-        "pct": 0.48,
+        "target": 3.62,
+        "pct": 0.36,
         "low": 3.22,
-        "high": 3.9
+        "high": 3.89
       },
       "pred_128d": {
-        "target": 3.6,
-        "pct": -0.2,
-        "low": 3.05,
-        "high": 4.01
+        "target": 3.61,
+        "pct": 0.07,
+        "low": 3.04,
+        "high": 4.02
       }
     },
     {
       "symbol": "000056",
       "name": "*ST皇庭",
-      "current": 2.4,
+      "current": 2.54,
       "pred_30d": {
-        "target": 2.44,
-        "pct": 1.48,
-        "low": 1.99,
-        "high": 2.78
+        "target": 2.51,
+        "pct": -1.36,
+        "low": 2.03,
+        "high": 2.88
       },
       "pred_60d": {
-        "target": 2.42,
-        "pct": 1.03,
-        "low": 1.84,
-        "high": 2.9
+        "target": 2.46,
+        "pct": -3.09,
+        "low": 1.88,
+        "high": 2.94
       },
       "pred_128d": {
-        "target": 2.3,
-        "pct": -4.05,
-        "low": 1.54,
-        "high": 2.96
+        "target": 2.31,
+        "pct": -8.86,
+        "low": 1.56,
+        "high": 2.94
       }
     },
     {
       "symbol": "000058",
       "name": "深 赛 格",
-      "current": 7.27,
+      "current": 7.2,
       "pred_30d": {
-        "target": 7.22,
-        "pct": -0.67,
-        "low": 6.41,
-        "high": 7.89
+        "target": 7.27,
+        "pct": 1.04,
+        "low": 6.47,
+        "high": 7.9
       },
       "pred_60d": {
-        "target": 7.2,
-        "pct": -0.96,
-        "low": 6.04,
-        "high": 8.24
+        "target": 7.39,
+        "pct": 2.67,
+        "low": 6.15,
+        "high": 8.39
       },
       "pred_128d": {
-        "target": 7.54,
-        "pct": 3.74,
-        "low": 5.69,
-        "high": 9.41
+        "target": 8.05,
+        "pct": 11.85,
+        "low": 5.89,
+        "high": 9.81
       }
     },
     {
       "symbol": "000059",
       "name": "华锦股份",
-      "current": 5.96,
+      "current": 5.79,
       "pred_30d": {
-        "target": 5.69,
-        "pct": -4.51,
-        "low": 4.81,
-        "high": 6.25
+        "target": 5.57,
+        "pct": -3.78,
+        "low": 4.73,
+        "high": 6.08
       },
       "pred_60d": {
-        "target": 5.42,
-        "pct": -9.02,
-        "low": 4.35,
-        "high": 6.11
+        "target": 5.34,
+        "pct": -7.81,
+        "low": 4.3,
+        "high": 5.96
       },
       "pred_128d": {
-        "target": 5.37,
-        "pct": -9.85,
-        "low": 3.99,
-        "high": 6.27
+        "target": 5.3,
+        "pct": -8.39,
+        "low": 3.95,
+        "high": 6.1
       }
     },
     {
       "symbol": "000060",
       "name": "中金岭南",
-      "current": 6.68,
+      "current": 6.61,
       "pred_30d": {
-        "target": 6.72,
-        "pct": 0.63,
-        "low": 5.74,
-        "high": 7.61
+        "target": 6.66,
+        "pct": 0.83,
+        "low": 5.73,
+        "high": 7.47
       },
       "pred_60d": {
-        "target": 6.66,
-        "pct": -0.3,
+        "target": 6.67,
+        "pct": 0.88,
         "low": 5.43,
-        "high": 7.85
+        "high": 7.81
       },
       "pred_128d": {
-        "target": 6.55,
-        "pct": -1.96,
-        "low": 5.08,
-        "high": 8.39
+        "target": 6.54,
+        "pct": -1.09,
+        "low": 5.09,
+        "high": 8.28
       }
     },
     {
       "symbol": "000061",
       "name": "农 产 品",
-      "current": 6.8,
+      "current": 6.57,
       "pred_30d": {
-        "target": 6.81,
-        "pct": 0.14,
-        "low": 5.78,
-        "high": 7.64
+        "target": 6.61,
+        "pct": 0.59,
+        "low": 5.68,
+        "high": 7.3
       },
       "pred_60d": {
-        "target": 6.77,
-        "pct": -0.4,
-        "low": 5.48,
-        "high": 7.89
+        "target": 6.62,
+        "pct": 0.79,
+        "low": 5.44,
+        "high": 7.54
       },
       "pred_128d": {
-        "target": 6.73,
-        "pct": -0.99,
-        "low": 5.18,
-        "high": 8.4
+        "target": 6.72,
+        "pct": 2.27,
+        "low": 5.11,
+        "high": 8.15
       }
     },
     {
       "symbol": "000062",
       "name": "深圳华强",
-      "current": 23.42,
+      "current": 23.09,
       "pred_30d": {
-        "target": 23.84,
-        "pct": 1.81,
-        "low": 19.88,
-        "high": 26.87
+        "target": 23.37,
+        "pct": 1.22,
+        "low": 19.47,
+        "high": 26.3
       },
       "pred_60d": {
-        "target": 23.73,
-        "pct": 1.33,
-        "low": 18.02,
-        "high": 28.14
+        "target": 23.3,
+        "pct": 0.92,
+        "low": 17.73,
+        "high": 27.5
       },
       "pred_128d": {
-        "target": 23.84,
-        "pct": 1.79,
-        "low": 15.83,
-        "high": 30.76
+        "target": 23.23,
+        "pct": 0.62,
+        "low": 15.56,
+        "high": 29.66
       }
     },
     {
       "symbol": "000063",
       "name": "中兴通讯",
-      "current": 33.09,
+      "current": 32.45,
       "pred_30d": {
-        "target": 32.2,
-        "pct": -2.7,
-        "low": 29.81,
-        "high": 33.79
+        "target": 31.85,
+        "pct": -1.85,
+        "low": 29.38,
+        "high": 33.55
       },
       "pred_60d": {
-        "target": 31.96,
-        "pct": -3.42,
-        "low": 28.66,
-        "high": 34.2
+        "target": 31.73,
+        "pct": -2.22,
+        "low": 28.42,
+        "high": 34.18
       },
       "pred_128d": {
-        "target": 31.84,
-        "pct": -3.77,
-        "low": 27.32,
-        "high": 36.46
+        "target": 30.97,
+        "pct": -4.56,
+        "low": 26.74,
+        "high": 35.36
       }
     },
     {
       "symbol": "000065",
       "name": "北方国际",
-      "current": 9.81,
+      "current": 9.67,
       "pred_30d": {
-        "target": 9.65,
-        "pct": -1.61,
+        "target": 9.54,
+        "pct": -1.39,
         "low": 8.6,
-        "high": 10.5
+        "high": 10.32
       },
       "pred_60d": {
-        "target": 9.52,
-        "pct": -2.96,
-        "low": 8.27,
-        "high": 10.63
+        "target": 9.32,
+        "pct": -3.66,
+        "low": 8.29,
+        "high": 10.31
       },
       "pred_128d": {
-        "target": 9.59,
-        "pct": -2.28,
-        "low": 8.14,
-        "high": 11.09
+        "target": 9.33,
+        "pct": -3.47,
+        "low": 8.19,
+        "high": 10.64
       }
     },
     {
       "symbol": "000066",
       "name": "中国长城",
-      "current": 14.55,
+      "current": 14.11,
       "pred_30d": {
-        "target": 14.32,
-        "pct": -1.58,
-        "low": 12.32,
-        "high": 15.85
+        "target": 13.91,
+        "pct": -1.41,
+        "low": 12.0,
+        "high": 15.3
       },
       "pred_60d": {
-        "target": 13.92,
-        "pct": -4.34,
-        "low": 11.13,
-        "high": 16.08
+        "target": 13.53,
+        "pct": -4.11,
+        "low": 10.85,
+        "high": 15.41
       },
       "pred_128d": {
-        "target": 13.66,
-        "pct": -6.09,
-        "low": 9.13,
-        "high": 17.36
+        "target": 12.83,
+        "pct": -9.08,
+        "low": 8.08,
+        "high": 16.31
       }
     },
     {
       "symbol": "000068",
       "name": "华控赛格",
-      "current": 3.31,
+      "current": 3.28,
       "pred_30d": {
-        "target": 3.33,
-        "pct": 0.59,
-        "low": 3.0,
-        "high": 3.55
+        "target": 3.32,
+        "pct": 1.19,
+        "low": 3.01,
+        "high": 3.53
       },
       "pred_60d": {
         "target": 3.35,
-        "pct": 1.33,
+        "pct": 2.27,
         "low": 2.89,
         "high": 3.65
       },
       "pred_128d": {
-        "target": 3.43,
-        "pct": 3.54,
-        "low": 2.74,
-        "high": 3.88
+        "target": 3.46,
+        "pct": 5.52,
+        "low": 2.75,
+        "high": 3.92
       }
     },
     {
       "symbol": "000069",
       "name": "华侨城Ａ",
-      "current": 1.85,
+      "current": 1.83,
       "pred_30d": {
-        "target": 1.84,
-        "pct": -0.34,
-        "low": 1.69,
-        "high": 1.99
+        "target": 1.83,
+        "pct": -0.22,
+        "low": 1.68,
+        "high": 1.97
       },
       "pred_60d": {
-        "target": 1.84,
-        "pct": -0.28,
-        "low": 1.6,
-        "high": 2.11
+        "target": 1.82,
+        "pct": -0.57,
+        "low": 1.59,
+        "high": 2.08
       },
       "pred_128d": {
-        "target": 2.01,
-        "pct": 8.39,
-        "low": 1.5,
-        "high": 2.56
+        "target": 1.96,
+        "pct": 7.31,
+        "low": 1.49,
+        "high": 2.51
       }
     },
     {
       "symbol": "000070",
       "name": "特发信息",
-      "current": 16.69,
+      "current": 16.18,
       "pred_30d": {
-        "target": 16.89,
-        "pct": 1.22,
-        "low": 12.18,
-        "high": 21.95
+        "target": 16.05,
+        "pct": -0.8,
+        "low": 11.74,
+        "high": 20.73
       },
       "pred_60d": {
-        "target": 16.72,
-        "pct": 0.2,
-        "low": 10.82,
-        "high": 23.79
+        "target": 15.92,
+        "pct": -1.59,
+        "low": 10.42,
+        "high": 22.74
       },
       "pred_128d": {
-        "target": 15.77,
-        "pct": -5.54,
-        "low": 9.09,
-        "high": 26.48
+        "target": 15.13,
+        "pct": -6.46,
+        "low": 8.86,
+        "high": 25.62
       }
     },
     {
       "symbol": "000078",
       "name": "ST海王",
-      "current": 1.55,
+      "current": 1.52,
       "pred_30d": {
-        "target": 1.59,
-        "pct": 2.37,
-        "low": 1.26,
-        "high": 1.91
+        "target": 1.57,
+        "pct": 3.1,
+        "low": 1.24,
+        "high": 1.9
       },
       "pred_60d": {
-        "target": 1.63,
-        "pct": 5.27,
-        "low": 1.18,
-        "high": 2.12
+        "target": 1.62,
+        "pct": 6.83,
+        "low": 1.16,
+        "high": 2.13
       },
       "pred_128d": {
-        "target": 1.74,
-        "pct": 12.26,
-        "low": 1.1,
-        "high": 2.48
+        "target": 1.75,
+        "pct": 15.3,
+        "low": 1.08,
+        "high": 2.51
       }
     },
     {
       "symbol": "000088",
       "name": "盐 田 港",
-      "current": 4.64,
+      "current": 4.66,
       "pred_30d": {
-        "target": 4.59,
-        "pct": -1.08,
-        "low": 4.41,
-        "high": 4.72
+        "target": 4.61,
+        "pct": -0.99,
+        "low": 4.43,
+        "high": 4.75
       },
       "pred_60d": {
-        "target": 4.56,
-        "pct": -1.73,
-        "low": 4.34,
-        "high": 4.73
+        "target": 4.58,
+        "pct": -1.72,
+        "low": 4.35,
+        "high": 4.76
       },
       "pred_128d": {
-        "target": 4.57,
-        "pct": -1.59,
+        "target": 4.59,
+        "pct": -1.53,
         "low": 4.29,
-        "high": 4.79
+        "high": 4.83
       }
     },
     {
@@ -2471,389 +2471,389 @@
       "current": 6.65,
       "pred_30d": {
         "target": 6.67,
-        "pct": 0.27,
+        "pct": 0.34,
         "low": 6.32,
         "high": 6.9
       },
       "pred_60d": {
         "target": 6.62,
-        "pct": -0.38,
-        "low": 6.15,
+        "pct": -0.4,
+        "low": 6.14,
         "high": 6.94
       },
       "pred_128d": {
-        "target": 6.56,
-        "pct": -1.39,
-        "low": 5.91,
+        "target": 6.53,
+        "pct": -1.73,
+        "low": 5.88,
         "high": 6.97
       }
     },
     {
       "symbol": "000090",
       "name": "天健集团",
-      "current": 3.57,
+      "current": 3.56,
       "pred_30d": {
-        "target": 3.61,
-        "pct": 1.01,
+        "target": 3.6,
+        "pct": 1.12,
         "low": 3.33,
-        "high": 3.8
+        "high": 3.79
       },
       "pred_60d": {
-        "target": 3.6,
-        "pct": 0.92,
-        "low": 3.24,
-        "high": 3.88
+        "target": 3.59,
+        "pct": 0.94,
+        "low": 3.22,
+        "high": 3.86
       },
       "pred_128d": {
-        "target": 3.63,
-        "pct": 1.75,
-        "low": 3.09,
-        "high": 4.16
+        "target": 3.67,
+        "pct": 2.97,
+        "low": 3.11,
+        "high": 4.17
       }
     },
     {
       "symbol": "000096",
       "name": "广聚能源",
-      "current": 8.42,
+      "current": 8.29,
       "pred_30d": {
-        "target": 8.52,
-        "pct": 1.19,
-        "low": 7.68,
-        "high": 9.16
+        "target": 8.33,
+        "pct": 0.44,
+        "low": 7.56,
+        "high": 8.92
       },
       "pred_60d": {
-        "target": 8.51,
-        "pct": 1.08,
-        "low": 7.2,
-        "high": 9.61
+        "target": 8.26,
+        "pct": -0.33,
+        "low": 7.05,
+        "high": 9.28
       },
       "pred_128d": {
-        "target": 8.03,
-        "pct": -4.59,
-        "low": 6.35,
-        "high": 9.81
+        "target": 7.75,
+        "pct": -6.48,
+        "low": 6.19,
+        "high": 9.45
       }
     },
     {
       "symbol": "000099",
       "name": "中信海直",
-      "current": 13.81,
+      "current": 13.7,
       "pred_30d": {
-        "target": 13.8,
-        "pct": -0.05,
-        "low": 12.68,
-        "high": 14.74
+        "target": 13.67,
+        "pct": -0.22,
+        "low": 12.65,
+        "high": 14.52
       },
       "pred_60d": {
-        "target": 13.9,
-        "pct": 0.66,
-        "low": 12.3,
-        "high": 15.44
+        "target": 13.8,
+        "pct": 0.71,
+        "low": 12.36,
+        "high": 15.16
       },
       "pred_128d": {
-        "target": 14.05,
-        "pct": 1.72,
-        "low": 11.22,
-        "high": 17.28
+        "target": 13.88,
+        "pct": 1.32,
+        "low": 11.27,
+        "high": 16.8
       }
     },
     {
       "symbol": "000100",
       "name": "TCL科技",
-      "current": 4.74,
+      "current": 4.69,
       "pred_30d": {
-        "target": 4.73,
-        "pct": -0.21,
-        "low": 4.35,
-        "high": 4.99
+        "target": 4.69,
+        "pct": -0.06,
+        "low": 4.29,
+        "high": 4.96
       },
       "pred_60d": {
-        "target": 4.73,
-        "pct": -0.2,
-        "low": 4.27,
-        "high": 5.05
+        "target": 4.72,
+        "pct": 0.68,
+        "low": 4.24,
+        "high": 5.07
       },
       "pred_128d": {
-        "target": 4.25,
-        "pct": -10.24,
-        "low": 3.92,
-        "high": 4.52
+        "target": 4.29,
+        "pct": -8.53,
+        "low": 3.94,
+        "high": 4.57
       }
     },
     {
       "symbol": "000151",
       "name": "中成股份",
-      "current": 10.42,
+      "current": 10.31,
       "pred_30d": {
-        "target": 10.65,
-        "pct": 2.19,
-        "low": 9.54,
-        "high": 11.57
+        "target": 10.71,
+        "pct": 3.88,
+        "low": 9.67,
+        "high": 11.62
       },
       "pred_60d": {
-        "target": 10.98,
-        "pct": 5.36,
-        "low": 9.19,
-        "high": 12.37
+        "target": 11.13,
+        "pct": 7.95,
+        "low": 9.45,
+        "high": 12.43
       },
       "pred_128d": {
-        "target": 12.62,
-        "pct": 21.14,
-        "low": 9.61,
-        "high": 14.64
+        "target": 13.0,
+        "pct": 26.05,
+        "low": 10.53,
+        "high": 14.77
       }
     },
     {
       "symbol": "000153",
       "name": "丰原药业",
-      "current": 6.41,
+      "current": 6.25,
       "pred_30d": {
-        "target": 6.41,
-        "pct": -0.05,
-        "low": 5.8,
-        "high": 6.8
+        "target": 6.31,
+        "pct": 1.01,
+        "low": 5.7,
+        "high": 6.7
       },
       "pred_60d": {
-        "target": 6.36,
-        "pct": -0.72,
-        "low": 5.54,
-        "high": 6.86
+        "target": 6.29,
+        "pct": 0.65,
+        "low": 5.46,
+        "high": 6.79
       },
       "pred_128d": {
-        "target": 6.34,
-        "pct": -1.12,
-        "low": 5.2,
-        "high": 6.99
+        "target": 6.28,
+        "pct": 0.43,
+        "low": 5.13,
+        "high": 6.96
       }
     },
     {
       "symbol": "000155",
       "name": "川能动力",
-      "current": 12.11,
+      "current": 11.98,
       "pred_30d": {
-        "target": 11.95,
-        "pct": -1.34,
-        "low": 10.72,
-        "high": 12.9
+        "target": 11.68,
+        "pct": -2.48,
+        "low": 10.54,
+        "high": 12.52
       },
       "pred_60d": {
-        "target": 11.79,
-        "pct": -2.63,
-        "low": 10.25,
-        "high": 13.09
+        "target": 11.63,
+        "pct": -2.93,
+        "low": 10.16,
+        "high": 12.83
       },
       "pred_128d": {
-        "target": 12.47,
-        "pct": 2.98,
-        "low": 10.32,
-        "high": 14.47
+        "target": 11.92,
+        "pct": -0.5,
+        "low": 10.09,
+        "high": 13.67
       }
     },
     {
       "symbol": "000156",
       "name": "华数传媒",
-      "current": 7.02,
+      "current": 7.0,
       "pred_30d": {
-        "target": 7.03,
-        "pct": 0.17,
-        "low": 6.53,
-        "high": 7.41
+        "target": 7.05,
+        "pct": 0.65,
+        "low": 6.54,
+        "high": 7.43
       },
       "pred_60d": {
-        "target": 6.91,
-        "pct": -1.53,
-        "low": 6.3,
-        "high": 7.45
+        "target": 6.96,
+        "pct": -0.55,
+        "low": 6.33,
+        "high": 7.5
       },
       "pred_128d": {
-        "target": 6.8,
-        "pct": -3.18,
-        "low": 6.12,
-        "high": 7.64
+        "target": 6.9,
+        "pct": -1.47,
+        "low": 6.16,
+        "high": 7.73
       }
     },
     {
       "symbol": "000157",
       "name": "中联重科",
-      "current": 6.66,
+      "current": 6.61,
       "pred_30d": {
-        "target": 6.78,
-        "pct": 1.79,
-        "low": 6.32,
-        "high": 7.15
+        "target": 6.76,
+        "pct": 2.26,
+        "low": 6.31,
+        "high": 7.12
       },
       "pred_60d": {
-        "target": 6.95,
-        "pct": 4.4,
+        "target": 6.97,
+        "pct": 5.38,
         "low": 6.32,
         "high": 7.44
       },
       "pred_128d": {
-        "target": 7.24,
-        "pct": 8.69,
-        "low": 6.39,
-        "high": 7.85
+        "target": 7.25,
+        "pct": 9.72,
+        "low": 6.43,
+        "high": 7.8
       }
     },
     {
       "symbol": "000158",
       "name": "常山北明",
-      "current": 13.29,
+      "current": 12.9,
       "pred_30d": {
-        "target": 12.59,
-        "pct": -5.27,
-        "low": 10.55,
-        "high": 14.08
+        "target": 11.98,
+        "pct": -7.15,
+        "low": 10.01,
+        "high": 13.42
       },
       "pred_60d": {
-        "target": 11.79,
-        "pct": -11.28,
-        "low": 9.09,
-        "high": 13.9
+        "target": 11.15,
+        "pct": -13.54,
+        "low": 8.64,
+        "high": 13.11
       },
       "pred_128d": {
-        "target": 10.19,
-        "pct": -23.34,
-        "low": 5.72,
-        "high": 13.98
+        "target": 9.43,
+        "pct": -26.89,
+        "low": 5.03,
+        "high": 12.88
       }
     },
     {
       "symbol": "000159",
       "name": "国际实业",
-      "current": 5.87,
+      "current": 5.81,
       "pred_30d": {
-        "target": 5.79,
-        "pct": -1.32,
-        "low": 5.34,
-        "high": 6.2
+        "target": 5.7,
+        "pct": -1.86,
+        "low": 5.26,
+        "high": 6.1
       },
       "pred_60d": {
-        "target": 5.79,
-        "pct": -1.34,
-        "low": 5.26,
-        "high": 6.28
+        "target": 5.72,
+        "pct": -1.52,
+        "low": 5.19,
+        "high": 6.22
       },
       "pred_128d": {
-        "target": 5.85,
-        "pct": -0.28,
-        "low": 5.19,
-        "high": 6.52
+        "target": 5.66,
+        "pct": -2.61,
+        "low": 5.07,
+        "high": 6.3
       }
     },
     {
       "symbol": "000166",
       "name": "申万宏源",
-      "current": 4.55,
+      "current": 4.58,
       "pred_30d": {
-        "target": 4.6,
-        "pct": 1.09,
-        "low": 4.33,
-        "high": 4.82
+        "target": 4.61,
+        "pct": 0.69,
+        "low": 4.35,
+        "high": 4.83
       },
       "pred_60d": {
-        "target": 4.64,
-        "pct": 1.95,
-        "low": 4.22,
+        "target": 4.65,
+        "pct": 1.57,
+        "low": 4.25,
         "high": 5.01
       },
       "pred_128d": {
-        "target": 4.67,
-        "pct": 2.56,
-        "low": 3.96,
-        "high": 5.21
+        "target": 4.69,
+        "pct": 2.36,
+        "low": 4.0,
+        "high": 5.22
       }
     },
     {
       "symbol": "000301",
       "name": "东方盛虹",
-      "current": 14.16,
+      "current": 13.76,
       "pred_30d": {
-        "target": 13.54,
-        "pct": -4.41,
-        "low": 11.37,
-        "high": 14.82
+        "target": 13.24,
+        "pct": -3.82,
+        "low": 11.19,
+        "high": 14.5
       },
       "pred_60d": {
-        "target": 13.49,
-        "pct": -4.7,
-        "low": 10.82,
-        "high": 15.19
+        "target": 13.18,
+        "pct": -4.24,
+        "low": 10.74,
+        "high": 14.77
       },
       "pred_128d": {
-        "target": 12.58,
-        "pct": -11.15,
-        "low": 9.11,
-        "high": 15.39
+        "target": 12.35,
+        "pct": -10.22,
+        "low": 9.08,
+        "high": 14.94
       }
     },
     {
       "symbol": "000333",
       "name": "美的集团",
-      "current": 86.02,
+      "current": 86.2,
       "pred_30d": {
-        "target": 85.46,
-        "pct": -0.65,
-        "low": 79.4,
-        "high": 88.88
+        "target": 85.84,
+        "pct": -0.42,
+        "low": 80.0,
+        "high": 89.28
       },
       "pred_60d": {
-        "target": 84.92,
-        "pct": -1.28,
-        "low": 76.3,
-        "high": 89.54
+        "target": 85.48,
+        "pct": -0.84,
+        "low": 76.86,
+        "high": 90.23
       },
       "pred_128d": {
-        "target": 85.05,
-        "pct": -1.13,
-        "low": 72.97,
-        "high": 92.03
+        "target": 86.16,
+        "pct": -0.05,
+        "low": 73.2,
+        "high": 93.59
       }
     },
     {
       "symbol": "000338",
       "name": "潍柴动力",
-      "current": 27.85,
+      "current": 26.83,
       "pred_30d": {
-        "target": 26.62,
-        "pct": -4.41,
-        "low": 22.62,
-        "high": 29.84
+        "target": 25.97,
+        "pct": -3.19,
+        "low": 22.2,
+        "high": 29.14
       },
       "pred_60d": {
-        "target": 26.08,
-        "pct": -6.36,
-        "low": 20.57,
+        "target": 25.98,
+        "pct": -3.19,
+        "low": 20.44,
         "high": 30.54
       },
       "pred_128d": {
-        "target": 24.17,
-        "pct": -13.2,
-        "low": 16.5,
-        "high": 31.3
+        "target": 25.83,
+        "pct": -3.72,
+        "low": 18.38,
+        "high": 33.15
       }
     },
     {
       "symbol": "000400",
       "name": "许继电气",
-      "current": 21.6,
+      "current": 21.16,
       "pred_30d": {
-        "target": 21.34,
-        "pct": -1.2,
-        "low": 19.63,
-        "high": 22.78
+        "target": 20.97,
+        "pct": -0.91,
+        "low": 19.33,
+        "high": 22.37
       },
       "pred_60d": {
-        "target": 21.24,
-        "pct": -1.65,
-        "low": 18.95,
-        "high": 23.19
+        "target": 21.0,
+        "pct": -0.77,
+        "low": 18.84,
+        "high": 22.94
       },
       "pred_128d": {
-        "target": 22.65,
-        "pct": 4.87,
-        "low": 19.01,
-        "high": 26.04
+        "target": 22.67,
+        "pct": 7.14,
+        "low": 19.18,
+        "high": 26.03
       }
     },
     {
@@ -2861,91 +2861,91 @@
       "name": "金隅冀东",
       "current": 3.65,
       "pred_30d": {
-        "target": 3.66,
-        "pct": 0.17,
-        "low": 3.38,
-        "high": 3.91
+        "target": 3.64,
+        "pct": -0.2,
+        "low": 3.34,
+        "high": 3.9
       },
       "pred_60d": {
-        "target": 3.72,
-        "pct": 1.93,
-        "low": 3.26,
-        "high": 4.13
+        "target": 3.69,
+        "pct": 1.07,
+        "low": 3.21,
+        "high": 4.08
       },
       "pred_128d": {
-        "target": 3.96,
-        "pct": 8.38,
-        "low": 3.19,
-        "high": 4.66
+        "target": 3.82,
+        "pct": 4.75,
+        "low": 3.08,
+        "high": 4.46
       }
     },
     {
       "symbol": "000402",
       "name": "金 融 街",
-      "current": 2.58,
+      "current": 2.55,
       "pred_30d": {
-        "target": 2.61,
-        "pct": 1.13,
-        "low": 2.38,
-        "high": 2.81
+        "target": 2.58,
+        "pct": 1.28,
+        "low": 2.36,
+        "high": 2.77
       },
       "pred_60d": {
-        "target": 2.62,
-        "pct": 1.42,
-        "low": 2.26,
-        "high": 2.92
+        "target": 2.6,
+        "pct": 1.97,
+        "low": 2.25,
+        "high": 2.89
       },
       "pred_128d": {
-        "target": 2.63,
-        "pct": 2.09,
-        "low": 2.1,
-        "high": 3.1
+        "target": 2.59,
+        "pct": 1.6,
+        "low": 2.08,
+        "high": 3.06
       }
     },
     {
       "symbol": "000403",
       "name": "派林生物",
-      "current": 10.51,
+      "current": 10.33,
       "pred_30d": {
-        "target": 10.31,
-        "pct": -1.92,
-        "low": 9.01,
-        "high": 11.25
+        "target": 10.21,
+        "pct": -1.16,
+        "low": 9.03,
+        "high": 11.09
       },
       "pred_60d": {
-        "target": 9.99,
-        "pct": -4.97,
-        "low": 8.23,
-        "high": 11.32
+        "target": 9.91,
+        "pct": -4.1,
+        "low": 8.3,
+        "high": 11.17
       },
       "pred_128d": {
-        "target": 9.53,
-        "pct": -9.32,
-        "low": 6.11,
-        "high": 11.91
+        "target": 9.42,
+        "pct": -8.82,
+        "low": 6.36,
+        "high": 11.51
       }
     },
     {
       "symbol": "000404",
       "name": "长虹华意",
-      "current": 7.12,
+      "current": 7.08,
       "pred_30d": {
-        "target": 7.17,
-        "pct": 0.67,
-        "low": 6.77,
-        "high": 7.49
+        "target": 7.12,
+        "pct": 0.61,
+        "low": 6.72,
+        "high": 7.44
       },
       "pred_60d": {
-        "target": 7.17,
-        "pct": 0.66,
-        "low": 6.59,
-        "high": 7.6
+        "target": 7.12,
+        "pct": 0.61,
+        "low": 6.54,
+        "high": 7.56
       },
       "pred_128d": {
-        "target": 7.05,
-        "pct": -1.03,
-        "low": 6.25,
-        "high": 7.62
+        "target": 7.0,
+        "pct": -1.16,
+        "low": 6.19,
+        "high": 7.61
       }
     },
     {
@@ -2953,321 +2953,321 @@
       "name": "胜利股份",
       "current": 4.38,
       "pred_30d": {
-        "target": 4.38,
-        "pct": 0.05,
-        "low": 3.98,
-        "high": 4.72
+        "target": 4.42,
+        "pct": 1.0,
+        "low": 4.0,
+        "high": 4.76
       },
       "pred_60d": {
-        "target": 4.33,
-        "pct": -1.21,
-        "low": 3.75,
-        "high": 4.81
+        "target": 4.39,
+        "pct": 0.22,
+        "low": 3.77,
+        "high": 4.9
       },
       "pred_128d": {
-        "target": 4.3,
-        "pct": -1.93,
-        "low": 3.41,
-        "high": 5.09
+        "target": 4.38,
+        "pct": -0.01,
+        "low": 3.4,
+        "high": 5.25
       }
     },
     {
       "symbol": "000408",
       "name": "藏格矿业",
-      "current": 78.56,
+      "current": 76.87,
       "pred_30d": {
-        "target": 84.39,
-        "pct": 7.42,
-        "low": 73.89,
-        "high": 91.68
+        "target": 80.07,
+        "pct": 4.16,
+        "low": 69.3,
+        "high": 87.69
       },
       "pred_60d": {
-        "target": 90.3,
-        "pct": 14.95,
-        "low": 75.26,
-        "high": 99.71
+        "target": 83.97,
+        "pct": 9.24,
+        "low": 66.27,
+        "high": 94.95
       },
       "pred_128d": {
-        "target": 102.09,
-        "pct": 29.95,
-        "low": 75.15,
-        "high": 119.46
+        "target": 88.01,
+        "pct": 14.5,
+        "low": 54.16,
+        "high": 110.24
       }
     },
     {
       "symbol": "000409",
       "name": "云鼎科技",
-      "current": 9.07,
+      "current": 9.02,
       "pred_30d": {
-        "target": 9.04,
-        "pct": -0.33,
-        "low": 8.16,
-        "high": 9.81
+        "target": 9.02,
+        "pct": -0.03,
+        "low": 8.13,
+        "high": 9.77
       },
       "pred_60d": {
-        "target": 8.84,
-        "pct": -2.55,
-        "low": 7.63,
-        "high": 9.97
+        "target": 8.9,
+        "pct": -1.36,
+        "low": 7.66,
+        "high": 10.06
       },
       "pred_128d": {
-        "target": 9.07,
-        "pct": 0.04,
-        "low": 7.05,
-        "high": 11.08
+        "target": 9.15,
+        "pct": 1.43,
+        "low": 7.06,
+        "high": 11.19
       }
     },
     {
       "symbol": "000410",
       "name": "沈阳机床",
-      "current": 5.21,
+      "current": 5.13,
       "pred_30d": {
-        "target": 5.28,
-        "pct": 1.43,
-        "low": 4.71,
-        "high": 5.76
+        "target": 5.21,
+        "pct": 1.54,
+        "low": 4.67,
+        "high": 5.67
       },
       "pred_60d": {
-        "target": 5.3,
-        "pct": 1.73,
-        "low": 4.48,
-        "high": 6.03
+        "target": 5.22,
+        "pct": 1.8,
+        "low": 4.46,
+        "high": 5.93
       },
       "pred_128d": {
-        "target": 5.43,
-        "pct": 4.26,
-        "low": 4.23,
-        "high": 6.64
+        "target": 5.35,
+        "pct": 4.35,
+        "low": 4.25,
+        "high": 6.51
       }
     },
     {
       "symbol": "000411",
       "name": "英特集团",
-      "current": 10.12,
+      "current": 10.02,
       "pred_30d": {
-        "target": 10.23,
-        "pct": 1.12,
-        "low": 9.47,
-        "high": 10.72
+        "target": 10.12,
+        "pct": 1.0,
+        "low": 9.36,
+        "high": 10.61
       },
       "pred_60d": {
-        "target": 10.13,
-        "pct": 0.08,
-        "low": 9.15,
-        "high": 10.85
+        "target": 9.98,
+        "pct": -0.45,
+        "low": 9.02,
+        "high": 10.7
       },
       "pred_128d": {
-        "target": 10.76,
-        "pct": 6.29,
-        "low": 9.34,
-        "high": 11.88
+        "target": 10.43,
+        "pct": 4.1,
+        "low": 9.09,
+        "high": 11.56
       }
     },
     {
       "symbol": "000415",
       "name": "渤海租赁",
-      "current": 4.58,
+      "current": 4.62,
       "pred_30d": {
-        "target": 4.28,
-        "pct": -6.53,
-        "low": 3.48,
-        "high": 4.72
+        "target": 4.49,
+        "pct": -2.84,
+        "low": 3.74,
+        "high": 4.86
       },
       "pred_60d": {
-        "target": 4.01,
-        "pct": -12.35,
-        "low": 2.91,
-        "high": 4.69
+        "target": 4.37,
+        "pct": -5.43,
+        "low": 3.28,
+        "high": 4.91
       },
       "pred_128d": {
-        "target": 3.98,
-        "pct": -13.16,
-        "low": 2.62,
-        "high": 4.97
+        "target": 4.39,
+        "pct": -4.96,
+        "low": 2.9,
+        "high": 5.24
       }
     },
     {
       "symbol": "000417",
       "name": "合百集团",
-      "current": 6.75,
+      "current": 6.39,
       "pred_30d": {
-        "target": 6.68,
-        "pct": -1.04,
-        "low": 5.53,
-        "high": 7.68
+        "target": 6.31,
+        "pct": -1.21,
+        "low": 5.34,
+        "high": 7.16
       },
       "pred_60d": {
-        "target": 6.55,
-        "pct": -2.95,
-        "low": 5.18,
-        "high": 7.87
+        "target": 6.23,
+        "pct": -2.49,
+        "low": 5.05,
+        "high": 7.42
       },
       "pred_128d": {
-        "target": 6.39,
-        "pct": -5.32,
-        "low": 4.87,
-        "high": 8.09
+        "target": 6.1,
+        "pct": -4.59,
+        "low": 4.78,
+        "high": 7.73
       }
     },
     {
       "symbol": "000419",
       "name": "通程控股",
-      "current": 5.33,
+      "current": 5.26,
       "pred_30d": {
-        "target": 5.35,
-        "pct": 0.4,
-        "low": 4.86,
-        "high": 5.67
+        "target": 5.31,
+        "pct": 1.04,
+        "low": 4.84,
+        "high": 5.62
       },
       "pred_60d": {
-        "target": 5.41,
-        "pct": 1.45,
-        "low": 4.69,
-        "high": 5.87
+        "target": 5.36,
+        "pct": 1.95,
+        "low": 4.66,
+        "high": 5.8
       },
       "pred_128d": {
-        "target": 5.85,
-        "pct": 9.76,
-        "low": 4.56,
-        "high": 6.68
+        "target": 5.75,
+        "pct": 9.36,
+        "low": 4.53,
+        "high": 6.52
       }
     },
     {
       "symbol": "000420",
       "name": "吉林化纤",
-      "current": 3.74,
+      "current": 3.65,
       "pred_30d": {
-        "target": 3.66,
-        "pct": -2.1,
-        "low": 3.33,
-        "high": 3.93
+        "target": 3.61,
+        "pct": -1.09,
+        "low": 3.29,
+        "high": 3.85
       },
       "pred_60d": {
-        "target": 3.6,
-        "pct": -3.7,
-        "low": 3.15,
-        "high": 3.97
+        "target": 3.56,
+        "pct": -2.58,
+        "low": 3.14,
+        "high": 3.88
       },
       "pred_128d": {
-        "target": 3.52,
-        "pct": -5.88,
-        "low": 2.91,
-        "high": 4.02
+        "target": 3.5,
+        "pct": -4.15,
+        "low": 2.93,
+        "high": 3.95
       }
     },
     {
       "symbol": "000421",
       "name": "南京公用",
-      "current": 5.97,
+      "current": 5.96,
       "pred_30d": {
-        "target": 5.68,
-        "pct": -4.87,
-        "low": 4.98,
-        "high": 6.17
+        "target": 5.93,
+        "pct": -0.53,
+        "low": 5.23,
+        "high": 6.4
       },
       "pred_60d": {
-        "target": 5.47,
-        "pct": -8.3,
-        "low": 4.69,
-        "high": 6.15
+        "target": 5.88,
+        "pct": -1.28,
+        "low": 4.91,
+        "high": 6.58
       },
       "pred_128d": {
-        "target": 5.59,
-        "pct": -6.34,
-        "low": 4.48,
-        "high": 6.68
+        "target": 5.98,
+        "pct": 0.33,
+        "low": 4.61,
+        "high": 7.14
       }
     },
     {
       "symbol": "000422",
       "name": "湖北宜化",
-      "current": 13.08,
+      "current": 12.7,
       "pred_30d": {
-        "target": 12.96,
-        "pct": -0.95,
-        "low": 11.76,
-        "high": 13.93
+        "target": 12.89,
+        "pct": 1.53,
+        "low": 11.73,
+        "high": 13.85
       },
       "pred_60d": {
-        "target": 13.16,
-        "pct": 0.63,
-        "low": 11.65,
-        "high": 14.53
+        "target": 13.3,
+        "pct": 4.69,
+        "low": 11.69,
+        "high": 14.75
       },
       "pred_128d": {
-        "target": 12.4,
-        "pct": -5.18,
-        "low": 11.2,
-        "high": 13.72
+        "target": 12.31,
+        "pct": -3.09,
+        "low": 11.18,
+        "high": 13.59
       }
     },
     {
       "symbol": "000423",
       "name": "东阿阿胶",
-      "current": 46.71,
+      "current": 46.12,
       "pred_30d": {
-        "target": 47.73,
-        "pct": 2.18,
-        "low": 44.97,
-        "high": 50.12
+        "target": 47.58,
+        "pct": 3.17,
+        "low": 44.51,
+        "high": 50.06
       },
       "pred_60d": {
-        "target": 47.37,
-        "pct": 1.4,
-        "low": 44.5,
-        "high": 50.01
+        "target": 47.22,
+        "pct": 2.39,
+        "low": 44.03,
+        "high": 49.89
       },
       "pred_128d": {
-        "target": 47.29,
-        "pct": 1.25,
-        "low": 43.83,
-        "high": 51.0
+        "target": 47.18,
+        "pct": 2.3,
+        "low": 43.29,
+        "high": 50.87
       }
     },
     {
       "symbol": "000425",
       "name": "徐工机械",
-      "current": 8.38,
+      "current": 8.24,
       "pred_30d": {
-        "target": 8.35,
-        "pct": -0.41,
-        "low": 7.32,
-        "high": 9.13
+        "target": 8.26,
+        "pct": 0.2,
+        "low": 7.26,
+        "high": 9.0
       },
       "pred_60d": {
-        "target": 8.34,
-        "pct": -0.52,
+        "target": 8.3,
+        "pct": 0.72,
         "low": 6.87,
-        "high": 9.55
+        "high": 9.46
       },
       "pred_128d": {
-        "target": 8.39,
-        "pct": 0.11,
-        "low": 6.18,
-        "high": 10.32
+        "target": 8.36,
+        "pct": 1.4,
+        "low": 6.17,
+        "high": 10.22
       }
     },
     {
       "symbol": "000426",
       "name": "兴业银锡",
-      "current": 38.66,
+      "current": 38.68,
       "pred_30d": {
-        "target": 38.22,
-        "pct": -1.14,
-        "low": 29.24,
-        "high": 47.4
+        "target": 38.32,
+        "pct": -0.94,
+        "low": 29.12,
+        "high": 47.72
       },
       "pred_60d": {
-        "target": 37.63,
-        "pct": -2.65,
-        "low": 26.05,
-        "high": 51.55
+        "target": 37.75,
+        "pct": -2.4,
+        "low": 25.85,
+        "high": 52.1
       },
       "pred_128d": {
-        "target": 36.36,
-        "pct": -5.94,
-        "low": 20.86,
-        "high": 60.92
+        "target": 36.57,
+        "pct": -5.45,
+        "low": 20.67,
+        "high": 61.51
       }
     },
     {
@@ -7353,7 +7353,7 @@
       },
       "pred_60d": {
         "target": 2.39,
-        "pct": -2.35,
+        "pct": -2.34,
         "low": 2.06,
         "high": 2.73
       },
@@ -7485,7 +7485,7 @@
       "current": 17.4,
       "pred_30d": {
         "target": 16.41,
-        "pct": -5.71,
+        "pct": -5.72,
         "low": 14.65,
         "high": 17.66
       },
@@ -9567,7 +9567,7 @@
       },
       "pred_128d": {
         "target": 6.23,
-        "pct": -12.89,
+        "pct": -12.9,
         "low": 5.03,
         "high": 7.19
       }
@@ -12074,7 +12074,7 @@
       },
       "pred_128d": {
         "target": 20.84,
-        "pct": -7.29,
+        "pct": -7.3,
         "low": 15.88,
         "high": 25.24
       }
@@ -12300,7 +12300,7 @@
         "target": 374.15,
         "pct": -8.67,
         "low": 194.18,
-        "high": 570.19
+        "high": 570.18
       },
       "pred_128d": {
         "target": 295.17,
@@ -22510,7 +22510,7 @@
       },
       "pred_60d": {
         "target": 8.06,
-        "pct": -1.48,
+        "pct": -1.49,
         "low": 6.31,
         "high": 9.83
       },
@@ -25437,7 +25437,7 @@
       },
       "pred_128d": {
         "target": 18.97,
-        "pct": 3.14,
+        "pct": 3.15,
         "low": 15.99,
         "high": 21.35
       }
@@ -34190,7 +34190,7 @@
         "target": 52.88,
         "pct": -0.15,
         "low": 44.88,
-        "high": 60.23
+        "high": 60.22
       },
       "pred_60d": {
         "target": 52.15,
@@ -37788,7 +37788,7 @@
       },
       "pred_128d": {
         "target": 7.2,
-        "pct": -14.09,
+        "pct": -14.08,
         "low": 4.5,
         "high": 9.12
       }
@@ -38433,7 +38433,7 @@
       "pred_128d": {
         "target": 44.5,
         "pct": -22.0,
-        "low": 25.59,
+        "low": 25.6,
         "high": 73.32
       }
     },
@@ -39903,7 +39903,7 @@
         "high": 20.51
       },
       "pred_128d": {
-        "target": 17.14,
+        "target": 17.15,
         "pct": -17.57,
         "low": 11.01,
         "high": 23.06
@@ -40996,7 +40996,7 @@
       "current": 9.1,
       "pred_30d": {
         "target": 9.09,
-        "pct": -0.1,
+        "pct": -0.11,
         "low": 7.81,
         "high": 10.01
       },
@@ -41738,7 +41738,7 @@
       },
       "pred_60d": {
         "target": 6.72,
-        "pct": 8.86,
+        "pct": 8.87,
         "low": 3.58,
         "high": 9.93
       },
@@ -42124,7 +42124,7 @@
       "pred_30d": {
         "target": 914.21,
         "pct": 0.58,
-        "low": 733.63,
+        "low": 733.62,
         "high": 1057.86
       },
       "pred_60d": {
@@ -44897,7 +44897,7 @@
         "target": 21.13,
         "pct": 13.53,
         "low": 15.54,
-        "high": 25.72
+        "high": 25.73
       }
     },
     {
@@ -46160,7 +46160,7 @@
       },
       "pred_128d": {
         "target": 27.58,
-        "pct": -25.11,
+        "pct": -25.1,
         "low": 14.23,
         "high": 40.59
       }
@@ -47444,7 +47444,7 @@
         "target": 54.27,
         "pct": 14.98,
         "low": 43.33,
-        "high": 64.08
+        "high": 64.09
       },
       "pred_128d": {
         "target": 77.51,
@@ -51679,7 +51679,7 @@
         "high": 279.45
       },
       "pred_128d": {
-        "target": 195.93,
+        "target": 195.92,
         "pct": 2.26,
         "low": 102.46,
         "high": 324.0
@@ -52623,7 +52623,7 @@
       },
       "pred_128d": {
         "target": 10.13,
-        "pct": -20.51,
+        "pct": -20.52,
         "low": 8.12,
         "high": 12.78
       }
@@ -53680,7 +53680,7 @@
         "high": 79.21
       },
       "pred_128d": {
-        "target": 61.22,
+        "target": 61.23,
         "pct": -5.27,
         "low": 40.16,
         "high": 86.66
@@ -54407,7 +54407,7 @@
         "target": 34.03,
         "pct": -2.37,
         "low": 28.77,
-        "high": 38.25
+        "high": 38.26
       },
       "pred_60d": {
         "target": 33.67,
@@ -56661,7 +56661,7 @@
         "target": 32.58,
         "pct": -1.55,
         "low": 28.47,
-        "high": 35.74
+        "high": 35.73
       },
       "pred_60d": {
         "target": 32.29,
@@ -57892,7 +57892,7 @@
         "target": 55.15,
         "pct": 1.46,
         "low": 41.61,
-        "high": 67.87
+        "high": 67.88
       }
     },
     {
@@ -58829,7 +58829,7 @@
         "target": 30.64,
         "pct": 6.12,
         "low": 21.7,
-        "high": 38.59
+        "high": 38.58
       },
       "pred_128d": {
         "target": 30.92,
@@ -64215,7 +64215,7 @@
       },
       "pred_128d": {
         "target": 31.33,
-        "pct": -19.51,
+        "pct": -19.5,
         "low": 18.43,
         "high": 41.55
       }
@@ -64928,7 +64928,7 @@
       },
       "pred_128d": {
         "target": 76.38,
-        "pct": 32.35,
+        "pct": 32.36,
         "low": 39.22,
         "high": 121.09
       }
@@ -67114,7 +67114,7 @@
       "pred_128d": {
         "target": 39.79,
         "pct": 11.3,
-        "low": 31.61,
+        "low": 31.6,
         "high": 47.61
       }
     },
@@ -67388,7 +67388,7 @@
         "high": 42.71
       },
       "pred_128d": {
-        "target": 38.57,
+        "target": 38.58,
         "pct": -0.96,
         "low": 28.69,
         "high": 48.91
@@ -67528,7 +67528,7 @@
       "pred_128d": {
         "target": 372.91,
         "pct": -6.14,
-        "low": 202.63,
+        "low": 202.64,
         "high": 530.39
       }
     },
@@ -75048,7 +75048,7 @@
       },
       "pred_128d": {
         "target": 3.37,
-        "pct": -1.48,
+        "pct": -1.47,
         "low": 2.8,
         "high": 3.89
       }
@@ -77941,7 +77941,7 @@
       "pred_60d": {
         "target": 53.77,
         "pct": 4.64,
-        "low": 48.43,
+        "low": 48.44,
         "high": 58.23
       },
       "pred_128d": {
@@ -82063,7 +82063,7 @@
       },
       "pred_128d": {
         "target": 5.36,
-        "pct": -10.17,
+        "pct": -10.16,
         "low": 3.94,
         "high": 6.91
       }
@@ -82950,7 +82950,7 @@
         "target": 7.95,
         "pct": -0.73,
         "low": 7.4,
-        "high": 8.34
+        "high": 8.35
       },
       "pred_60d": {
         "target": 7.81,
@@ -84679,7 +84679,7 @@
       },
       "pred_60d": {
         "target": 7.99,
-        "pct": 8.46,
+        "pct": 8.47,
         "low": 6.02,
         "high": 9.7
       },
@@ -86755,7 +86755,7 @@
       },
       "pred_128d": {
         "target": 6.08,
-        "pct": 0.56,
+        "pct": 0.57,
         "low": 5.41,
         "high": 6.79
       }
@@ -90889,7 +90889,7 @@
       },
       "pred_60d": {
         "target": 12.24,
-        "pct": -10.86,
+        "pct": -10.87,
         "low": 9.28,
         "high": 14.85
       },
@@ -92806,7 +92806,7 @@
         "target": 37.25,
         "pct": -2.49,
         "low": 24.86,
-        "high": 52.48
+        "high": 52.47
       }
     },
     {
@@ -94914,7 +94914,7 @@
       },
       "pred_60d": {
         "target": 63.34,
-        "pct": -14.08,
+        "pct": -14.09,
         "low": 53.0,
         "high": 72.5
       },
@@ -95497,7 +95497,7 @@
         "target": 35.7,
         "pct": -21.54,
         "low": 20.19,
-        "high": 56.01
+        "high": 56.0
       }
     },
     {
@@ -96081,7 +96081,7 @@
       "current": 29.37,
       "pred_30d": {
         "target": 28.42,
-        "pct": -3.23,
+        "pct": -3.24,
         "low": 21.87,
         "high": 33.62
       },
@@ -101247,7 +101247,7 @@
         "target": 14.91,
         "pct": 3.65,
         "low": 10.8,
-        "high": 17.18
+        "high": 17.19
       }
     },
     {
@@ -101256,7 +101256,7 @@
       "current": 13.95,
       "pred_30d": {
         "target": 13.84,
-        "pct": -0.78,
+        "pct": -0.77,
         "low": 11.8,
         "high": 15.49
       },
@@ -101475,7 +101475,7 @@
       },
       "pred_128d": {
         "target": 13.43,
-        "pct": -1.76,
+        "pct": -1.77,
         "low": 11.31,
         "high": 15.77
       }
@@ -104879,7 +104879,7 @@
       },
       "pred_128d": {
         "target": 55.01,
-        "pct": -0.47,
+        "pct": -0.48,
         "low": 41.66,
         "high": 67.88
       }
@@ -105925,7 +105925,7 @@
       "current": 100.13,
       "pred_30d": {
         "target": 95.91,
-        "pct": -4.21,
+        "pct": -4.22,
         "low": 68.39,
         "high": 119.63
       },
@@ -110950,7 +110950,7 @@
         "high": 298.47
       },
       "pred_128d": {
-        "target": 181.99,
+        "target": 181.98,
         "pct": -18.5,
         "low": 76.97,
         "high": 328.66
@@ -111918,7 +111918,7 @@
       "pred_128d": {
         "target": 1158.49,
         "pct": 9.81,
-        "low": 708.66,
+        "low": 708.67,
         "high": 1569.27
       }
     },
@@ -112584,7 +112584,7 @@
       },
       "pred_128d": {
         "target": 57.6,
-        "pct": -6.39,
+        "pct": -6.4,
         "low": 40.85,
         "high": 71.39
       }
@@ -112784,7 +112784,7 @@
         "high": 205.39
       },
       "pred_60d": {
-        "target": 142.08,
+        "target": 142.09,
         "pct": -21.84,
         "low": 71.14,
         "high": 201.15
@@ -113699,7 +113699,7 @@
       "current": 224.0,
       "pred_30d": {
         "target": 216.31,
-        "pct": -3.43,
+        "pct": -3.44,
         "low": 163.81,
         "high": 266.2
       },
@@ -115155,7 +115155,7 @@
       "pred_60d": {
         "target": 73.17,
         "pct": -26.02,
-        "low": 44.47,
+        "low": 44.46,
         "high": 101.79
       },
       "pred_128d": {
@@ -115714,7 +115714,7 @@
         "target": 1093.65,
         "pct": -36.34,
         "low": 434.1,
-        "high": 1746.27
+        "high": 1746.28
       }
     },
     {
@@ -115988,7 +115988,7 @@
       },
       "pred_128d": {
         "target": 25.12,
-        "pct": 10.19,
+        "pct": 10.2,
         "low": 14.68,
         "high": 31.44
       }
@@ -116185,7 +116185,7 @@
         "target": 212.37,
         "pct": 11.19,
         "low": 155.79,
-        "high": 262.87
+        "high": 262.88
       },
       "pred_60d": {
         "target": 211.16,
@@ -118122,7 +118122,7 @@
       "pred_60d": {
         "target": 38.25,
         "pct": -2.23,
-        "low": 30.12,
+        "low": 30.13,
         "high": 45.3
       },
       "pred_128d": {
@@ -118284,7 +118284,7 @@
         "target": 281.89,
         "pct": 0.14,
         "low": 49.95,
-        "high": 462.92
+        "high": 462.91
       },
       "pred_128d": {
         "target": 309.02,
@@ -118483,7 +118483,7 @@
       "current": 56.52,
       "pred_30d": {
         "target": 50.81,
-        "pct": -10.1,
+        "pct": -10.09,
         "low": 32.91,
         "high": 62.55
       },
@@ -119325,7 +119325,7 @@
         "target": 56.38,
         "pct": -12.73,
         "low": 31.34,
-        "high": 84.08
+        "high": 84.09
       }
     },
     {
@@ -120554,7 +120554,7 @@
       "pred_30d": {
         "target": 351.46,
         "pct": 4.71,
-        "low": 256.66,
+        "low": 256.67,
         "high": 427.6
       },
       "pred_60d": {
@@ -120577,7 +120577,7 @@
       "pred_30d": {
         "target": 2354.06,
         "pct": -4.73,
-        "low": 1586.03,
+        "low": 1586.02,
         "high": 2846.11
       },
       "pred_60d": {
@@ -120768,7 +120768,7 @@
         "target": 125.28,
         "pct": 3.96,
         "low": 100.81,
-        "high": 143.89
+        "high": 143.88
       },
       "pred_128d": {
         "target": 134.0,
